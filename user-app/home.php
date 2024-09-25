@@ -480,10 +480,16 @@ if(!isset($_SESSION['isLogin'])){
                         <h3>Notification</h3>
                     </a>
                 </li>
+                <li>
+            <a href="ranking" class="pages">
+            <i class="iconsax sidebar-icon" data-icon="trophy"></i>
+                <h3>Leaderboard</h3>
+            </a>
+        </li>
 
                 <li>
                     <a href="setting" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="user-1"> </i>
+                        <i class="iconsax sidebar-icon" data-icon="trophy"></i>
                         <h3>Setting</h3>
                     </a>
                 </li>
