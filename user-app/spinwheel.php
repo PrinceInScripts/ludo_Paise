@@ -94,6 +94,23 @@ h1 {
   font-weight: 500;
 }
 
+.btn {
+  display: block; /* Make the button a block-level element */
+  margin: 2rem auto 0; /* Center horizontally and add space on top */
+  width: 50%; /* Set width to 50% of the container */
+  padding: 15px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-align: center; /* Center text inside the button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3e8e41;
+}
+
      </style>
     <!---------------  Font Aewsome  --------------------->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
@@ -113,6 +130,8 @@ h1 {
       <i class="fa-solid fa-location-arrow"></i>
      </div> 
     <div id="text"><p>Wheel Of Fortune</p></div>
+
+    <a href="home.php" class="btn">Go Back</a>
   </div>
   <!---------------  SCRIPT  --------------------->
   <!-- <script src="script.js"></script>   -->
