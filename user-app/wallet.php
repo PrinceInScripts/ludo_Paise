@@ -78,14 +78,30 @@ $wallet = $data['wallet'];
                         <div class="profile-head">
                             <div class="d-flex align-items-center gap-2">
                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/1041/1041888.png" alt="profile">
-                                <h5>Balance</h5>
+                                <h5>Deposit Balance</h5>
                             </div>
                             
                         </div>
                         <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$wallet?></h4>
                         <div class="grid-btn mt-2">
-                            <a href="payment" class="btn gray-btn w-100 m-0">Recharge</a>
-                            <a href="home" class="btn theme-btn w-100 m-0">Withdraw</a>
+                            
+                            <a href="payment" class="btn theme-btn w-100 m-0">Recharge</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="driver-box outstation-driver-box">
+                        <div class="profile-head">
+                            <div class="d-flex align-items-center gap-2">
+                                <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/1041/1041888.png" alt="profile">
+                                <h5>Withdrawal Balance</h5>
+                            </div>
+                            
+                        </div>
+                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$wallet?></h4>
+                        <div class="grid-btn mt-2">
+                            <a href="payment" class="btn gray-btn w-100 m-0">Withdraw</a>
+                            <a href="home" class="btn theme-btn w-100 m-0">Convert</a>
                         </div>
                     </div>
                 </li>

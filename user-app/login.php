@@ -1,5 +1,8 @@
 
-
+<?php 
+include './db.php';
+include './functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,8 +54,7 @@
 
 <body>
 <?php 
-include './db.php';
-include './functions.php';
+
 
 
 if(isset($_POST['submit'])){
@@ -122,17 +124,6 @@ if(isset($_POST['submit'])){
             });
         </script>
         <?php 
-    }else{
-        ?>
-        <script>
-            swal({
-                title: "Error",
-                text: "<?php echo $errormsg; ?>",
-                icon: "error",
-                button: "Ok",
-            });
-        </script>
-        <?php
     }
     ?>
     <!-- header starts -->

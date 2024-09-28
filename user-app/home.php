@@ -1,6 +1,6 @@
 <?php
 include('db.php');
-if(!isset($_SESSION['isLogin'])){
+if (!isset($_SESSION['isLogin'])) {
     header('location:login');
 }
 
@@ -53,7 +53,7 @@ if(!isset($_SESSION['isLogin'])){
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style1.css">
     <style>
-        .flag{
+        .flag {
             width: 30px;
             height: 30px;
             margin-right: 10px;
@@ -87,153 +87,25 @@ if(!isset($_SESSION['isLogin'])){
     </header>
     <!-- header end -->
 
-        <!-- Change language offcanvas starts -->
-        <div class="offcanvas ride-offcanvas p-0" tabindex="-1" id="language">
-        <div class="offcanvas-header pb-0">
-            <h3>Choose Chart</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="option-listing">
-                <li class="w-100">
-                    <div class="form-check mt-0 pb-3">
-                        <label class="form-check-label" for="jodichart"><img class="flag"
-                                src="https://cdn-icons-png.flaticon.com/512/12907/12907880.png" alt="">Jodi Chart</label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="jodichart" checked>
-                    </div>
-                </li>
-                <li class="w-100">
-                    <div class="form-check mt-3 pb-3">
-                        <label class="form-check-label" for="panachart"><img class="flag"
-                                src="https://cdn-icons-png.flaticon.com/512/8176/8176145.png" alt="">Pana Chart</label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="panachart">
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="offcanvas-footer border-0">
-            <button onclick="viewChart()" class="btn theme-btn w-100 mt-0">View Chart</button>
-        </div>
-    </div>
-    <!-- Change language offcanvas end -->
+   
 
-    <!-- search section starts -->
-    <!-- <section class="search-section section-b-space pt-0">
-        <div class="custom-container">
-            <div class="form-input">
-                <input type="search" class="form-control with-icon" id="inputusername"
-                    placeholder="Search destinations">
-                <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
-                <a href="date-time-schedule" class="date-time-picker">
-                    <i class="iconsax icon" data-icon="calendar-1">
-                    </i>
-                </a>
-            </div>
-        </div>
-    </section> -->
-    <!-- search section end -->
+   
 
     <!-- slider section starts -->
     <section>
         <div class="swiper banner1 home-banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                <div class="container">
-                    <h1>Weekly</h1>
-                    <table class="leaderboard">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Name</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                                <td class="gold">1 🥇</td>
-                                <td>John Doe</td>
-                                <td>1500</td>
-                            </tr>
-                            <tr>
-                                <td class="silver">2 🥈</td>
-                                <td>Jane Smith</td>
-                                <td>1400</td>
-                            </tr>
-                            <tr>
-                                <td class="bronze">3 🥉</td>
-                                <td>Emily Johnson</td>
-                                <td>1300</td>
-                            </tr>
-                        </tbody>
-                    </table>
-               </div>
+                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider4.png" alt="slider">
                 </div>
                 <div class="swiper-slide">
-                <div class="container">
-                    <h1>Monthly</h1>
-                    <table class="leaderboard">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Name</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                                <td class="gold">1 🥇</td>
-                                <td>John Doe</td>
-                                <td>1500</td>
-                            </tr>
-                            <tr>
-                                <td class="silver">2 🥈</td>
-                                <td>Jane Smith</td>
-                                <td>1400</td>
-                            </tr>
-                            <tr>
-                                <td class="bronze">3 🥉</td>
-                                <td>Emily Johnson</td>
-                                <td>1300</td>
-                            </tr>
-                        </tbody>
-                    </table>
-               </div>
+                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider4.png" alt="slider">
                 </div>
             </div>
         </div>
     </section>
-    <!-- slider section end -->
-
-    <!-- category section starts -->
-    <!-- <section>
-        <div class="custom-container">
-            <div class="title">
-                <h3>Top Games</h3>
-            </div>
-
-            <ul class="categories-list">
-                <li>
-                    <a href="search-location" class="categories-box">
-                        <img class="img-fluid categories-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/c1.svg" alt="c1">
-                        <h6>Ride</h6>
-                    </a>
-                </li>
-                <li>
-                    <a href="outstation" class="categories-box">
-                        <img class="img-fluid categories-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/c2.svg" alt="c1">
-                        <h6>Outstation</h6>
-                    </a>
-                </li>
-                <li>
-                    <a href="rental" class="categories-box">
-                        <img class="img-fluid categories-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/c3.svg" alt="c1">
-                        <h6>Rental</h6>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section> -->
-    <!-- category section end -->
+    <!-- slider section ends -->
+   
 
     <!-- offer section starts -->
     <section class="section-b-space">
@@ -241,141 +113,32 @@ if(!isset($_SESSION['isLogin'])){
             <div class="title">
                 <h3>Play Game</h3>
             </div>
- <!--
+            
             <div class="row gy-3">
+            <div class="games-window">
                 <?php
                 $query = "SELECT * FROM `gamelist`";
                 $result = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_array($result)) {
                 ?>
-                    <div class="col-12">
-                        <div class="coupon-box">
-                            <div style="text-transform: uppercase;" class="coupon-discount"><?= $row['title'] ?></div>
-                            <?php
-                            if ($row['game_status'] == 'open') {
-                            ?>
-                                <div class="coupon-details">
-                                    <div class="coupon-content">
-                                        <a href="#language" data-bs-toggle="offcanvas" class="coupon-name">
-                                            <img class="img-fluid coupon-img" style="border-radius:0" src="https://cdn-icons-png.flaticon.com/512/1234/1234189.png" alt="c1">
-
-                                            <div>
-                                                <h5 class="fw-normal title-color">
-                                                    <?php
-                                                    $arr = json_decode($row['game_data'], true);
-                                                    echo $arr['result'][0] . "-" . $arr['result'][1] . "-" . $arr['result'][2];
-                                                    ?>
-                                                </h5>
-                                            </div>
-                                        </a>
-                                        <div onclick="window.location.href='select?id=<?=$row['id'] ?>'" class="rating">
-                                            <img style="width: 26px;height:26px" class="img-fluid star" src="https://cdn-icons-png.flaticon.com/512/5690/5690573.png" alt="star">
-                                         <h6>4.5</h6>
-                                        </div>
-                                    </div>
-                                    <p style="color:green">Betting is open for Today</p>
-
-
-                                    <ul class="content-list">
-                                        <li><i class="iconsax icon" data-icon="calendar-1"></i>Chart Info</li>
-                                        <li><i class="iconsax icon" data-icon="user-1"></i>Place Bet</li>
-                                    </ul>
-                                    <div class="d-flex align-items-center justify-content-between mt-3">
-                                        <h6 class="content-color fw-normal">Last Bid Time Open <span style="color:blue">11:37 AM</span></h6>
-                                        <h6 class="content-color fw-normal">Last Bid Time Close <span style="color:blue">11:37 AM</span></h6>
-                                    </div>
-                                </div>
-                            <?php
-                            } else {
-                                ?>
-                                <div class="coupon-details">
-                                    <div class="coupon-content">
-                                        <a href="jodichart" class="coupon-name">
-                                            <img class="img-fluid coupon-img" style="border-radius:0" src="https://cdn-icons-png.flaticon.com/512/1234/1234190.png" alt="c1">
-
-                                            <div>
-                                                <h5 class="fw-normal title-color">
-                                                    <?php
-                                                    $arr = json_decode($row['game_data'], true);
-                                                    echo $arr['result'][0] . "-" . $arr['result'][1] . "-" . $arr['result'][2];;
-                                                    ?>
-                                                </h5>
-                                            </div>
-                                        </a>
-                                        <div onclick="window.location.href='select?id=<?=$row['id'] ?>'" class="rating">
-                                            <img style="width: 26px;height:26px" class="img-fluid star" src="https://cdn-icons-png.flaticon.com/512/5690/5690573.png" alt="star">
-                                            <h6>4.5</h6> 
-                                        </div>
-                                    </div>
-                                    <p style="color:red">Betting is closed for Today</p>
-
-
-                                    <ul class="content-list">
-                                        <li><i class="iconsax icon" data-icon="calendar-1"></i>Chart Info</li>
-                                        <li><i class="iconsax icon" data-icon="user-1"></i>Place Bet</li>
-                                    </ul>
-                                    <div class="d-flex align-items-center justify-content-between mt-3">
-                                        <h6 class="content-color fw-normal">Last Bid Time Open <span style="color:blue">11:37 AM</span></h6>
-                                        <h6 class="content-color fw-normal">Last Bid Time Close <span style="color:blue">11:37 AM</span></h6>
-                                    </div>
-                                </div>
-                            <?php
-                            }
-                            ?>
-
-                        </div>
+                   <a class="gameCard-container" href="#">
+                    <span class="blink text-primary d-block text-right">◉ LIVE</span>
+                    <picture class="gameCard-image">
+                        <img width="100%" src="../assets/images/games/firstLudo.png" alt="Classic Ludo">
+                    </picture>
+                    <div class="gameCard-title">
+                        <span class="text-dark d-block text-right">◉ CLASSIC LUDO</span>
                     </div>
+
+                </a>
                 <?php
                 }
                 ?>
+                </div>
 
             </div>
-            -->
+          
 
-            <div class="games-window">
-  <a class="gameCard-container" href="#">
-    <span class="blink text-primary d-block text-right">◉ LIVE</span>
-    <picture class="gameCard-image">
-      <img width="100%" src="../assets/images/slider/slider4.png" alt="Classic Ludo">
-    </picture>
-    <div class="gameCard-title">
-      <span class="text-dark d-block text-right">◉ CLASSIC LUDO</span>
-    </div>
- 
-  </a>
-
-  <a class="gameCard-container" href="/Homepage/Ludo Popular">
-    <span class="blink text-PRIMARY d-block text-right">◉ LIVE</span>
-    <picture class="gameCard-image">
-      <img width="100%" height="100%" src="../assets/images/slider/slider4.png" alt="Popular Ludo">
-    </picture>
-    <div class="gameCard-title">
-      <span class="text-dark d-block text-right">◉ POPULAR LUDO</span>
-    </div>
-  </a>
-
-  <a class="gameCard-container" href="/Homepage/Ludo 1 Goti">
-    <span class="blink text-Live d-block text-right">◉ LIVE</span>
-    <picture class="gameCard-image">
-      <img width="100%" src="../assets/images/slider/slider4.png" alt="Ludo No Cut">
-    </picture>
-    <div class="gameCard-title">
-      <span class="blink text-success d-block text-right">◉ LUDO NO CUT</span>
-    </div>
-   
-  </a>
-
-  <a class="gameCard-container" href="/Homepage/Ludo Ulta">
-    <span class="blink text-primary d-block text-right">◉ LIVE</span>
-    <picture class="gameCard-image">
-      <img width="100%" src="../assets/images/slider/slider4.png" alt="Ludo Ulta">
-    </picture>
-    <div class="gameCard-title">
-      <span class="blink text-success d-block text-right">◉ LUDO ULTA</span>
-    </div>
-  
-  </a>
-</div>
         </div>
     </section>
     <!-- offer section end -->
@@ -407,7 +170,7 @@ if(!isset($_SESSION['isLogin'])){
                 </a>
             </li>
 
-            <li >
+            <li>
                 <a href="setting">
                     <div class="icon">
                         <img style="width:25px" class="unactive" src="https://cdn-icons-png.flaticon.com/512/2040/2040504.png" alt="car">
@@ -426,7 +189,7 @@ if(!isset($_SESSION['isLogin'])){
                     <span>All Bids</span>
                 </a>
             </li>
-            
+
 
             <li>
                 <a href="history">
@@ -457,10 +220,10 @@ if(!isset($_SESSION['isLogin'])){
                     <span>Edit Account</span>
                 </div>
             </a>
-            
-             <a href="#">
+
+            <a href="#">
                 wallet
-             </a>
+            </a>
             <ul class="link-section switch-section">
                 <li class="active">
                     <a href="home" class="pages">
@@ -481,11 +244,11 @@ if(!isset($_SESSION['isLogin'])){
                     </a>
                 </li>
                 <li>
-            <a href="ranking" class="pages">
-            <i class="iconsax sidebar-icon" data-icon="trophy"></i>
-                <h3>Leaderboard</h3>
-            </a>
-        </li>
+                    <a href="ranking" class="pages">
+                        <i class="iconsax sidebar-icon" data-icon="trophy"></i>
+                        <h3>Leaderboard</h3>
+                    </a>
+                </li>
 
                 <li>
                     <a href="setting" class="pages">
