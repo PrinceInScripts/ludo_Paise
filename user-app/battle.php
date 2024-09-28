@@ -266,7 +266,7 @@ $wallet = $data['wallet'];
     <h1 class="create-battle-title">Create A Battle</h1>
     <div class="create-battle-form">
       <input type="number" name="amount" placeholder="Enter your amount" class="create-battle-input">
-      <button class="create-battle-button">Submit</button>
+      <a href="battleview.php" class="create-battle-button">Submit</a>
     </div>
   </div>
 </section>

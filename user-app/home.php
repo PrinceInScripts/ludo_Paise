@@ -121,7 +121,7 @@ if (!isset($_SESSION['isLogin'])) {
                 $result = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_array($result)) {
                 ?>
-                   <a class="gameCard-container" href="#">
+                   <a class="gameCard-container" href='battle.php?id=<?php echo $row['id']?>'>
                     <span class="blink text-primary d-block text-right">◉ LIVE</span>
                     <picture class="gameCard-image">
                         <img width="100%" src="../assets/images/games/firstLudo.png" alt="Classic Ludo">
