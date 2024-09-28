@@ -117,12 +117,12 @@ if (!isset($_SESSION['isLogin'])) {
             <div class="row gy-3">
             <div class="games-window">
                 <?php
-                $query = "SELECT * FROM `gamelist`";
+                $query = "SELECT * FROM `gamelists`";
                 $result = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_array($result)) {
                 ?>
                    <a class="gameCard-container" href="#">
-                    <span class="blink text-primary d-block text-right">◉ LIVE</span>
+                    <span class="py-2 blink text-primary d-block text-right">◉ LIVE</span>
                     <picture class="gameCard-image">
                         <img width="100%" src="../assets/images/games/firstLudo.png" alt="Classic Ludo">
                     </picture>
