@@ -96,10 +96,10 @@ if (!isset($_SESSION['isLogin'])) {
         <div class="swiper banner1 home-banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider4.png" alt="slider">
+                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider.gif" alt="slider">
                 </div>
                 <div class="swiper-slide">
-                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider4.png" alt="slider">
+                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider.gif" alt="slider">
                 </div>
             </div>
         </div>
@@ -216,7 +216,7 @@ if (!isset($_SESSION['isLogin'])) {
             <a href="profile" class="profile-part d-flex align-items-center gap-2">
                 <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
                 <div>
-                    <h3>Ashok Matkaplay</h3>
+                    <h3>Ludo User</h3>
                     <span>Edit Account</span>
                 </div>
             </a>

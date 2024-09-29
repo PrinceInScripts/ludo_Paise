@@ -22,7 +22,7 @@ $wallet = $data['wallet'];
     <meta name="author" content="taxify">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
-    <title>Matka Play </title>
+    <title>Ludopaisa </title>
 
     <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
     <meta name="title-color" content="#01AA85">
@@ -222,7 +222,7 @@ $wallet = $data['wallet'];
             <a href="profile" class="profile-part d-flex align-items-center gap-2">
                 <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
                 <div>
-                    <h3>Ashok Matkaplay</h3>
+                    <h3>Ludo User</h3>
                     <span>Edit Account</span>
                 </div>
             </a>

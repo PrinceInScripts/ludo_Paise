@@ -473,7 +473,7 @@ button {
             <a href="profile" class="profile-part d-flex align-items-center gap-2">
                 <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
                 <div>
-                    <h3>Ashok Matkaplay</h3>
+                    <h3>Ludo User</h3>
                     <span>Edit Account</span>
                 </div>
             </a>

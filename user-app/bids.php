@@ -16,7 +16,7 @@ include('db.php');
     <meta name="author" content="taxify">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
-    <title>Matka Play </title>
+    <title>Ludopaisa </title>
 
     <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
     <meta name="title-color" content="#01AA85">
@@ -75,9 +75,9 @@ include('db.php');
         <ul class="driver-list">
             <?php
             $query = "
-            SELECT bids.*, gamelist.title 
+            SELECT bids.*, gamelists.title 
             FROM bids 
-            JOIN gamelist ON bids.game_id = gamelist.id ORDER BY bids.id DESC";
+            JOIN gamelists ON bids.game_id = gamelists.id ORDER BY bids.id DESC";
             $result = mysqli_query($con, $query);
 
             if ($result && mysqli_num_rows($result) > 0) {
@@ -127,7 +127,7 @@ include('db.php');
 
                             <div class="d-flex align-items-center justify-content-between mt-2">
                                 <div class="d-flex align-items-center gap-1">
-                                    <h5 class="fw-normal title-color">Select : <?= $row['bid_value'] ?></h5>
+                                    <h5 class="fw-normal title-color">Remark : <?= $row['bid_value'] ?></h5>
                                     <span class="content-color fw-normal">(<?= $row['bid_type'] ?>)</span>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@ include('db.php');
             <a href="profile" class="profile-part d-flex align-items-center gap-2">
                 <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
                 <div>
-                    <h3>Ashok Matkaplay</h3>
+                    <h3>Ludo User</h3>
                     <span>Edit Account</span>
                 </div>
             </a>

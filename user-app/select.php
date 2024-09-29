@@ -3,7 +3,7 @@ include 'db.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    $sql = "SELECT * FROM `gamelist` WHERE `id` = $id";
+    $sql = "SELECT * FROM `gamelists` WHERE `id` = $id";
     $result = mysqli_query($con, $sql);
     $gamedata = mysqli_fetch_assoc($result);
 } else {
@@ -25,7 +25,7 @@ if (isset($_GET['id'])) {
     <meta name="author" content="taxify">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
-    <title>Matka Play </title>
+    <title>Ludopaisa </title>
 
     <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
     <meta name="title-color" content="#01AA85">
