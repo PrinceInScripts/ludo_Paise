@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -261,13 +263,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="allUsers.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="addUser.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add User</p>
                 </a>
