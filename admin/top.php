@@ -310,25 +310,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="completeChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Completed Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="conflictChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conflict Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="cancelledChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cancelled Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="runningChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Running Challenge</p>
                 </a>
