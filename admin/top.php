@@ -275,19 +275,19 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="kycPending.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Pending</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="kycComplete.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Completed</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Rejected</p>
                 </a>
@@ -304,7 +304,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="allChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View All Challenge</p>
                 </a>
