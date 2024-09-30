@@ -5,9 +5,7 @@ include ("top.php");
 
 ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -54,7 +52,7 @@ include ("top.php");
                           <td><?php echo $row['accepted_by']?></td>
                           <td><?php echo $row['status']?></td>
                           <td>
-                            <a href="#"> <button class="btn btn-danger">View</button></a>
+                            <a href="viewChallenge?id=<?php echo $row['id']?>"> <button class="btn btn-danger">View</button></a>
                          </td>
                         </tr>
                         <?php
