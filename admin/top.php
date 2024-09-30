@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -261,31 +263,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="allUsers.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="addUser.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Year</p>
+                  <p>Add User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="kycPending.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Pending</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="kycComplete.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Completed</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KYC Rejected</p>
                 </a>
@@ -302,31 +304,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="allChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View All Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="completeChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Completed Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="conflictChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conflict Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="cancelledChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cancelled Challenge</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="runningChallenge.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Running Challenge</p>
                 </a>
