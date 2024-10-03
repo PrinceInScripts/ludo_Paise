@@ -162,50 +162,11 @@ $user_id = $_SESSION['id'];
                 <!-- <p class="fw-normal content-color">Your device's address book will not contain this contact. </p> -->
 
                 <section class="pt-0 driver-request">
-                    <div class="">
-                        <ul class="driver-list">
-                            <?php
-
-                            $sql = "SELECT * FROM games WHERE status = 'pending' AND created_by != '$user_id'";
-                            $result = mysqli_query($con, $sql);
-
-                            while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                                <li>
-                                    <div class="driver-box">
-                                        <div class="profile-head">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                                <h5>Challange From <span style="color:red">xgTDD</span></h5>
-                                            </div>
-                                            <h4 class="fw-semibold theme-color">
-
-                                            </h4>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between mt-2">
-                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between mt-2">
-                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                        </div>
-
-                                        <div class="grid-btn mt-2">
-                                            <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                        </div>
-                                        <div class="progress mt-2" role="progressbar">
-                                            <div class="progress-bar w-25"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <hr>
-                            <?php
-                            }
-
-                            ?>
-                        </ul>
-                    </div>
+                <div id="opponent-battle" class="driver-request">
+    <ul class="driver-list">
+        <!-- Opponent battles will be loaded here via Ajax -->
+    </ul>
+</div>
                 </section>
 
 
@@ -371,6 +332,26 @@ setInterval(updateTimers, 1000);
 
 // Set the Ajax reload to run every 5 seconds
 setInterval(reloadBattleList, 1000);
+
+
+function fetchOpponentBattles() {
+    $.ajax({
+        url: 'operations/fetch_opponent_battles.php', // Change to your endpoint
+        type: 'GET',
+        success: function(data) {
+            $('#opponent-battle .driver-list').html(data);
+        },
+        error: function() {
+            console.error('Failed to fetch opponent battles.');
+        }
+    });
+}
+
+// Initial call to load opponent battles
+fetchOpponentBattles();
+
+// Set an interval to update opponent battles every second
+setInterval(fetchOpponentBattles, 1000);
 </script>
 
 </body>
