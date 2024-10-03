@@ -58,7 +58,7 @@ $user_id = $_SESSION['id'];
                     }elseif($row['accepted_by'] == $user_id && $row['isJoined'] == 1){
                         ?>
                         <div class="grid-btn mt-2">
-                        <a href="#0" class="btn btn-primary w-100 m-0">Enter Room</a>
+                        <a href="room?battle=<?=$game_id?>" class="btn btn-primary w-100 m-0">Enter Room</a>
                     </div>
                         <?php 
                     }else{
