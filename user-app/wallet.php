@@ -4,7 +4,7 @@ $mobile = $_SESSION['mobile'];
 $query = "SELECT * FROM users WHERE mobile = '$mobile'";
 $run = mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($run);
-$wallet = $data['wallet'];
+$wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
 ?>
 
@@ -82,7 +82,7 @@ $wallet = $data['wallet'];
                             </div>
                             
                         </div>
-                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$wallet?></h4>
+                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$data['deposit_wallet']?></h4>
                         <div class="grid-btn mt-2">
                             
                             <a href="payment" class="btn theme-btn w-100 m-0">Recharge</a>
@@ -98,7 +98,7 @@ $wallet = $data['wallet'];
                             </div>
                             
                         </div>
-                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$wallet?></h4>
+                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$data['withdraw_wallet']?></h4>
                         <div class="grid-btn mt-2">
                             <a href="payment" class="btn gray-btn w-100 m-0">Withdraw</a>
                             <a href="home" class="btn theme-btn w-100 m-0">Convert</a>

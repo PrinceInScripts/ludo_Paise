@@ -250,20 +250,23 @@ include 'db.php';
             <h3 class="fw-semibold title-color text-center">Choose Method</h3>
             <br>
             <ul class="payment-method-list pt-0">
-                <li class="w-100">
+                <?php 
+                
+                $sql = "SELECT * FROM payment_modes WHERE status = 1";
+                $result = mysqli_query($con, $sql);
+                while($row = mysqli_fetch_assoc($result)){
+                    ?>
+                        <li class="w-100">
                     <div class="payment-list-box">
                         <label class="form-check-label" for="flexRadioDefault"> <img class="img-fluid img"
-                                src="https://cdn.uxhack.co/product_logos/bhim_logo_2.png" alt="mastercard"> UPI Auto</label>
+                                src="<?=$row['icon'] ?>" alt="mastercard"> <?=$row['pay_name'] ?></label>
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
                     </div>
                 </li>
-                <li class="w-100">
-                    <div class="payment-list-box">
-                        <label class="form-check-label" for="flexRadioDefault"> <img class="img-fluid img"
-                                src="https://cdn-icons-png.flaticon.com/512/8984/8984290.png" alt="mastercard"> UPI Manual</label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
-                    </div>
-                </li>
+                    <?php
+                }
+                
+                ?>
             </ul>
 
 
