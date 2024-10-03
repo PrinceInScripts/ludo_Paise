@@ -10,6 +10,7 @@ $run = mysqli_query($con, $query);
 $data = mysqli_fetch_assoc($run);
 $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
+$battle_id='';
 if (isset($_GET['battle'])) {
     $battle_id = $_GET['battle'];
     $battleQuery = "SELECT * FROM games WHERE id = '$battle_id' AND (created_by = '$user_id' OR accepted_by = '$user_id') ";
@@ -30,6 +31,30 @@ if (isset($_GET['battle'])) {
     header('location:home');
 }
 
+$msg='';
+
+if(isset($_POST['btn-upload'])){
+    if($_FILES['image']['type']!=''){
+        if($_FILES['image']['type']!='image/png' && $_FILES['image']['type']!='image/jpg' && $_FILES['image']['type']!='image/jpeg'){
+        $msg="Please select only png,jpg and jpeg image formate";
+    }
+}
+
+if($msg==''){
+    
+    $image=$_FILES['image']['name'];
+     
+      move_uploaded_file($_FILES['image']['tmp_name'],$image);
+     $sql="";
+     mysqli_query($con,$sql);
+     
+     
+     header("location:product.php");
+     die();
+    
+}
+
+}
 
 
 
@@ -396,7 +421,7 @@ if (isset($_GET['battle'])) {
     ?>
         <section class="room-code-section">
             <h1 class="room-code-heading">Room Code</h1>
-            <p id="room-code" class="room-code"><?=$roomcode?></p> <!-- Example code -->
+            <p id="room-code" class="room-code"><?=$roomcode?></p> 
             <br>
             <button class="btn btn-success" onclick="copyToClipboard()">Copy Code</button>
         </section>
@@ -422,8 +447,11 @@ if (isset($_GET['battle'])) {
             </span>
             <h2 id="popup-title">Upload Screenshot</h2>
             <p>Please upload the screenshot of your game result.</p>
-            <input class="form-control" type="file" id="screenshot-upload" accept="image/*">
+            <form action="operations/upload.php"  method="POST" enctype="multipart/form-data">
+            <input class="form-control" type="file" name="file" id="screenshot-upload" accept="image/*">
+            <input type="hidden" name="battle_id" class="form-control" value="<?=$battle_id?>" required> 
             <button class="btn-upload " onClick="closePopup()">Upload</button>
+            </form>
         </div>
     </div>
 
