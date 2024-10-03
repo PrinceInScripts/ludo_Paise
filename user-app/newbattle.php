@@ -1,3 +1,11 @@
+<?php
+
+include './db.php';
+
+$user_id = $_SESSION['id'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,7 +100,7 @@
             }
         }
 
-        .driver-request .driver-list{
+        .driver-request .driver-list {
             padding: 0;
         }
 
@@ -128,12 +136,12 @@
 
                 <div>
                     <div class="form-group">
-                        <label class="form-label mb-2" for="Inputfirstname">Enter Amount</label>
-                        <input type="text" class="form-control" id="Inputfirstname" placeholder="Amount should be multiple of 10">
+                        <label class="form-label mb-2" for="amount">Enter Amount</label>
+                        <input type="text" class="form-control" id="amount" placeholder="Amount should be multiple of 10">
 
                     </div>
                     <div class="grid-btn mt-4 col-6 mx-auto">
-                        <a href="#0" class="btn btn-success w-100 m-0">Create Battle</a>
+                        <button onclick="create_battle()" class="btn btn-success w-100 m-0">Create Battle</button>
                     </div>
                 </div>
                 <hr>
@@ -141,206 +149,74 @@
 
                 </div>
             </div>
+            <div id="self-battle" class="driver-request">
+    <ul class="driver-list">
+        <!-- Battle list loaded here via Ajax -->
+    </ul>
+</div>
+
             <div class="theme-form ">
                 <div class="grid-btn mt-4">
-                    <a href="#0" class="btn theme-btn w-100 m-0">Open Battle</a>
+                    <button class="btn theme-btn w-100 m-0">Open Battle</button>
                 </div>
                 <!-- <p class="fw-normal content-color">Your device's address book will not contain this contact. </p> -->
 
                 <section class="pt-0 driver-request">
                     <div class="">
                         <ul class="driver-list">
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Time Remaining : <span style="color:red"><span id="timer">89</span> Second</span></h5>
+                            <?php
+
+                            $sql = "SELECT * FROM games WHERE status = 'pending' AND created_by != '$user_id'";
+                            $result = mysqli_query($con, $sql);
+
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <li>
+                                    <div class="driver-box">
+                                        <div class="profile-head">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
+                                                <h5>Challange From <span style="color:red">xgTDD</span></h5>
+                                            </div>
+                                            <h4 class="fw-semibold theme-color">
+
+                                            </h4>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
-                                            <div class="spinner-border" role="status"></div>
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
 
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-danger w-100 m-0">Reject</a>
-                                        <a href="accept-ride-details.html" class="btn btn-success w-100 m-0">Accept</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
-                        </ul>
-
-                        <ul class="driver-list">
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
 
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
 
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
+                                        <div class="grid-btn mt-2">
+                                            <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
-
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
+                                        <div class="progress mt-2" role="progressbar">
+                                            <div class="progress-bar w-25"></div>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
+                                    </div>
+                                </li>
+                                <hr>
+                            <?php
+                            }
 
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
-                                        </div>
-                                        <h4 class="fw-semibold theme-color">
-
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
-
-                                    </div>
-
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
+                            ?>
                         </ul>
                     </div>
                 </section>
 
-              
+
                 <div>
 
                 </div>
             </div>
 
-             <!-- Running Battle  -->
+            <!-- Running Battle  -->
 
-             <div class="theme-form ">
+            <div class="theme-form ">
                 <div class="grid-btn mt-4">
                     <a href="#0" class="btn theme-btn w-100 m-0">Running Battle</a>
                 </div>
@@ -349,35 +225,48 @@
                 <section class="pt-0 driver-request">
                     <div class="">
                         <ul class="driver-list">
-                            <li>
-                                <div class="driver-box">
-                                    <div class="profile-head">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                            <h5>Challange From <span style="color:red">xgTDD</span></h5>
+
+                            <?php
+
+                            $query2 = "SELECT * FROM games WHERE status = 'running' AND created_by = '$user_id'";
+                            $result2 = mysqli_query($con, $query2);
+                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                            ?>
+                                <li>
+                                    <div class="driver-box">
+                                        <div class="profile-head">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
+                                                <h5>Challange From <span style="color:red">xgTDD</span></h5>
+                                            </div>
+                                            <h4 class="fw-semibold theme-color">
+
+                                            </h4>
                                         </div>
-                                        <h4 class="fw-semibold theme-color">
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
 
-                                        </h4>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee : </h5>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
 
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize : </h5>
+                                        </div>
 
+                                        <div class="grid-btn mt-2">
+                                            <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
+                                        </div>
+                                        <div class="progress mt-2" role="progressbar">
+                                            <div class="progress-bar w-25"></div>
+                                        </div>
                                     </div>
+                                </li>
+                                <hr>
+                            <?php
+                            }
 
-                                    <div class="grid-btn mt-2">
-                                        <a href="accept-ride-details.html" class="btn btn-secondary w-100 m-0">Play</a>
-                                    </div>
-                                    <div class="progress mt-2" role="progressbar">
-                                        <div class="progress-bar w-25"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <hr>
+                            ?>
+
+
                         </ul>
                     </div>
                 </section>
@@ -416,6 +305,74 @@
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Create Battle operations/create_battle.php using Ajax 
+
+        function create_battle() {
+            var amount = document.getElementById('amount').value;
+
+            $.ajax({
+                url: 'operations/create_battle.php',
+                type: 'POST',
+                data: {
+                    amount: amount
+                },
+                success: function(data) {
+
+                    console.log(data);
+                    var response = JSON.parse(data);
+                    if (response.status == 'success') {
+                        // if success refresh page with swal message 
+                        swal.fire('Success', response.message, 'success');
+                    } else {
+                        swal.fire('Error', response.message, 'error');
+                    }
+
+                }
+            });
+        }
+
+
+
+      
+    </script>
+
+
+<script>
+// Function to update countdown timers
+function updateTimers() {
+    $('.driver-list li').each(function() {
+        var timerElement = $(this).find('[id^=timer-]');
+        var currentTime = parseInt(timerElement.text());
+
+        if (currentTime > 0) {
+            timerElement.text(currentTime - 1); // Decrement the timer by 1 second
+        }
+    });
+}
+
+// Function to reload the battle list every 5 seconds
+function reloadBattleList() {
+    $.ajax({
+        url: 'operations/reload_battle.php', // The PHP file that generates the battle list
+        type: 'GET',
+        success: function(data) {
+            $('#self-battle .driver-list').html(data); // Update the battle list
+        }
+    });
+}
+
+// Set the countdown to run every second
+setInterval(updateTimers, 1000);
+
+// Set the Ajax reload to run every 5 seconds
+setInterval(reloadBattleList, 1000);
+</script>
+
 </body>
 
 
