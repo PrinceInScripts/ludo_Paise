@@ -31,30 +31,16 @@ if (isset($_GET['battle'])) {
     header('location:home');
 }
 
-$msg='';
-
-if(isset($_POST['btn-upload'])){
-    if($_FILES['image']['type']!=''){
-        if($_FILES['image']['type']!='image/png' && $_FILES['image']['type']!='image/jpg' && $_FILES['image']['type']!='image/jpeg'){
-        $msg="Please select only png,jpg and jpeg image formate";
-    }
-}
-
-if($msg==''){
+if($created_by!='' && $accepted_by!=''){
+    $cratorSql="SELECT * FROM users WHERE id = '$created_by'";
+    $creatorRun = mysqli_query($con, $cratorSql);
+    $creatorData = mysqli_fetch_assoc($creatorRun);
     
-    $image=$_FILES['image']['name'];
-     
-      move_uploaded_file($_FILES['image']['tmp_name'],$image);
-     $sql="";
-     mysqli_query($con,$sql);
-     
-     
-     header("location:product.php");
-     die();
-    
+    $acceptorSql="SELECT * FROM users WHERE id = '$accepted_by'";
+    $acceptorRun = mysqli_query($con, $acceptorSql);
+    $acceptorData = mysqli_fetch_assoc($acceptorRun);
 }
 
-}
 
 
 
@@ -308,7 +294,8 @@ if($msg==''){
 
         .close-popup {
             position: relative;
-            top: 206px;
+            left: 190px;
+            bottom: 30px;
             font-size: 1.5em;
             cursor: pointer;
         }
@@ -369,22 +356,37 @@ if($msg==''){
         <button class="btn btn-danger"> Rules</button>
     </section>
 
+    <?php
+    $img_src1=$creatorData['profile_pic'];
+    $img_src2=$acceptorData['profile_pic'];
+    $img_src1_sql="SELECT * FROM profile_pic WHERE id = '$img_src1'";
+    $img_src2_sql="SELECT * FROM profile_pic WHERE id = '$img_src2'";
+    $img_src1_run=mysqli_query($con,$img_src1_sql);
+    $img_src2_run=mysqli_query($con,$img_src2_sql);
 
+    $img_src1_data = mysqli_fetch_assoc($img_src1_run);
+$img_src2_data = mysqli_fetch_assoc($img_src2_run);
+
+
+
+    
+    
+    ?>
     <section class="challenge-section">
         <div class="challenges-container">
             <div class="challenges ">
-                <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p8.png" alt="p8">
-                <p>₹ name</p>
+                <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/<?php echo $img_src1_data['profile']; ?>" alt="p8">
+                <p><?php echo $creatorData['username']?></p>
 
             </div>
             <div class="timer-container">
                 <img id="output" width="40px" class="profile-pic" src="../assets/images/product/vs.png" alt="p8">
-                <p>₹ win Prize</p>
+                <p><?php echo $winAmount?></p>
             </div>
 
             <div class="challenges ">
-                <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p8.png" alt="p8">
-                <p>₹ name</p>
+                <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/<?php echo $img_src2_data['profile']; ?>" alt="p8">
+                <p><?php echo $acceptorData['username']?></p>
 
             </div>
         </div>
@@ -447,10 +449,10 @@ if($msg==''){
             </span>
             <h2 id="popup-title">Upload Screenshot</h2>
             <p>Please upload the screenshot of your game result.</p>
-            <form action="operations/upload.php"  method="POST" enctype="multipart/form-data">
+            <form id="uploadForm"  method="POST" enctype="multipart/form-data">
             <input class="form-control" type="file" name="file" id="screenshot-upload" accept="image/*">
             <input type="hidden" name="battle_id" class="form-control" value="<?=$battle_id?>" required> 
-            <button class="btn-upload " onClick="closePopup()">Upload</button>
+            <button class="btn-upload" type="submit" name="submit" onClick="closePopup()">Upload</button>
             </form>
         </div>
     </div>
@@ -629,7 +631,11 @@ if($msg==''){
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
         function viewChart() {
@@ -670,6 +676,48 @@ if($msg==''){
             var popup = document.getElementById("upload-popup");
             popup.style.display = "none"; // Hide the popup
         }
+
+        $(document).ready(function () {
+        $('#uploadForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent form from refreshing the page
+
+            var formData = new FormData(this); // Create a new FormData object from the form
+
+            $.ajax({
+                url: 'operations/upload.php', // The PHP script that handles the upload
+                type: 'POST',
+                data: formData, // Form data to be sent to the server
+                contentType: false, // Important for file uploads
+                processData: false, // Important for file uploads
+                success: function (response) {
+                    
+                    response = JSON.parse(response);
+
+                    response = response[0];
+
+                   if(response.error){
+                    swal.fire({
+                        title: 'Error',
+                        text: response.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                   }else{
+                    swal.fire({
+                        title: 'Success',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                   }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error);
+                }
+            });
+        });
+    });
+
     </script>
 </body>
 
