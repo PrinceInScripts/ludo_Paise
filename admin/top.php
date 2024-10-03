@@ -345,31 +345,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="deposit.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Deposit Transition</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="withdraw.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Withdraw Transition</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="bonus.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Bonus</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="penalty.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penalty</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="history.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>History</p>
                 </a>
