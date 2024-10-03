@@ -115,7 +115,7 @@ $user_id = $_SESSION['id'];
     <header id="header" class="main-header inner-page-header">
         <div class="custom-container">
             <div class="header-panel">
-                <a href="choose-rider.html">
+                <a href="home.php">
                     <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
                 </a>
 

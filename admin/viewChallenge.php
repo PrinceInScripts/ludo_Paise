@@ -51,7 +51,7 @@ if(isset($_GET['id']) && $_GET['id']!=''){
 
                 <h3 class="profile-username text-center"><?php echo $row['game_type']?></h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
+                <!-- <p class="text-muted text-center">Software Engineer</p> -->
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
