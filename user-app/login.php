@@ -84,7 +84,6 @@ if(isset($_POST['submit'])){
         <script>
             swal({
                 title: "Error",
-                
                 text: "Try again later",
                 icon: "error",
                 button: "Ok",
