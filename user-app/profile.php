@@ -1,3 +1,34 @@
+<?php
+include('db.php');
+if (!isset($_SESSION['isLogin'])) {
+    header('location:login');
+}
+
+$user_id = $_SESSION['id'];
+$username="";
+$email="";
+$mobile="";
+$profile="";
+
+$sql="SELECT * FROM users WHERE id='$user_id'";
+$res=mysqli_query($con,$sql);
+
+if(mysqli_num_rows($res)>0){
+    $row=mysqli_fetch_assoc($res);
+    $username=$row['username'];
+    $email=$row['email'];
+    $mobile=$row['mobile'];
+    $profile=$row['profile_pic'];
+}
+
+    $img_src_sql="SELECT * FROM profile_pic WHERE id = '$profile'";
+    $img_src_run=mysqli_query($con,$img_src_sql);
+
+    $img_src_data = mysqli_fetch_assoc($img_src_run);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +92,7 @@
             <div class="custom-container">
                 <div class="profile-section">
                     <div class="profile-image mt-0">
-                        <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
+                        <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile']?>" alt="p8">
                         <input id="file" type="file" onchange="loadFile(event)">
                         <i class="iconsax upload-icon" data-icon="edit-2"> </i>
                     </div>
@@ -69,17 +100,17 @@
                 <form class="auth-form">
                     <div class="form-group mt-0">
                         <label class="form-label mb-2" for="Inputname">User Name</label>
-                        <input type="text" class="form-control" id="Inputname" placeholder="Enter your name">
+                        <input type="text" class="form-control" id="Inputname" placeholder="Enter your name" value="<?php echo $username?>">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputnumner">Mobile Number</label>
-                        <input type="number" class="form-control" id="Inputnumner" placeholder="Enter your number">
+                        <input type="number" class="form-control" id="Inputnumner" placeholder="Enter your number" value="<?php echo $mobile?>">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputemail">Email</label>
-                        <input type="email" class="form-control" id="Inputemail" placeholder="Enter your email">
+                        <input type="email" class="form-control" id="Inputemail" placeholder="Enter your email" value="<?php echo $email?>">
                     </div>
 
                     <a href="home" class="btn theme-btn w-100 auth-btn">Update</a>
