@@ -55,7 +55,17 @@ include './functions.php';
 <body>
 <?php 
 
-
+function generateUsername($length = 8) {
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $username = '';
+    $charLength = strlen($characters);
+    
+    for ($i = 0; $i < $length; $i++) {
+        $username .= $characters[rand(0, $charLength - 1)];
+    }
+    
+    return $username;
+}
 
 if(isset($_POST['submit'])){
     $mobile = $_POST['mobile'];
@@ -70,7 +80,9 @@ if(isset($_POST['submit'])){
         $query = "UPDATE users SET otp = '$otp' WHERE mobile = '$mobile'";
         $result = mysqli_query($con,$query);
     }else{
-        $query = "INSERT INTO users (mobile,otp) VALUES ('$mobile','$otp')";
+        $username=generateUsername();
+        $profile=rand(1, 22);
+        $query = "INSERT INTO users (mobile,otp,username,profile_pic) VALUES ('$mobile','$otp','$username','$profile')";
         $result = mysqli_query($con,$query);
     }
     $mobileNew = "91".$mobile;
