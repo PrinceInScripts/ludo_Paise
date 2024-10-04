@@ -5,26 +5,26 @@ if (!isset($_SESSION['isLogin'])) {
 }
 
 $user_id = $_SESSION['id'];
-$username="";
-$email="";
-$mobile="";
-$profile="";
+$username = "";
+$email = "";
+$mobile = "";
+$profile = "";
 
-$sql="SELECT * FROM users WHERE id='$user_id'";
-$res=mysqli_query($con,$sql);
+$sql = "SELECT * FROM users WHERE id='$user_id'";
+$res = mysqli_query($con, $sql);
 
-if(mysqli_num_rows($res)>0){
-    $row=mysqli_fetch_assoc($res);
-    $username=$row['username'];
-    $email=$row['email'];
-    $mobile=$row['mobile'];
-    $profile=$row['profile_pic'];
+if (mysqli_num_rows($res) > 0) {
+    $row = mysqli_fetch_assoc($res);
+    $username = $row['username'];
+    $email = $row['email'];
+    $mobile = $row['mobile'];
+    $profile = $row['profile_pic'];
 }
 
-    $img_src_sql="SELECT * FROM profile_pic WHERE id = '$profile'";
-    $img_src_run=mysqli_query($con,$img_src_sql);
+$img_src_sql = "SELECT * FROM profile_pic WHERE id = '$profile'";
+$img_src_run = mysqli_query($con, $img_src_sql);
 
-    $img_src_data = mysqli_fetch_assoc($img_src_run);
+$img_src_data = mysqli_fetch_assoc($img_src_run);
 ?>
 
 
@@ -34,6 +34,7 @@ if(mysqli_num_rows($res)>0){
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/profile-setting.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:06 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,28 +93,28 @@ if(mysqli_num_rows($res)>0){
             <div class="custom-container">
                 <div class="profile-section">
                     <div class="profile-image mt-0">
-                        <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile']?>" alt="p8">
+                        <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>" alt="p8">
                         <input id="file" type="file" onchange="loadFile(event)">
                         <i class="iconsax upload-icon" data-icon="edit-2"> </i>
                     </div>
                 </div>
-                <form class="auth-form">
+                <form action="operations/update_profile.php" class="auth-form" method="post">
                     <div class="form-group mt-0">
                         <label class="form-label mb-2" for="Inputname">User Name</label>
-                        <input type="text" class="form-control" id="Inputname" placeholder="Enter your name" value="<?php echo $username?>">
+                        <input type="text" class="form-control" id="Inputname" name="username" placeholder="Enter your name" value="<?php echo $username; ?>" >
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputnumner">Mobile Number</label>
-                        <input type="number" class="form-control" id="Inputnumner" placeholder="Enter your number" value="<?php echo $mobile?>">
+                        <input type="number" class="form-control" id="Inputnumner" name="mobile" placeholder="Enter your number" value="<?php echo $mobile; ?>" >
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputemail">Email</label>
-                        <input type="email" class="form-control" id="Inputemail" placeholder="Enter your email" value="<?php echo $email?>">
+                        <input type="email" class="form-control" id="Inputemail" name="email" placeholder="Enter your email" value="<?php echo $email; ?>" >
                     </div>
 
-                    <a href="home" class="btn theme-btn w-100 auth-btn">Update</a>
+                    <button type="submit" name="submit" class="btn theme-btn w-100 auth-btn">Update</button>
                 </form>
             </div>
         </div>
@@ -142,4 +143,5 @@ if(mysqli_num_rows($res)>0){
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/profile-setting.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:06 GMT -->
+
 </html>
