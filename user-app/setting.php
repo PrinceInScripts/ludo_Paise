@@ -7,7 +7,12 @@ $data = mysqli_fetch_assoc($run);
 
 $name = $data['username'];
 $email = $data['email'];
-$wallet = $data['wallet'];
+$wallet = $data['deposit_wallet']+$data['withdraw_wallet'];
+
+$img_src_sql = "SELECT * FROM profile_pic WHERE id = '$data[profile_pic]'";
+$img_src_run = mysqli_query($con, $img_src_sql);
+
+$img_src_data = mysqli_fetch_assoc($img_src_run);
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +78,7 @@ $wallet = $data['wallet'];
     <section class="setting-section pt-0">
         <div class="profile-section">
             <div class="profile-image">
-                <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
+                <img class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile']?>" alt="p8">
             </div>
             <h3 class="profile-name">
                 <?php 
@@ -88,7 +93,7 @@ $wallet = $data['wallet'];
             <h6 class="fw-normal content-color mt-1 text-center">
             <?php 
                 if($email == ''){
-                    echo "add email";
+                    echo "<a href='profile.php' class=' color-palette'>add email</a>";
                 }else{
                     echo $email;
                 }

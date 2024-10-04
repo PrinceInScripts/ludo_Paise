@@ -3,7 +3,21 @@ include('db.php');
 if (!isset($_SESSION['isLogin'])) {
     header('location:login');
 }
+$userid = $_SESSION['id'];
 
+
+$query = "SELECT * FROM users WHERE id = '$userid'";
+$run = mysqli_query($con,$query);
+$data = mysqli_fetch_assoc($run);
+
+$name = $data['username'];
+$email = $data['email'];
+$wallet = $data['deposit_wallet']+$data['withdraw_wallet'];
+
+$img_src_sql = "SELECT * FROM profile_pic WHERE id = '$data[profile_pic]'";
+$img_src_run = mysqli_query($con, $img_src_sql);
+
+$img_src_data = mysqli_fetch_assoc($img_src_run);
 
 ?>
 <!DOCTYPE html>
@@ -214,16 +228,20 @@ if (!isset($_SESSION['isLogin'])) {
         </div>
         <div class="offcanvas-body">
             <a href="profile" class="profile-part d-flex align-items-center gap-2">
-                <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
+                <img class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile']?>" alt="p8">
                 <div>
-                    <h3>Ludo User</h3>
+                    <h3><?php echo $data['username']?></h3>
                     <span>Edit Account</span>
                 </div>
             </a>
 
-            <a href="#">
-                wallet
-            </a>
+            <div onclick="window.location.href='wallet'" class="wallet-part">
+            <h6>My Wallet Balance</h6>
+            <div class="d-flex align-content-center justify-content-center gap-1">
+                <h5>₹ <?=$wallet?> </h5>
+                <img class="img-fluid arrow-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/side-arrow.svg" alt="side-arrow">
+            </div>
+        </div>
             <ul class="link-section switch-section">
                 <li class="active">
                     <a href="home" class="pages">
