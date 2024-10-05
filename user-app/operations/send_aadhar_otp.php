@@ -35,8 +35,15 @@ if (curl_errno($ch)) {
     $responseData = json_decode($response, true);
     if ($responseData['status'] == 'success') {
         $_SESSION['aadhar_request_id'] = $responseData['request_id'];
-        $query = "UPDATE users SET adhaar_id = '$aadhar' WHERE id = '$user_id'";
-        $res =  array(['status' => 'success', 'message' => $responseData['message']]);
+        $query = "UPDATE users SET adhaar_no = '$aadhar' WHERE id = '$user_id'";
+        $result = mysqli_query($con, $query);
+
+        if($result){
+            $res =  array(['status' => 'success', 'message' => $responseData['message']]);
+        } else {
+            $res =  array(['status' => 'success', 'message' => $responseData['message']]);
+        }
+        
     } else {
         $res = array(['status' => 'error', 'message' => $responseData['message']]);
     }

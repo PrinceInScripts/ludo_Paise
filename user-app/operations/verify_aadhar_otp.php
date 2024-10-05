@@ -62,13 +62,19 @@ if (isset($_POST['otp'])) {
 
             // INSERT INTO `aadhaar_data`(`id`, `user_id`, `full_name`, `aadhaar_number`, `dob`, `gender`, `country`, `dist`, `state`, `po`, `vtc`, `subdist`, `street`, `house`, `zip`, `profile_image`, `mobile_hash`, `share_code`, `reference_id`, `request_id`, `created_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]')
 
-            // $insertAadhardata = "INSERT INTO `aadhaar_data`(`user_id`, `full_name`, `aadhaar_number`, `dob`, `gender`, `country`, `dist`, `state`, `po`, `vtc`, `subdist`, `street`, `house`, `zip`, `mobile_hash`, `share_code`, `request_id`) VALUES ('$user_id','$full_name','$aadhaar_number','$dob','$gender','$country','$dist','$state','$po','$vtc','$subdist','$street','$house','$zip','$mobile_hash','$share_code','$request_id')";
-            // if($insertAadhardata){
-               
-            // }
+            $insertAadhardata = "INSERT INTO `aadhaar_data`(`user_id`, `full_name`, `aadhaar_number`, `dob`, `gender`, `country`, `dist`, `state`, `po`, `vtc`, `subdist`, `street`, `house`, `zip`, `mobile_hash`, `share_code`, `request_id`) VALUES ('$user_id','$full_name','$aadhaar_number','$dob','$gender','$country','$dist','$state','$po','$vtc','$subdist','$street','$house','$zip','$mobile_hash','$share_code','$request_id')";
+            $run = mysqli_query($con, $insertAadhardata);
+            if($insertAadhardata){
+                $query = "UPDATE users SET kyc_status = 1 WHERE id = '$user_id'";
+                $run = mysqli_query($con, $query);
+                if($run){
+                    $res =  array(['status' => 'success', 'message' => $responseData['message']]);
+                }else{
+                $res =  array(['status' => 'success', 'message' => 'Failed to update user status']);
+                }
+            }
 
-            $query = "UPDATE users SET kyc_status = 1 WHERE id = '$user_id'";
-            $res =  array(['status' => 'success', 'message' => $responseData['message']]);
+            
            
             
         } else {

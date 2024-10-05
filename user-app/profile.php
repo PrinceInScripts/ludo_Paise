@@ -236,7 +236,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         icon: 'success',
                         confirmButtonText: 'Ok'
                     });
-                    // location.reload();
+                    location.reload();
                 }else{
                     swal.fire({
                         title: 'Error',
