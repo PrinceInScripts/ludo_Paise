@@ -17,6 +17,8 @@ if (mysqli_num_rows($res) > 0) {
     $row = mysqli_fetch_assoc($res);
     $username = $row['username'];
     $email = $row['email'];
+    $aadhar = $row['adhaar_no'];
+    $kyc = $row['kyc_status'];
     $mobile = $row['mobile'];
     $profile = $row['profile_pic'];
 }
@@ -98,28 +100,156 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         <i class="iconsax upload-icon" data-icon="edit-2"> </i>
                     </div>
                 </div>
+                <br>
+                <h3 class="text-center profile-name">KYC Status</h3>
+                <div class="auth-form">
+                    <?php
+                    if ($kyc == 1) {
+                    ?>
+                        <div class="form-group mb-4">
+
+                            <label class="form-label" for="Inputemail1">Aadhar No</label>
+                            <input readonly type="email" class="form-control" id="Inputemail1" minlength="16" maxlength="16" onkeyup="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your Aadhar" value="<?php echo $aadhar; ?>">
+                        </div>
+                        <button  class="btn btn-success w-100">Verified</button>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="form-group mb-4">
+
+                            <label class="form-label" for="aadhar">Aadhar No</label>
+                            <input type="text" class="form-control" id="aadhar" name="aadhar" minlength="16" maxlength="16" onkeyup="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your Aadhar" value="<?php echo $aadhar; ?>">
+                        </div>
+
+                        
+                        <div id="otp-box" style="display:none" class="form-group mb-4">
+
+                            <label class="form-label" for="aadhar-otp">Enter OTP</label>
+                            <input type="text" class="form-control" id="aadhar-otp" name="aadhar-otp" minlength="16" maxlength="16" onkeyup="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter OTP">
+                        </div>
+
+                        <button id="sendOtpBtn" onclick="sendAadharOtp()" type="menu" class="btn theme-btn w-100">Verify</button>
+                        <button id="verifyOtpButton" style="display: none;" onclick="verifyOtp()" type="menu" class="btn theme-btn w-100">Submit OTP</button>
+                        
+                    <?php
+                    }
+                    ?>
+
+
+                </div>
+                <hr>
+                <br>
+                <h3 class="text-center profile-name">Update Profile</h3>
                 <form action="operations/update_profile.php" class="auth-form" method="post">
                     <div class="form-group mt-0">
                         <label class="form-label mb-2" for="Inputname">User Name</label>
-                        <input type="text" class="form-control" id="Inputname" name="username" placeholder="Enter your name" value="<?php echo $username; ?>" >
+                        <input type="text" class="form-control" id="Inputname" name="username" placeholder="Enter your name" value="<?php echo $username; ?>">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputnumner">Mobile Number</label>
-                        <input type="number" class="form-control" id="Inputnumner" name="mobile" placeholder="Enter your number" value="<?php echo $mobile; ?>" >
+                        <input type="number" class="form-control" id="Inputnumner" name="mobile" placeholder="Enter your number" value="<?php echo $mobile; ?>" readonly="true">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputemail">Email</label>
-                        <input type="email" class="form-control" id="Inputemail" name="email" placeholder="Enter your email" value="<?php echo $email; ?>" >
+                        <input type="email" class="form-control" id="Inputemail" name="email" placeholder="Enter your email" value="<?php echo $email; ?>">
                     </div>
+
+
+
 
                     <button type="submit" name="submit" class="btn theme-btn w-100 auth-btn">Update</button>
                 </form>
+                <hr>
+
             </div>
         </div>
     </div>
     <!-- setting section starts -->
+
+   <!-- Jquery Cdn Link  -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- swal fire  -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script> 
+    function sendAadharOtp(){
+        // using ajax 
+
+        var aadhar = document.getElementById('aadhar').value;
+        var data = {
+            aadhar: aadhar,
+        }
+        
+        $.ajax({
+            url: 'operations/send_aadhar_otp.php',
+            type: 'POST',
+            data: data,
+            success: function(response){
+                console.log(response);
+                var res = JSON.parse(response);
+                if(res[0].status == 'success'){
+                    document.getElementById('otp-box').style.display = 'block';
+                    document.getElementById('sendOtpBtn').style.display = 'none';
+                    document.getElementById('verifyOtpButton').style.display = 'block';
+
+                   swal.fire({
+                        title: 'Success',
+                        text: res[0].message,
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                }else{
+                    swal.fire({
+                        title: 'Error',
+                        text: res[0].message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            }
+        });
+
+    }
+
+    function verifyOtp(){
+        var otp = document.getElementById('aadhar-otp').value;
+        var data = {
+            otp: otp,
+        }
+        
+        $.ajax({
+            url: 'operations/verify_aadhar_otp.php',
+            type: 'POST',
+            data: data,
+            success: function(response){
+                console.log(response);
+                var res = JSON.parse(response);
+                if(res[0].status == 'success'){
+                    swal.fire({
+                        title: 'Success',
+                        text: res[0].message,
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                    // location.reload();
+                }else{
+                    swal.fire({
+                        title: 'Error',
+                        text: res[0].message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            }
+        });
+
+    }
+    </script>
 
     <!-- panel-space start -->
     <section class="panel-space"></section>

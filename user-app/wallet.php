@@ -1,8 +1,8 @@
-<?php 
+<?php
 include './db.php';
 $mobile = $_SESSION['mobile'];
 $query = "SELECT * FROM users WHERE mobile = '$mobile'";
-$run = mysqli_query($con,$query);
+$run = mysqli_query($con, $query);
 $data = mysqli_fetch_assoc($run);
 $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
@@ -13,6 +13,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/rental-vehicle-details by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:14 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,10 +50,10 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <style>
-        .wallet-amount{
+        .wallet-amount {
             font-size: 2.5rem;
-    text-align: center;
-    padding: 14px;
+            text-align: center;
+            padding: 14px;
         }
     </style>
 </head>
@@ -68,7 +69,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                 <h3>Wallet</h3>
             </div>
         </div>
-    </header> 
+    </header>
     <!-- header end -->
     <section class="driver-request section-b-space">
         <div class="custom-container">
@@ -80,11 +81,11 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/1041/1041888.png" alt="profile">
                                 <h5>Deposit Balance</h5>
                             </div>
-                            
+
                         </div>
-                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$data['deposit_wallet']?></h4>
+                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?= $data['deposit_wallet'] ?></h4>
                         <div class="grid-btn mt-2">
-                            
+
                             <a href="payment" class="btn theme-btn w-100 m-0">Recharge</a>
                         </div>
                     </div>
@@ -96,9 +97,9 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/1041/1041888.png" alt="profile">
                                 <h5>Withdrawal Balance</h5>
                             </div>
-                            
+
                         </div>
-                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?=$data['withdraw_wallet']?></h4>
+                        <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?= $data['withdraw_wallet'] ?></h4>
                         <div class="grid-btn mt-2">
                             <a href="payment" class="btn gray-btn w-100 m-0">Withdraw</a>
                             <a href="home" class="btn theme-btn w-100 m-0">Convert</a>
@@ -148,7 +149,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <!-- vehicle details section end -->
 
 
-    
+
     <!-- panel-space start -->
     <section class="panel-space"></section>
     <!-- panel-space end -->
@@ -195,7 +196,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                     <span>All Bids</span>
                 </a>
             </li>
-            
+
 
             <li>
                 <a href="history">
@@ -210,82 +211,8 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     </div>
     <!-- bottom navbar end -->
 
-   <!-- sidebar starts -->
-   <div class="offcanvas sidebar-offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft">
-        <div class="offcanvas-header sidebar-header">
-            <div class="sidebar-logo">
-                <img class="img-fluid logo" src="../assets/images/logo/logo.png" alt="logo">
-                <img class="img-fluid logo-dark" src="../assets/images/logo/logo-dark.png" alt="logo">
-            </div>
-        </div>
-        <div class="offcanvas-body">
-            <a href="profile" class="profile-part d-flex align-items-center gap-2">
-                <img class="img-fluid profile-pic" src="../assets/images/profile/p8.png" alt="p8">
-                <div>
-                    <h3>Ludo User</h3>
-                    <span>Edit Account</span>
-                </div>
-            </a>
-            <ul class="link-section switch-section">
-                <li class="active">
-                    <a href="home" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="home-2"> </i>
-                        <h3>Home</h3>
-                    </a>
-                </li>
-                <li>
-                    <a href="history" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="car"> </i>
-                        <h3>Account Statement</h3>
-                    </a>
-                </li>
-                <li>
-                    <a href="notification" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="bell-2"> </i>
-                        <h3>Notification</h3>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="setting" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="user-1"> </i>
-                        <h3>Setting</h3>
-                    </a>
-                </li>
-                <li>
-                    <a href="#0" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="book-closed"> </i>
-                        <h3>Terms & Condition</h3>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="rates" class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="document-text-1"> </i>
-                        <h3> Game Rates</h3>
-                    </a>
-                </li>
-
-                <!-- <li>
-                    <div class="pages">
-                        <i class="iconsax sidebar-icon" data-icon="brush-3"> </i>
-                        <h3>Dark</h3>
-                    </div>
-                    <div class="switch-btn">
-                        <input id="dark-switch" type="checkbox">
-                    </div>
-                </li> -->
-
-            </ul>
-
-            <div class="bottom-sidebar">
-                <a href="login" class="pages">
-                    <i class="iconsax sidebar-icon" data-icon="logout-2"> </i>
-                    <h3>Logout</h3>
-                </a>
-            </div>
-        </div>
-    </div>
+    <!-- sidebar starts -->
+    <?php include_once('includes/sidebar.php') ?>
     <!-- sidebar end -->
 
     <!-- iconsax js -->
@@ -306,4 +233,5 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/rental-vehicle-details by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:14 GMT -->
+
 </html>
