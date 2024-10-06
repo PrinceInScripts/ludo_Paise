@@ -376,6 +376,42 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Setting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="deposit.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Adjust limit</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="withdraw.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Adjust Fees</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="bonus.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Adjust Message</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="penalty.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Adjust Status</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
           
           
         </ul>
