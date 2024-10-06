@@ -37,6 +37,7 @@ include ("top.php");
                     <th>Deposit Money</th>
                     <th>Withdraw Money</th>
                     <th>KYC Status</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -64,6 +65,12 @@ include ("top.php");
                             <?php
                           }
                           ?>
+                           
+
+                         </td>
+                         <td>
+
+                         <a class="btn btn-warning">View</a>
                          </td>
                         </tr>
                         <?php
