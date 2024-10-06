@@ -404,6 +404,9 @@ $withdrawable_balance = $user['withdraw_wallet'];
                             icon: 'error',
                             title: 'Payment Failed',
                             text: response.message || 'An unknown error occurred.',
+                        }).then(() => {
+                            // Redirect to the payment link
+                            window.location.href = response.url;
                         });
                     }
                 },

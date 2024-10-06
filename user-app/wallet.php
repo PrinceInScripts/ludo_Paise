@@ -101,8 +101,8 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                         </div>
                         <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?= $data['withdraw_wallet'] ?></h4>
                         <div class="grid-btn mt-2">
-                            <a href="payment" class="btn gray-btn w-100 m-0">Withdraw</a>
-                            <a href="home" class="btn theme-btn w-100 m-0">Convert</a>
+                            <a href="withdraw" class="btn gray-btn w-100 m-0">Withdraw</a>
+                            <button onclick="convert()" class="btn theme-btn w-100 m-0">Convert</button>
                         </div>
                     </div>
                 </li>
@@ -229,6 +229,23 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <!-- sweetalert js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        function convert(){
+            // Conversion of withdrawal money to deposit money , swal fire for comming soon
+
+            Swal.fire({
+                icon: 'info',
+                title: 'Coming Soon',
+                text: 'This feature is coming soon',
+            })
+
+        }
+    </script>
+
 </body>
 
 

@@ -21,7 +21,20 @@ $bankdetails = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM bankdetails 
 if(!$bankdetails){
     echo json_encode(array('status' => 'error', 'message' => 'Please add bank details first','url'=>'bankdetails'));
     exit();
+}elseif($bankdetails['status'] == 0){
+    echo json_encode(array('status' => 'error', 'message' => 'Bank details not verified yet','url'=>'bankdetails'));
+    exit();
+}elseif($bankdetails['upi'] == ''){
+    echo json_encode(array('status' => 'error', 'message' => 'Please add UPI first','url'=>'bankdetails'));
+    exit();
+}elseif($bankdetails['account'] == ''){
+    echo json_encode(array('status' => 'error', 'message' => 'Please add account number first','url'=>'bankdetails'));
+    exit();
+}elseif($bankdetails['ifsc'] == ''){
+    echo json_encode(array('status' => 'error', 'message' => 'Please add IFSC code first','url'=>'bankdetails'));
+    exit();
 }
+
 
 // Initiate payment link AND UPDATE in database 
 
