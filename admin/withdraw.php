@@ -59,11 +59,11 @@ include ("top.php");
                         <td><?php echo $row['created_at']; ?></td>
                         <td> <?php 
                             if ($row['status'] == 2) {
-                                echo "<span style='color: orange;'>Pending</span>";
+                                echo "<span style='color: orange;'>Failed</span>";
                             } elseif ($row['status'] == 1) {
                                 echo "<span style='color: green;'>Success</span>";
-                            } else {
-                                echo "<span style='color: red;'>Failed</span>";
+                            } else if($row['status'] == 0){
+                                echo "<span style='color: red;'>Pending</span>";
                             }
                             ?></td>
                     </tr>
