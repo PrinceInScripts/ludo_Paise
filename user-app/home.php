@@ -87,9 +87,39 @@ $userid = $_SESSION['id'];
     </header>
     <!-- header end -->
 
-   
+    <!-- Change language offcanvas starts -->
+    <div class="offcanvas ride-offcanvas p-0" tabindex="-1" id="language">
+        <div class="offcanvas-header pb-0">
+            <h3>Choose Game</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="option-listing">
+                <li class="w-100" onclick="selectRadio('ludoclassic')">
+                    <div class="form-check mt-0 pb-3">
+                        <label class="form-check-label" for="jodichart"><img class="flag"
+                                src="https://cdn-icons-png.flaticon.com/512/12907/12907880.png" alt="">Ludo Normal</label>
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="ludoclassic" checked>
+                    </div>
+                </li>
+                <li class="w-100" onclick="selectRadio('ludoclassictournament')">
+                    <div class="form-check mt-3 pb-3">
+                        <label class="form-check-label" for="panachart"><img class="flag"
+                                src="https://cdn-icons-png.flaticon.com/512/8176/8176145.png" alt="">Ludo Tournament</label>
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="ludoclassictournament">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="offcanvas-footer border-0">
+            <button onclick="viewChart()" class="btn theme-btn w-100 mt-0">Enter Room</button>
+        </div>
+    </div>
+    <!-- Change language offcanvas end -->
 
-   
+
+
+
 
     <!-- slider section starts -->
     <section>
@@ -105,7 +135,7 @@ $userid = $_SESSION['id'];
         </div>
     </section>
     <!-- slider section ends -->
-   
+
 
     <!-- offer section starts -->
     <section class="section-b-space">
@@ -113,31 +143,31 @@ $userid = $_SESSION['id'];
             <div class="title">
                 <h3>Play Game</h3>
             </div>
-            
-            <div class="row gy-3">
-            <div class="games-window">
-                <?php
-                $query = "SELECT * FROM `gamelists`";
-                $result = mysqli_query($con, $query);
-                while ($row = mysqli_fetch_array($result)) {
-                ?>
-                   <a class="gameCard-container" href='newbattle.php?id=<?php echo $row['id']?>'>
-                    <span class="py-1 blink text-primary d-block text-right">◉ LIVE</span>
-                    <picture class="gameCard-image">
-                        <img width="100%" src="../assets/images/games/<?=$row['image'] ?>" alt="<?=$row['title'] ?>">
-                    </picture>
-                    <div class="gameCard-title">
-                        <span class="text-dark d-block text-right">◉ <?=$row['title'] ?></span>
-                    </div>
 
-                </a>
-                <?php
-                }
-                ?>
+            <div class="row gy-3">
+                <div class="games-window">
+                    <?php
+                    $query = "SELECT * FROM `gamelists`";
+                    $result = mysqli_query($con, $query);
+                    while ($row = mysqli_fetch_array($result)) {
+                    ?>
+                        <a href="#language" data-bs-toggle="offcanvas" class="gameCard-container" href='newbattle.php?id=<?php echo $row['id'] ?>'>
+                            <span class="py-1 blink text-primary d-block text-right">◉ LIVE</span>
+                            <picture class="gameCard-image">
+                                <img width="100%" src="../assets/images/games/<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
+                            </picture>
+                            <div class="gameCard-title">
+                                <span class="text-dark d-block text-right">◉ <?= $row['title'] ?></span>
+                            </div>
+
+                        </a>
+                    <?php
+                    }
+                    ?>
                 </div>
 
             </div>
-          
+
 
         </div>
     </section>
@@ -227,12 +257,40 @@ $userid = $_SESSION['id'];
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script>
+
+// Function to select the corresponding radio button
+function selectRadio(id) {
+    document.getElementById(id).checked = true;
+}
+
+
         function viewChart() {
+           
+
             var ele = document.getElementsByName('flexRadioDefault');
+
+            
             for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    window.location.href = ele[i].id;
+                if (ele[i].checked) {
+
+                    if (ele[i].id == 'ludoclassic') {
+                        window.location.href = 'newbattle.php?id=1';
+                    }else if (ele[i].id == 'ludoclassictournament'){
+                        swal.fire({
+                            title: 'Coming Soon',
+                            text: 'This feature is coming soon',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                    
+
+                }
+
+
             }
         }
     </script>

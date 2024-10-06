@@ -1,5 +1,8 @@
 <?php
 include 'db.php';
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +46,10 @@ include 'db.php';
 
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
+
+    <!-- Swal Fire CDN  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .driver-list {
             display: flex;
@@ -195,6 +202,74 @@ include 'db.php';
     </header>
     <!-- header end -->
 
+    <?php 
+    
+    $user_id = $_SESSION['id'];
+    if(isset($_GET['txn_id'])){
+        $txn_id = $_GET['txn_id'];
+        $sql = "SELECT * FROM paymenthistory WHERE order_id = '$txn_id' AND userid = '$user_id'";
+        $result = mysqli_query($con, $sql);
+        $payment = mysqli_fetch_assoc($result);
+        $count = mysqli_num_rows($result);
+        if($count == 0){
+            // swal alert and redirect to payment page
+            ?>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Payment Not Found',
+                    text: 'Payment not found. Please make payment first!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function(){
+                    window.location.href = './payment';
+                });
+                </script>
+            <?php 
+        }else{
+            if($payment['status'] == 1){
+                // swal alert and redirect to payment page
+                ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Payment Success',
+                        text: 'Payment Already Received!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function(){
+                        window.location.href = './payment';
+                    });
+                    </script>
+                <?php 
+            }elseif($payment['status'] == 2){
+                // swal alert and redirect to payment page
+                ?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Payment Failed',
+                        text: 'Payment has been failed. Please try again!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function(){
+                        window.location.href = './payment';
+                    });
+                    </script>
+                <?php
+            }else{
+                $upi = $payment['upi'];
+                $amount = $payment['amount'];
+                $upi_data = urlencode("upi://pay?pa=$upi&pn=Ludopaisa&mc=0000&tid=$txn_id&tr=$txn_id&tn=Add%20Funds&am=$amount&cu=INR");
+                $qr_img = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=".$upi_data;
+            }
+        }
+    }else{
+        header('Location: ./payment');
+    }
+    
+    ?>
+
     <!-- finding driver list starts -->
     <section class="driver-request section-b-space">
         <div class="custom-container">
@@ -217,7 +292,7 @@ include 'db.php';
                 <li>
                     <div class="game-container">
                         <div class="card">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=fsdgfjhdfghjfbksjdhfksdjhkdsfgfdjhukrhgfkjdshfksdhfkusdhfkjdshfksdjhfkuerfhyerkfjskdf" alt="">
+                            <img src="<?=$qr_img ?>" alt="">
                         </div>
                     </div>
                 </li>
@@ -225,7 +300,7 @@ include 'db.php';
             <br>
             <div class="form-group mt-0">
                         <label class="form-label mb-2" for="upiId">UPI ID :</label>
-                        <input type="text" class="form-control" id="upiId" value="payment@upi" disabled>
+                        <input type="text" class="form-control" id="upiId" value="<?=$upi ?>" disabled>
                     </div>
                     
             <div class="grid-btn mt-4">
