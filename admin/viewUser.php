@@ -16,8 +16,11 @@ if(isset($_GET['id'])){
 
     $img_src_data = mysqli_fetch_assoc($img_src_run);
 
-    print_r($img_src_data);
-    
+   $personal_sql="SELECT * FROM aadhaar_data WHERE user_id='$id'"; 
+   $personal_run=mysqli_query($con,$personal_sql);
+   if(mysqli_num_rows($personal_run)>0){
+       $personal_data=mysqli_fetch_assoc($personal_run);
+   }
 
 }
 
@@ -53,16 +56,37 @@ if(isset($_GET['id'])){
                        alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center"><?php echo $user['username']?></h3>
-
+                <h3 class="profile-username text-center"><?php echo $personal_data['full_name']?></h3>
+                 <p class="text-muted text-center"><?php echo $user['username']?></p>
 
                 <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
+                <li class="list-group-item">
                     <b>ID</b> <a class="float-right"><?php echo $user['id']?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Mobile</b> <a class="float-right"><?php echo $user['mobile']?></a>
                   </li>
+                  <li class="list-group-item">
+                    <b>D.O.B</b> <a class="float-right"><?php echo $personal_data['dob']?></a>
+                  </li>
+                  <?php
+                    if($personal_data['gender'] == 'M'){
+                      ?>
+                      <li class="list-group-item">
+                      <b>Gender</b> <a class="float-right">Male</a>
+                    </li>
+                      <?php
+                    } else {
+                      ?>
+                      <li class="list-group-item">
+                      <b>Gender</b> <a class="float-right">Female</a>
+                    </li>
+                      <?php
+
+                    }
+                  ?>
+                  
+                
                   <?php
                   if($user['email']){
                     ?>
@@ -76,7 +100,13 @@ if(isset($_GET['id'])){
                     <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet']+$user['withdraw_wallet']?></a>
                   </li>
                   <?php
-                  if($user['adhaar_no']){
+                  if($user['adhaar_no'] == ''){
+                    ?>
+                    <li class="list-group-item">
+                    <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
+                  </li>
+                    <?php
+                  }else{
                     ?>
                     <li class="list-group-item">
                     <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no']?></a>
@@ -86,6 +116,9 @@ if(isset($_GET['id'])){
                   ?>
                   <li class="list-group-item">
                     <b>Account Create</b> <a class="float-right"><?php echo $user['created_at']?></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Address</b> <a class="float-right"><?php echo $personal_data['state'].",".$personal_data['country']?></a>
                   </li>
                 </ul>
 
