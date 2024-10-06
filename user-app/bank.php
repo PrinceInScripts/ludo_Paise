@@ -45,7 +45,7 @@
     <header id="header" class="main-header">
         <div class="custom-container">
             <div class="header-panel">
-                <a href="setting">
+                <a onclick="history.back()">
                     <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
                 </a>
                 <img class="img-fluid logo" src="../assets/images/logo/logo.png" alt="logo">

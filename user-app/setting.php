@@ -186,7 +186,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
             <div class="profile-list alert-list mt-4">
                 <h5 class="fw-normal error-color mb-3">Alert zone</h5>
                 <ul class="setting-listing">
-                    <li class="w-100">
+                    <!-- <li class="w-100">
                         <a href="#delete" class="setting-box" data-bs-toggle="modal">
                             <div class="setting-icon">
                                 <i class="iconsax icon" data-icon="user-2-remove"> </i>
@@ -195,7 +195,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                                 <h5 class="error-color">Delete Account</h5>
                             </div>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="w-100">
                         <a href="#logout" class="setting-box" data-bs-toggle="modal">

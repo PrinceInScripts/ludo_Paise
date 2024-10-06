@@ -88,7 +88,7 @@ $userid = $_SESSION['id'];
     <!-- header end -->
 
     <!-- Change language offcanvas starts -->
-    <div class="offcanvas ride-offcanvas p-0" tabindex="-1" id="language">
+    <div class="offcanvas ride-offcanvas p-0" tabindex="-1" id="ludo-classic">
         <div class="offcanvas-header pb-0">
             <h3>Choose Game</h3>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -151,7 +151,7 @@ $userid = $_SESSION['id'];
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_array($result)) {
                     ?>
-                        <a href="#language" data-bs-toggle="offcanvas" class="gameCard-container" href='newbattle.php?id=<?php echo $row['id'] ?>'>
+                        <a href="#<?=$row['slug'] ?>" style="opacity:<?=$row['opacity'] ?>" data-bs-toggle="offcanvas" class="gameCard-container" href='newbattle.php?id=<?php echo $row['id'] ?>'>
                             <span class="py-1 blink text-primary d-block text-right">◉ LIVE</span>
                             <picture class="gameCard-image">
                                 <img width="100%" src="../assets/images/games/<?= $row['image'] ?>" alt="<?= $row['title'] ?>">

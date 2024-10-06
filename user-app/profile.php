@@ -80,7 +80,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
     <header id="header" class="main-header">
         <div class="custom-container">
             <div class="header-panel">
-                <a href="setting">
+                <a onclick="history.back()">
                     <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
                 </a>
                 <h3>Profile setting</h3>

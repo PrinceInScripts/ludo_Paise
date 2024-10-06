@@ -46,7 +46,7 @@
     <header id="header" class="main-header inner-page-header">
         <div class="custom-container">
             <div class="header-panel">
-                <a href="setting">
+                <a onclick="history.back()">
                     <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
                 </a>
                 <h3>App setting</h3>

@@ -95,7 +95,7 @@ $userid = $_SESSION['id'];
             <div class="tab-content ride-content" id="TabContent">
 
                 <?php
-                $query = "SELECT * FROM paymenthistory WHERE userid = '$userid' AND type = 'deposit' ORDER BY id DESC";
+                $query = "SELECT * FROM paymenthistory WHERE userid = '$userid' ORDER BY id DESC";
                 $run = mysqli_query($con, $query);
 
                 if (mysqli_num_rows($run) > 0) {
@@ -104,7 +104,7 @@ $userid = $_SESSION['id'];
                         <ul class="my-ride-list">
                             <?php
                             while ($row = mysqli_fetch_assoc($run)) {
-                                if ($row['status'] == 2) {
+                                if ($row['status'] == 0) {
                             ?>
                                     <li class="mt-2 box-shadow">
                                         <div class="my-ride-box">
@@ -212,7 +212,7 @@ $userid = $_SESSION['id'];
                                         </div>
                                     </li>
                                 <?php
-                                } elseif ($row['status'] == 0) {
+                                } elseif ($row['status'] == 2) {
                                 ?>
                                     <li class="mt-2 box-shadow">
                                         <div class="my-ride-box">
@@ -283,7 +283,7 @@ $userid = $_SESSION['id'];
 
 
 <?php
-                $query2 = "SELECT * FROM paymenthistory WHERE userid = '$userid' AND type = 'withdraw' ORDER BY id DESC";
+                $query2 = "SELECT * FROM withdrawrecord WHERE userid = '$userid' ORDER BY id DESC";
                 $run2 = mysqli_query($con, $query2);
 
                 if (mysqli_num_rows($run2) > 0) {
@@ -292,7 +292,7 @@ $userid = $_SESSION['id'];
                     <ul class="my-ride-list">
                         <?php 
                         while ($row2 = mysqli_fetch_assoc($run2)) {
-                            if($row2['status'] == 2){
+                            if($row2['status'] == 0){
                                 ?>
                                 <li>
                             <div class="my-ride-box">
@@ -305,7 +305,7 @@ $userid = $_SESSION['id'];
                                     <div class="my-ride-content flex-column">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['order_id'] ?></h6>
+                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
                                             </a>
                                             <span class="status secondary-color fw-normal">Pending</span>
                                         </div>
@@ -361,7 +361,7 @@ $userid = $_SESSION['id'];
                                     <div class="my-ride-content flex-column">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['order_id'] ?></h6>
+                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
                                             </a>
                                             <span class="status success-color fw-normal">Success</span>
                                         </div>
@@ -404,7 +404,7 @@ $userid = $_SESSION['id'];
                             </div>
                         </li>
                                 <?php 
-                            }elseif($row2['status'] == 0){
+                            }elseif($row2['status'] == 2){
                                 ?>
                                 <li>
                             <div class="my-ride-box">
@@ -417,7 +417,7 @@ $userid = $_SESSION['id'];
                                     <div class="my-ride-content flex-column">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['order_id'] ?></h6>
+                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
                                             </a>
                                             <span class="status error-color fw-normal">Cancelled</span>
                                         </div>

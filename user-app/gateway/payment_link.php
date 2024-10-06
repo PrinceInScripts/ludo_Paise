@@ -24,7 +24,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
 
         // API URLs
         $callback_url = 'http://ludopaisa.com/payment/payment_callback.php?txn_id=' . $txn_id;
-        $redirect_url = 'http://example.com/redirect.php';
+        $redirect_url = 'http://ludopaisa.com/user-app/history';
 
         // Prepare request data
         $url = 'https://phonepe.dkkart.com/ludopaisa/api.php';
@@ -79,7 +79,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             echo json_encode(array('status' => 'error', 'message' => 'Error in response', 'response' => $response));
         }
     } else if ($payment_mode == 'manual') {
-
+        sleep(1);
         // fetch upi list from manualupi table 
 
         $sql = "SELECT * FROM manualupi WHERE status = 1";
@@ -106,10 +106,13 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
 
        
     } else if ($payment_mode == 'upigateway') {
-        $payment_link = 'https://example.com/pay?amount=' . $amount;
+        sleep(1);
+        echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
     } else if ($payment_mode == 'bankcard') {
-        $payment_link = 'https://example.com/pay?amount=' . $amount;
+        sleep(1);
+        echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
     } else {
-        $payment_link = '';
+        sleep(1);
+        echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
     }
 }
