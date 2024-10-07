@@ -227,7 +227,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 <div class="modal-body">
                     <ul class="media-list">
                         <li>
-                            <a href="#" class="media-box">
+                            <a href="https://api.whatsapp.com/send?text=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E%0A%0A2%25%20direct%20commission%0AInstant%20Deposit%0AInstant%20Withdrawal%0A%0A%0A%0A*Join%20Now%20by%20clicking%20the%20link%20below*%20%F0%9F%91%89%20https%3A%2F%2Fludopaisa.com%0A%0A" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/whatsapp.svg" alt="whatsapp">
                                 </div>
@@ -235,7 +235,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="media-box">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://ludopaisa.com&quote=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E%0A%0A2%25%20direct%20commission%0AInstant%20Deposit%0AInstant%20Withdrawal%0A%0AGame%20Link%20%3A%20https%3A%2F%2Fludopaisa.com%0A%F0%9F%8E%B0%F0%9F%8E%B0%F0%9F%8E%B0" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/facebook.svg" alt="facebook">
                                 </div>
@@ -244,7 +244,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         </li>
 
                         <li>
-                            <a href="https://slack.com/signin#/signin" class="media-box">
+                            <a href="https://instagram.com/login" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/instagram.svg"
                                         alt="instagram">
@@ -254,7 +254,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         </li>
 
                         <li>
-                            <a href="https://www.instagram.com/accounts/login/" class="media-box">
+                            <a href="https://twitter.com/intent/tweet?url=https://ludopaisa.com&text=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E%0A%0A2%25%20direct%20commission%0AInstant%20Deposit%0AInstant%20Withdrawal%0A%0AGame%20Link%20%3A%20https%3A%2F%2Fludopaisa.com%0A%F0%9F%8E%B0%F0%9F%8E%B0%F0%9F%8E%B0" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/twitter.svg" alt="twitter">
                                 </div>
@@ -262,7 +262,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/accounts/login/" class="media-box">
+                            <a href="mailto:?subject=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E&body=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E%0A%0A2%25%20direct%20commission%0AInstant%20Deposit%0AInstant%20Withdrawal%0A%0AGame%20Link%20%3A%20https%3A%2F%2Fludopaisa.com%0A%F0%9F%8E%B0%F0%9F%8E%B0%F0%9F%8E%B0" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gmail.svg" alt="gmail">
                                 </div>
@@ -270,7 +270,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             </a>
                         </li>
                         <li>
-                            <a href="https://telegr.am/user_mgt/login" class="media-box">
+                            <a href="https://t.me/share/url?url=https://ludopaisa.com&text=Join%20Ludopaisa%20Today%20%F0%9F%98%8E%F0%9F%98%8E%0A%0A2%25%20direct%20commission%0AInstant%20Deposit%0AInstant%20Withdrawal%0A%0AGame%20Link%20%3A%20https%3A%2F%2Fludopaisa.com%0A%F0%9F%8E%B0%F0%9F%8E%B0%F0%9F%8E%B0" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/telegram.svg" alt="telegram">
                                 </div>
