@@ -1,3 +1,13 @@
+<?php 
+include 'db.php';
+
+// fetch back details from db
+$user_id = $_SESSION['id'];
+$sql = "SELECT * FROM bankdetails WHERE userid = '$user_id'";
+$run = mysqli_query($con, $sql);
+$fetch = mysqli_fetch_assoc($run);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,43 +69,85 @@
         <div class="auth-content-bg">
             <div class="custom-container">
                 <form class="auth-form mt-0 pt-2">
-                    <div class="form-group mt-0">
+                    <?php 
+                    if(mysqli_num_rows($run) > 0){
+                        ?>
+                        <div class="form-group mt-0">
                         <label class="form-label mb-2" for="Inputname">Bank Name</label>
-                        <input type="text" class="form-control" id="Inputname" value="DBS Bank"
+                        <input type="text" class="form-control" id="Inputname" value="<?=$fetch['bank_name'] ?>"
                             placeholder="Enter bank name">
                     </div>
                     <div class="form-group ">
-                        <label class="form-label mb-2" for="Inputholder">Holder Name</label>
-                        <input type="text" class="form-control" id="Inputholder" value="Zain Dorwart"
+                        <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
+                        <input type="text" class="form-control" id="Inputholder" value="<?=$fetch['bank_holder'] ?>"
                             placeholder="Enter holder name">
                     </div>
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputnumner">Account No.</label>
-                        <input type="number" class="form-control text-start" id="Inputnumner" value="125626358956"
+                        <input type="number" class="form-control text-start" id="Inputnumner" value="<?=$fetch['bank_acc'] ?>"
                             placeholder="Enter your account no">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
-                        <input type="text" class="form-control" id="Inputbranch" value="Toronto"
+                        <input type="text" class="form-control" id="Inputbranch" value="<?=$fetch['bank_branch'] ?>"
                             placeholder="Enter branch name">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
-                        <input type="email" class="form-control text-start" id="Inputcode" value="DBS0IN0831"
+                        <input type="email" class="form-control text-start" id="Inputcode" value="<?=$fetch['bank_ifsc'] ?>"
                             placeholder="Enter ifsc code">
                     </div>
                     <div class="form-group">
-                        <label class="form-label mb-2" for="Inputswift">Swift Code</label>
-                        <input type="email" class="form-control text-start" id="Inputswift" value="DBS0IN0831"
+                        <label class="form-label mb-2" for="Inputswift">UPI ID</label>
+                        <input type="email" class="form-control text-start" id="Inputswift" value="<?=$fetch['upi'] ?>"
                             placeholder="Enter swift code">
                     </div>
+                        <?php 
+                    }else{
+                        ?>
+                        <div class="form-group mt-0">
+                        <label class="form-label mb-2" for="Inputname">Bank Name</label>
+                        <input type="text" class="form-control" id="Inputname" 
+                            placeholder="Enter bank name">
+                    </div>
+                    <div class="form-group ">
+                        <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
+                        <input type="text" class="form-control" id="Inputholder" 
+                            placeholder="Enter holder name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mb-2" for="Inputnumner">Account No.</label>
+                        <input type="number" class="form-control text-start" id="Inputnumner" 
+                            placeholder="Enter your account no">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
+                        <input type="text" class="form-control" id="Inputbranch" 
+                            placeholder="Enter branch name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
+                        <input type="email" class="form-control text-start" id="Inputcode" 
+                            placeholder="Enter ifsc code">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mb-2" for="Inputswift">UPI ID</label>
+                        <input type="email" class="form-control text-start" id="Inputswift" 
+                            placeholder="Enter UPI">
+                    </div>
+                        <?php 
+                    }
+                    ?>
+                    
                 </form>
 
                 <div class="fixed-btn">
                     <div class="custom-container">
-                        <a href="setting" class="btn theme-btn w-100 mt-0 auth-btn">Update</a>
+                        <button onclick="bankUpdate()" class="btn theme-btn w-100 mt-0 auth-btn">Update</button>
                     </div>
                 </div>
             </div>
@@ -122,6 +174,61 @@
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function bankUpdate(){
+            var bank_name = document.getElementById('Inputname').value;
+            var bank_holder = document.getElementById('Inputholder').value;
+            var bank_acc = document.getElementById('Inputnumner').value;
+            var bank_branch = document.getElementById('Inputbranch').value;
+            var bank_ifsc = document.getElementById('Inputcode').value;
+            var upi = document.getElementById('Inputswift').value;
+
+            var data = {
+                bank_name : bank_name,
+                bank_holder : bank_holder,
+                bank_acc : bank_acc,
+                bank_branch : bank_branch,
+                bank_ifsc : bank_ifsc,
+                upi : upi
+            }
+
+            $.ajax({
+                url : 'operations/bank-update.php',
+                method : 'post',
+                data : data,
+                success : function(response){
+                    
+                    // json parse 
+                    var res = JSON.parse(response);
+                    // swal.fire 
+                    res = res[0];
+                    
+                    if(res.success){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: res.message,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        })
+                    }
+
+                    
+                }
+            })
+        }
+    </script>
 </body>
 
 
