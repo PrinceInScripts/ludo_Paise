@@ -1,3 +1,9 @@
+<?php 
+include('./db.php');
+include('./includes/sessions.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

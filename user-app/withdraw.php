@@ -1,10 +1,7 @@
 <?php
 include 'db.php';
 
-if (!isset($_SESSION['id'])) {
-    header('Location: login');
-    exit();
-}
+include('includes/sessions.php');
 
 $user_id = $_SESSION['id'];
 

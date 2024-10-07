@@ -1,5 +1,6 @@
 <?php
 include './db.php';
+include('includes/sessions.php');
 $mobile = $_SESSION['mobile'];
 $query = "SELECT * FROM users WHERE mobile = '$mobile'";
 $run = mysqli_query($con, $query);

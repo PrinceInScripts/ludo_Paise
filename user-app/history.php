@@ -1,5 +1,6 @@
 <?php 
 include './db.php';
+include('includes/sessions.php');
 $userid = $_SESSION['id'];
 ?>
 
