@@ -244,7 +244,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         </li>
 
                         <li>
-                            <a href="https://instagram.com/login" class="media-box">
+                            <a href="https://instagram.com/" class="media-box">
                                 <div class="media-image mx-auto">
                                     <img class="img-fluid icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/instagram.svg"
                                         alt="instagram">
