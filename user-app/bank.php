@@ -1,6 +1,6 @@
 <?php 
 include 'db.php';
-
+include('includes/sessions.php');
 // fetch back details from db
 $user_id = $_SESSION['id'];
 $sql = "SELECT * FROM bankdetails WHERE userid = '$user_id'";

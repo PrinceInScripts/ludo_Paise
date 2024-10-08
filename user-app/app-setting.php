@@ -1,3 +1,7 @@
+<?php 
+include('db.php');
+include('includes/sessions.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,7 +85,7 @@
                             <div class="setting-content">
                                 <div>
                                     <h5>Change Currency</h5>
-                                    <h6>US Dollar</h6>
+                                    <h6>INR</h6>
                                 </div>
                                 <i class="iconsax icon" data-icon="chevron-right"> </i>
                             </div>
@@ -114,13 +118,13 @@
         </div>
         <div class="offcanvas-body">
             <ul class="option-listing">
-                <li class="w-100">
+                <!-- <li class="w-100">
                     <div class="form-check mt-0 pb-3">
                         <label class="form-check-label" for="fixed01"><img class="flag"
                                 src="https://themes.pixelstrap.com/pwa/taxify/assets/images/icons/flag8.svg" alt=""> US dollar</label>
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="fixed01" checked>
                     </div>
-                </li>
+                </li> -->
 
                 <li class="w-100">
                     <div class="form-check mt-3 pb-3">
@@ -130,7 +134,7 @@
                     </div>
                 </li>
 
-                <li class="w-100">
+                <!-- <li class="w-100">
                     <div class="form-check mt-3 pb-3">
                         <label class="form-check-label" for="fixed03"><img class="flag"
                                 src="https://themes.pixelstrap.com/pwa/taxify/assets/images/icons/flag3.svg" alt=""> Euro</label>
@@ -144,11 +148,11 @@
                                 src="https://themes.pixelstrap.com/pwa/taxify/assets/images/icons/flag7.svg" alt=""> Pound</label>
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="fixed04">
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="offcanvas-footer border-0">
-            <a href="setting" class="btn theme-btn w-100 mt-0">Update</a>
+            <button data-bs-dismiss="offcanvas" class="btn theme-btn w-100 mt-0">Update</button>
         </div>
     </div>
     <!-- Change currency offcanvas end -->
@@ -168,7 +172,7 @@
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="fixed1" checked>
                     </div>
                 </li>
-                <li class="w-100">
+                <!-- <li class="w-100">
                     <div class="form-check mt-3 pb-3">
                         <label class="form-check-label" for="fixed2"><img class="flag"
                                 src="https://themes.pixelstrap.com/pwa/taxify/assets/images/icons/flag1.svg" alt="">Arabic</label>
@@ -190,11 +194,11 @@
                                 src="https://themes.pixelstrap.com/pwa/taxify/assets/images/icons/flag6.svg" alt=""> Spanish</label>
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="fixed4">
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="offcanvas-footer border-0">
-            <a href="setting" class="btn theme-btn w-100 mt-0">Update</a>
+            <button data-bs-dismiss="offcanvas" class="btn theme-btn w-100 mt-0">Update</button>
         </div>
     </div>
     <!-- Change language offcanvas end -->

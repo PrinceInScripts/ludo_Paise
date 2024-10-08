@@ -1,8 +1,6 @@
 <?php
 include('db.php');
-if (!isset($_SESSION['isLogin'])) {
-    header('location:login');
-}
+include('includes/sessions.php');
 
 $user_id = $_SESSION['id'];
 $username = "";

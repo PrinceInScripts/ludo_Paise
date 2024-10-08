@@ -51,6 +51,7 @@
 
 <?php 
 include './db.php';
+
 $mobile = $_SESSION['mobile'];
 if(isset($_POST['submit'])){
     
@@ -76,6 +77,18 @@ if(mysqli_num_rows($run) > 0){
     $_SESSION['otp'] = $data['otp'];
     $_SESSION['status'] = $data['status'];
     $_SESSION['isLogin'] = true;
+
+
+    $token = bin2hex(random_bytes(16));
+
+    setcookie('login_token', $token, time() + (30 * 24 * 60 * 60), "/");
+
+    $updateToken = "UPDATE users SET login_token = '$token' WHERE mobile = '$mobile'";
+    $run = mysqli_query($con,$updateToken);
+    if($run){
+        $_SESSION['session_token'] = $token;
+    }
+
     ?>
     <script>
         swal("Verified", {
