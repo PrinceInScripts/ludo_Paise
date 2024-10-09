@@ -70,7 +70,7 @@ include ("top.php");
                          </td>
                          <td>
 
-                         <a class="btn btn-warning">View</a>
+                         <a href="viewUser.php?id=<?php echo $row['id']?>" class="btn btn-warning">View</a>
                          </td>
                         </tr>
                         <?php

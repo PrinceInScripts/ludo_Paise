@@ -72,8 +72,12 @@ if (isset($_GET['id'])) {
 
                             <h3 class="profile-username text-center"><?php echo $personal_data['full_name'] ?></h3>
                             <p class="text-muted text-center"><?php echo $user['username'] ?></p>
+                           
 
                             <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                </li>
                                 <li class="list-group-item">
                                     <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
                                 </li>
@@ -155,7 +159,47 @@ if (isset($_GET['id'])) {
 
 
                         </div>
+                       
                     </div>
+                    
+  
+
+    <!-- Bonus Feature -->
+<div class="card mt-3">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Add Bonus</h5>
+    </div>
+    <div class="card-body">
+        <form action="update_wallet.php" method="post">
+            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+            <div class="input-group mb-3">
+                <input type="number" class="form-control" name="bonus" placeholder="Bonus Amount" required>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-success" name="action" value="bonus">Apply Bonus</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Penalty Feature -->
+<div class="card mt-3">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">Add Penalty</h5>
+    </div>
+    <div class="card-body">
+        <form action="update_wallet.php" method="post">
+            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+            <div class="input-group mb-3">
+                <input type="number" class="form-control" name="penalty" placeholder="Penalty Amount" required>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-danger" name="action" value="penalty">Apply Penalty</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
                 </div>
 
                 <!-- Right Column: User's History and All Details -->
@@ -386,6 +430,7 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Game Activity -->
                                 <div class="tab-pane" id="game_activity">
                                     <?php
                                     if (isset($_GET['id'])) {
@@ -427,6 +472,7 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Action -->
                                 <div class="tab-pane" id="action">
                                     <?php
                                     if (isset($_GET['id'])) {
