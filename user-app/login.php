@@ -86,6 +86,7 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($con,$query);
     }
     $mobileNew = "91".$mobile;
+    
 
     $otpStatus = array('status' => true);
     // $otpStatus = sendOTP($mobile, $otp);
