@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="../../plugins/codemirror/theme/monokai.css">
   <!-- SimpleMDE -->
   <link rel="stylesheet" href="../../plugins/simplemde/simplemde.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
   
 </head>
