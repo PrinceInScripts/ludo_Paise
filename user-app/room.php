@@ -8,7 +8,7 @@ $run = mysqli_query($con, $query);
 $data = mysqli_fetch_assoc($run);
 $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
-$battle_id='';
+$battle_id = '';
 if (isset($_GET['battle'])) {
     $battle_id = $_GET['battle'];
     $battleQuery = "SELECT * FROM games WHERE id = '$battle_id' AND (created_by = '$user_id' OR accepted_by = '$user_id') ";
@@ -24,17 +24,23 @@ if (isset($_GET['battle'])) {
         $game_id = $battleData['game_id'];
         $winAmount = $battleData['winAmount'];
         $roomcode = $battleData['roomcode'];
+        $creator_ss = $battleData['creator_ss'];
+        $acceptor_ss = $battleData['acceptor_ss'];
+        $creator_join_ss = $battleData['creator_join_ss'];
+        $acceptor_join_ss = $battleData['acceptor_join_ss'];
+        $is_complete = $battleData['is_complete'];
+        $winner = $battleData['winner'];
     }
 } else {
     header('location:home');
 }
 
-if($created_by!='' && $accepted_by!=''){
-    $cratorSql="SELECT * FROM users WHERE id = '$created_by'";
+if ($created_by != '' && $accepted_by != '') {
+    $cratorSql = "SELECT * FROM users WHERE id = '$created_by'";
     $creatorRun = mysqli_query($con, $cratorSql);
     $creatorData = mysqli_fetch_assoc($creatorRun);
-    
-    $acceptorSql="SELECT * FROM users WHERE id = '$accepted_by'";
+
+    $acceptorSql = "SELECT * FROM users WHERE id = '$accepted_by'";
     $acceptorRun = mysqli_query($con, $acceptorSql);
     $acceptorData = mysqli_fetch_assoc($acceptorRun);
 }
@@ -136,13 +142,13 @@ if($created_by!='' && $accepted_by!=''){
         .rules {
             display: flex;
             flex-direction: row;
-            justify-content:space-between;
+            justify-content: space-between;
             padding: 2% 8%;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-   
+
 
 
         .challenge-section {
@@ -189,7 +195,7 @@ if($created_by!='' && $accepted_by!=''){
             border-radius: 10px;
             margin: 20px auto;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 100%;
         }
 
         .room-code-heading {
@@ -224,15 +230,13 @@ if($created_by!='' && $accepted_by!=''){
         }
 
         .game-result-section {
-
-
             background-color: #fff;
             border-radius: 10px;
             padding: 20px;
             margin: 20px auto;
             text-align: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 100%;
         }
 
         .game-result-heading {
@@ -250,7 +254,7 @@ if($created_by!='' && $accepted_by!=''){
             color: #666;
         }
 
-     
+
 
         .btn-won {
             background-color: #28a745;
@@ -312,6 +316,66 @@ if($created_by!='' && $accepted_by!=''){
             margin-top: 10px;
             width: 100%;
         }
+
+        .game-result {
+            background-color: #fff3f3;
+            /* Light red background */
+            border: 2px solid #ff4d4d;
+            /* Red border */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Slight shadow for depth */
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .game-result h2 {
+            color: #333;
+            /* Dark color for contrast */
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .game-result p {
+            color: #ff4d4d;
+            /* Red text for "lost" message */
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .game-result-win {
+            background-color: #f3fff3;
+            /* Light green background */
+            border: 2px solid #198754;
+            /* Green border */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Slight shadow for depth */
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .game-result-win h2 {
+            color: #333;
+            /* Dark color for contrast */
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .game-result-win p {
+            color: #198754;
+            /* Green text for "won" message */
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -355,36 +419,36 @@ if($created_by!='' && $accepted_by!=''){
     </section>
 
     <?php
-    $img_src1=$creatorData['profile_pic'];
-    $img_src2=$acceptorData['profile_pic'];
-    $img_src1_sql="SELECT * FROM profile_pic WHERE id = '$img_src1'";
-    $img_src2_sql="SELECT * FROM profile_pic WHERE id = '$img_src2'";
-    $img_src1_run=mysqli_query($con,$img_src1_sql);
-    $img_src2_run=mysqli_query($con,$img_src2_sql);
+    $img_src1 = $creatorData['profile_pic'];
+    $img_src2 = $acceptorData['profile_pic'];
+    $img_src1_sql = "SELECT * FROM profile_pic WHERE id = '$img_src1'";
+    $img_src2_sql = "SELECT * FROM profile_pic WHERE id = '$img_src2'";
+    $img_src1_run = mysqli_query($con, $img_src1_sql);
+    $img_src2_run = mysqli_query($con, $img_src2_sql);
 
     $img_src1_data = mysqli_fetch_assoc($img_src1_run);
-$img_src2_data = mysqli_fetch_assoc($img_src2_run);
+    $img_src2_data = mysqli_fetch_assoc($img_src2_run);
 
 
 
-    
-    
+
+
     ?>
     <section class="challenge-section">
         <div class="challenges-container">
             <div class="challenges ">
                 <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/<?php echo $img_src1_data['profile']; ?>" alt="p8">
-                <p><?php echo $creatorData['username']?></p>
+                <p><?php echo $creatorData['username'] ?></p>
 
             </div>
             <div class="timer-container">
                 <img id="output" width="40px" class="profile-pic" src="../assets/images/product/vs.png" alt="p8">
-                <p><?php echo $winAmount?></p>
+                <p><?php echo $winAmount ?></p>
             </div>
 
             <div class="challenges ">
                 <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/<?php echo $img_src2_data['profile']; ?>" alt="p8">
-                <p><?php echo $acceptorData['username']?></p>
+                <p><?php echo $acceptorData['username'] ?></p>
 
             </div>
         </div>
@@ -392,19 +456,20 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
 
     <?php
     if ($roomcode == null && $created_by == $user_id) {
-        ?>
+    ?>
         <!-- Enter Roomcode for creator with Bootstrap CSS-->
         <section class="room-code-section">
             <h1 class="room-code-heading">Enter Room Code</h1>
             <form action="operations/enter_room.php" method="POST">
                 <input onkeyup="this.value = this.value.replace(/[^0-9]/g, '');" type="text" minlength="10" maxlength="10" name="roomcode" class="form-control" placeholder="Enter Room Code" required>
-                <input type="hidden" name="battle_id" class="form-control" value="<?=$battle_id?>" required>
+                <input type="hidden" name="battle_id" class="form-control" value="<?= $battle_id ?>" required>
+
                 <button type="submit" name="submit" class="btn btn-primary mt-2">Submit</button>
             </form>
         </section>
-        <?php 
-    } elseif($roomcode == null && $accepted_by == $user_id){
-        ?>
+    <?php
+    } elseif ($roomcode == null && $accepted_by == $user_id) {
+    ?>
         <!-- Waiting for roomcode -->
 
         <section class="room-code-section">
@@ -415,13 +480,13 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
             </div>
         </section>
 
-        <?php 
+    <?php
 
-    }else {
+    } else {
     ?>
         <section class="room-code-section">
             <h1 class="room-code-heading">Room Code</h1>
-            <p id="room-code" class="room-code"><?=$roomcode?></p> 
+            <p id="room-code" class="room-code"><?= $roomcode ?></p>
             <br>
             <button class="btn btn-success" onclick="copyToClipboard()">Copy Code</button>
         </section>
@@ -429,16 +494,126 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
     }
     ?>
 
+    <?php
+    if ($is_complete == 0) {
+        if ($created_by == $user_id && $creator_join_ss == null) {
+    ?>
+            <section class="game-result-section">
+                <h1 class="game-result-heading">Room Join Screenshot</h1>
+                <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
+                <button class="btn-primary btn" onclick="seeExample()">See Example</button>
+                <button class="btn-warning btn" onclick="openUploadPopup('proof')">Upload Screenshot</button>
+
+            </section>
+        <?php
+        } elseif ($accepted_by == $user_id && $acceptor_join_ss == null) {
+        ?>
+            <section class="game-result-section">
+                <h1 class="game-result-heading">Room Join Screenshot</h1>
+                <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
+                <button class="btn-primary btn" onclick="seeExample()">See Example</button>
+                <button class="btn-warning btn" onclick="openUploadPopup('proof')">Upload Screenshot</button>
+
+            </section>
+        <?php
+        } else {
+        ?>
+            <section class="game-result-section">
+                <h1 class="game-result-heading">Room Join Screenshot</h1>
+                <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
+                <button class="btn-success btn">Screenshot Uploaded</button>
+
+            </section>
+    <?php
+        }
+    }
+    ?>
 
 
+
+    <hr>
     <section class="game-result-section">
         <h1 class="game-result-heading">Game Result</h1>
-        <p class="game-result-description">After completion of your game, select the status of the game and post your screenshot below</p>
-        <button class="btn-success btn" onclick="openUploadPopup('won')">I WON</button>
-        <button class="btn-danger btn" >I LOST</button>
-        <button class="btn-secondary btn">CANCEL</button>
+        <?php
+
+        if ($created_by == $user_id && $isJoined == 1 && $is_complete == 0) {
+
+            if ($creator_ss == null) {
+        ?>
+                <p class="game-result-description">After completion of your game, select the status of the game and post your screenshot below</p>
+                <button class="btn btn-won" onclick="openUploadPopup('won')">I Won</button>
+                <button class="btn btn-lost" onclick="lost()">I Lost</button>
+                <button class="btn btn-cancel">Cancel</button>
+            <?php
+            } elseif ($creator_ss != null && $acceptor_ss == null) {
+            ?>
+                <p>Game Result Uploaded and waiting for opponent</p>
+            <?php
+            } elseif ($creator_ss != null && $acceptor_ss != null && $acceptor_ss != 'lost') {
+            ?>
+                <p>Game Conflicted</p>
+            <?php
+            } else {
+            ?>
+                <p>Game Result Uploaded by both players</p>
+            <?php
+            }
+        } elseif ($accepted_by == $user_id && $isJoined == 1  && $is_complete == 0) {
+            if ($acceptor_ss == null) {
+            ?>
+                <p class="game-result-description">After completion of your game, select the status of the game and post your screenshot below</p>
+                <button class="btn btn-success" onclick="openUploadPopup('won')">I Won</button>
+                <button class="btn btn-danger" onclick="lost()">I Lost</button>
+                <button class="btn btn-secondary">Cancel</button>
+            <?php
+            } elseif ($acceptor_ss != null && $creator_ss == null) {
+            ?>
+                <p>Game Result Uploaded and waiting for opponent</p>
+            <?php
+            } elseif ($acceptor_ss != null && $creator_ss != null && $creator_ss != 'lost') {
+            ?>
+                <p>Game Conflicted</p>
+            <?php
+            } else {
+            ?>
+                <p>Game Result Uploaded by both players</p>
+            <?php
+            }
+        } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner == $user_id) {
+            ?>
+            <div class="game-result-win">
+                <p>Congratulations! You won the game</p>
+            </div>
+
+        <?php
+        } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner == $user_id) {
+        ?>
+            <div class="game-result-win">
+                <p>Congratulations! You won the game</p>
+            </div>
+
+        <?php
+        } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
+        ?>
+            <div class="game-result">
+                <p>Sorry! You lost the game</p>
+            </div>
+        <?php
+        } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
+        ?>
+            <div class="game-result">
+                <p>Sorry! You lost the game</p>
+            </div>
+
+        <?php
+        }
+
+
+        ?>
 
     </section>
+
+
 
     <div id="upload-popup" class="popup-modal">
         <div class="popup-content">
@@ -447,10 +622,11 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
             </span>
             <h2 id="popup-title">Upload Screenshot</h2>
             <p>Please upload the screenshot of your game result.</p>
-            <form id="uploadForm"  method="POST" enctype="multipart/form-data">
-            <input class="form-control" type="file" name="file" id="screenshot-upload" accept="image/*">
-            <input type="hidden" name="battle_id" class="form-control" value="<?=$battle_id?>" required> 
-            <button class="btn-upload" type="submit" name="submit" onClick="closePopup()">Upload</button>
+            <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="file" id="screenshot-upload" accept="image/*">
+                <input type="hidden" name="battle_id" class="form-control" value="<?= $battle_id ?>" required>
+                <input type="hidden" id="screenshotType" name="screenshotType" value="" required>
+                <button class="btn-upload" type="submit" name="submit" onClick="closePopup()">Upload</button>
             </form>
         </div>
     </div>
@@ -545,13 +721,81 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
 
-  
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
+        function lost() {
+            // swal fire warning to lost the game .. if yes use ajax to update the database
+
+            swal.fire({
+                title: 'Are you sure you lost the game?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, I lost!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Use ajax to update the database
+                    $.ajax({
+                        url: 'operations/lost.php',
+                        type: 'POST',
+                        data: {
+                            battle_id: '<?= $battle_id ?>',
+                            user_id: '<?= $user_id ?>'
+                        },
+                        success: function(response) {
+                            response = JSON.parse(response);
+                            if (response.error) {
+                                // reload after response message
+                                swal.fire({
+                                    title: 'Error',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                // reload after response message
+                                swal.fire({
+                                    title: 'Success',
+                                    text: response.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error: ' + error);
+                        }
+                    });
+                }
+            });
+
+        }
+
+        function seeExample() {
+            // swal fire two scroll mobile screenshot images 
+            swal.fire({
+                title: 'Example (Scroll down to see more)',
+                html: `
+                    <h1>Creator SS</h1>
+                    <img src="../assets/images/examples/example1.jpg" width="100%" alt="example">
+                    <h1>Acceptor SS</h1>
+                    <img src="../assets/images/examples/example2.jpg" width="100%" alt="example">
+                `,
+                confirmButtonText: 'Close'
+            });
+        }
+
         function viewChart() {
             var ele = document.getElementsByName('flexRadioDefault');
             for (i = 0; i < ele.length; i++) {
@@ -569,18 +813,32 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
             document.execCommand('copy');
             document.body.removeChild(tempInput);
             // swal file 
-            swal("Room code copied to clipboard", "", "success");
+            swal.fire({
+                title: 'Room Code Copied',
+                text: 'You can now share the room code with your opponent',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
         }
 
         function openUploadPopup(result) {
             var popup = document.getElementById("upload-popup");
             var title = document.getElementById("popup-title");
+            var screenshotTypeInput = document.getElementById("screenshotType");
+
+            if (!screenshotTypeInput) {
+                console.error("screenshotType input element is not found");
+                return;
+            }
 
             // Set title based on the button clicked
             if (result === 'won') {
                 title.textContent = "Upload Screenshot for Winning";
-            } else if (result === 'lost') {
-                title.textContent = "Upload Screenshot for Losing";
+                screenshotTypeInput.value = "won";
+
+            } else if (result === 'proof') {
+                title.textContent = "Upload Screenshot";
+                screenshotTypeInput.value = "proof";
             }
 
             popup.style.display = "flex"; // Display the popup
@@ -591,47 +849,46 @@ $img_src2_data = mysqli_fetch_assoc($img_src2_run);
             popup.style.display = "none"; // Hide the popup
         }
 
-        $(document).ready(function () {
-        $('#uploadForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent form from refreshing the page
+        $(document).ready(function() {
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent form from refreshing the page
 
-            var formData = new FormData(this); // Create a new FormData object from the form
+                var formData = new FormData(this); // Create a new FormData object from the form
 
-            $.ajax({
-                url: 'operations/upload.php', // The PHP script that handles the upload
-                type: 'POST',
-                data: formData, // Form data to be sent to the server
-                contentType: false, // Important for file uploads
-                processData: false, // Important for file uploads
-                success: function (response) {
-                    
-                    response = JSON.parse(response);
+                $.ajax({
+                    url: 'operations/upload.php', // The PHP script that handles the upload
+                    type: 'POST',
+                    data: formData, // Form data to be sent to the server
+                    contentType: false, // Important for file uploads
+                    processData: false, // Important for file uploads
+                    success: function(response) {
 
-                    response = response[0];
+                        response = JSON.parse(response);
 
-                   if(response.error){
-                    swal.fire({
-                        title: 'Error',
-                        text: response.message,
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                   }else{
-                    swal.fire({
-                        title: 'Success',
-                        text: response.message,
-                        icon: 'success',
-                        confirmButtonText: 'Ok'
-                    });
-                   }
-                },
-                error: function (xhr, status, error) {
-                    console.log('Error: ' + error);
-                }
+                        response = response[0];
+
+                        if (response.error) {
+                            swal.fire({
+                                title: 'Error',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            swal.fire({
+                                title: 'Success',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error: ' + error);
+                    }
+                });
             });
         });
-    });
-
     </script>
 </body>
 

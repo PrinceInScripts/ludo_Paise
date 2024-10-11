@@ -1,73 +1,194 @@
 <?php
 require_once '../db.php';
-$user_id = $_SESSION['id'];
 
-
-
-// upload screenshot here 
-
-if (isset($_FILES['file']) && isset($_POST['battle_id'])) {
-    $battle_id = $_POST['battle_id'];
-
-    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND created_by = '$user_id' OR accepted_by = '$user_id'";
-    $result = mysqli_query($con, $fetch);
-    $fetch = mysqli_fetch_assoc($result);
-
-    if (mysqli_num_rows($result) > 0) {
-
- 
-        $file = $_FILES['file'];
-        $filename = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileSize = $file['size'];
-        $fileError = $file['error'];
-        $fileType = $file['type'];
-        $fileExt = explode('.', $filename);
-        $fileActualExt = strtolower(end($fileExt));
-        $allowed = array('jpg', 'jpeg', 'png', 'pdf');
-        if (in_array($fileActualExt, $allowed)) {
-            if ($fileError === 0) {
-                if ($fileSize < 100000) {
-                    $fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = '../../assets/games/';
-                    // make directory as battle_id 
-                    if (!file_exists($fileDestination . $battle_id)) {
-                        mkdir($fileDestination . $battle_id, 0777, true);
-                    }
-                    $fileDestination = $fileDestination . $battle_id . "/" . $fileNameNew;
-                    move_uploaded_file($fileTmpName, $fileDestination);
-
-
-                    if($fetch['created_by'] == $user_id){
-                        $sql = "UPDATE games SET creator_ss = '$fileNameNew' WHERE id = '$battle_id' AND created_by = '$user_id'";
-                    }else{
-                        $sql = "UPDATE games SET acceptor_ss = '$fileNameNew' WHERE id = '$battle_id' AND accepted_by = '$user_id'";
-                    }
-
-
-                    $result = mysqli_query($con, $sql);
-                    if ($result) {
-                        $response =  array(['error' => false , 'message' => "Screenshot uploaded successfully"]);
-                    } else {
-                        $response =  array(['error' => true , 'message' => "An error occured"]);
-                    }
-                } else {
-                    $response =  array(['error' => true , 'message' => "Your file is too big!"]);
-                }
-            } else {
-                $response =  array(['error' => true , 'message' => "There was an error uploading your file!"]);
-            }
-        } else {
-            $response =  array(['error' => true , 'message' => "You cannot upload files of this type!"]);
-        }
-    } else {
-        $response =  array(['error' => true , 'message' => "Battle not found"]);
-    }
-} else {
-    $response =  array(['error' => true , 'message' => "Battle not found"]);
-   
+// Check if user is logged in
+if (!isset($_SESSION['id'])) {
+    echo json_encode([['error' => true, 'message' => "Unauthorized access."]]);
+    exit;
 }
 
+$user_id = $_SESSION['id'];
 
-echo json_encode($response);
+if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screenshotType'])) {
+
+    $ssType = $_POST['screenshotType'];
+    if ($ssType == 'win') {
+        $battle_id = mysqli_real_escape_string($con, $_POST['battle_id']);
+
+        // Prepare SQL to prevent SQL injection
+        $query = "SELECT * FROM games WHERE id = ? AND (created_by = ? OR accepted_by = ?)";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 'iii', $battle_id, $user_id, $user_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) > 0) {
+            $file = $_FILES['file'];
+            $filename = basename($file['name']);
+            $fileTmpName = $file['tmp_name'];
+            $fileSize = $file['size'];
+            $fileError = $file['error'];
+            $fileType = mime_content_type($fileTmpName); // More secure than just checking file extension
+            $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+            // Check if file type is allowed
+            if (in_array($fileType, $allowedTypes)) {
+                if ($fileError === 0) {
+                    // Check if the file size is within the allowed limit (2MB)
+                    if ($fileSize < 2000000) { // 2MB limit
+                        // Generate a unique file name
+                        $fileExt = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                        $fileNameNew = bin2hex(random_bytes(16)) . "." . $fileExt;
+
+                        // Set file destination
+                        $fileDestination = "../../assets/games/{$battle_id}/";
+
+                        // Create directory if it doesn't exist
+                        if (!file_exists($fileDestination)) {
+                            mkdir($fileDestination, 0777, true);
+                        }
+
+                        // Complete file path
+                        $fileDestination .= $fileNameNew;
+
+                        // Move the uploaded file to the server
+                        if (move_uploaded_file($fileTmpName, $fileDestination)) {
+
+                            // Fetch battle details to determine who is uploading the screenshot
+                            $fetch = mysqli_fetch_assoc($result);
+
+                            // Prepare SQL for updating screenshot
+                            if ($fetch['created_by'] == $user_id) {
+                                $sql = "UPDATE games SET creator_ss = ? WHERE id = ? AND created_by = ?";
+                            } else {
+                                $sql = "UPDATE games SET acceptor_ss = ? WHERE id = ? AND accepted_by = ?";
+                            }
+
+                            $stmt = mysqli_prepare($con, $sql);
+                            mysqli_stmt_bind_param($stmt, 'sii', $fileNameNew, $battle_id, $user_id);
+                            mysqli_stmt_execute($stmt);
+
+                            if (mysqli_stmt_affected_rows($stmt) > 0) {
+                                // Successfully uploaded and updated database
+                                echo json_encode([['error' => false, 'message' => "Screenshot uploaded successfully"]]);
+                            } else {
+                                // Database update failed
+                                echo json_encode([['error' => true, 'message' => "Failed to update database."]]);
+                            }
+                        } else {
+                            // Failed to move the uploaded file
+                            echo json_encode([['error' => true, 'message' => "Failed to upload file."]]);
+                        }
+                    } else {
+                        // File size too large
+                        echo json_encode([['error' => true, 'message' => "File is too large. Maximum size is 2MB."]]);
+                    }
+                } else {
+                    // File error occurred during upload
+                    echo json_encode([['error' => true, 'message' => "Error uploading file."]]);
+                }
+            } else {
+                // Invalid file type
+                echo json_encode([['error' => true, 'message' => "Invalid file type. Only JPG, PNG, and PDF files are allowed."]]);
+            }
+        } else {
+            // Battle not found or user not authorized
+            echo json_encode([['error' => true, 'message' => "Battle not found or unauthorized access."]]);
+        }
+    
+    
+    } elseif ($ssType == 'proof') {
+        $battle_id = mysqli_real_escape_string($con, $_POST['battle_id']);
+
+        // Prepare SQL to prevent SQL injection
+        $query = "SELECT * FROM games WHERE id = ? AND (created_by = ? OR accepted_by = ?)";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 'iii', $battle_id, $user_id, $user_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) > 0) {
+            $file = $_FILES['file'];
+            $filename = basename($file['name']);
+            $fileTmpName = $file['tmp_name'];
+            $fileSize = $file['size'];
+            $fileError = $file['error'];
+            $fileType = mime_content_type($fileTmpName); // More secure than just checking file extension
+            $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+            // Check if file type is allowed
+            if (in_array($fileType, $allowedTypes)) {
+                if ($fileError === 0) {
+                    // Check if the file size is within the allowed limit (2MB)
+                    if ($fileSize < 2000000) { // 2MB limit
+                        // Generate a unique file name
+                        $fileExt = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                        $fileNameNew = bin2hex(random_bytes(16)) . "." . $fileExt;
+
+                        // Set file destination
+                        $fileDestination = "../../assets/games/{$battle_id}/";
+
+                        // Create directory if it doesn't exist
+                        if (!file_exists($fileDestination)) {
+                            mkdir($fileDestination, 0777, true);
+                        }
+
+                        // Complete file path
+                        $fileDestination .= $fileNameNew;
+
+                        // Move the uploaded file to the server
+                        if (move_uploaded_file($fileTmpName, $fileDestination)) {
+
+                            // Fetch battle details to determine who is uploading the screenshot
+                            $fetch = mysqli_fetch_assoc($result);
+
+                            // Prepare SQL for updating screenshot
+                            if ($fetch['created_by'] == $user_id) {
+                                $sql = "UPDATE games SET creator_join_ss = ? WHERE id = ? AND created_by = ?";
+                            } else {
+                                $sql = "UPDATE games SET acceptor_join_ss = ? WHERE id = ? AND accepted_by = ?";
+                            }
+
+                            $stmt = mysqli_prepare($con, $sql);
+                            mysqli_stmt_bind_param($stmt, 'sii', $fileNameNew, $battle_id, $user_id);
+                            mysqli_stmt_execute($stmt);
+
+                            if (mysqli_stmt_affected_rows($stmt) > 0) {
+                                // Successfully uploaded and updated database
+                                echo json_encode([['error' => false, 'message' => "Screenshot uploaded successfully"]]);
+                            } else {
+                                // Database update failed
+                                echo json_encode([['error' => true, 'message' => "Failed to update database."]]);
+                            }
+                        } else {
+                            // Failed to move the uploaded file
+                            echo json_encode([['error' => true, 'message' => "Failed to upload file."]]);
+                        }
+                    } else {
+                        // File size too large
+                        echo json_encode([['error' => true, 'message' => "File is too large. Maximum size is 2MB."]]);
+                    }
+                } else {
+                    // File error occurred during upload
+                    echo json_encode([['error' => true, 'message' => "Error uploading file."]]);
+                }
+            } else {
+                // Invalid file type
+                echo json_encode([['error' => true, 'message' => "Invalid file type. Only JPG, PNG, and PDF files are allowed."]]);
+            }
+        } else {
+            // Battle not found or user not authorized
+            echo json_encode([['error' => true, 'message' => "Battle not found or unauthorized access."]]);
+        }
+
+
+
+
+    } else {
+    }
+} else {
+    // Missing file or battle ID
+    echo json_encode([['error' => true, 'message' => "Missing file or battle ID."]]);
+}
+
 exit;

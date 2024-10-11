@@ -1,6 +1,8 @@
 <?php
 include('db.php');
 include('includes/sessions.php');
+
+$user_id = $_SESSION['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,66 +77,63 @@ include('includes/sessions.php');
         <div class="custom-container">
             <ul class="driver-list">
                 <?php
-                $query = "
-            SELECT bids.*, gamelists.title 
-            FROM bids 
-            JOIN gamelists ON bids.game_id = gamelists.id ORDER BY bids.id DESC";
-                $result = mysqli_query($con, $query);
 
-                if ($result && mysqli_num_rows($result) > 0) {
+                $sql = "SELECT * FROM games WHERE created_by = '$user_id' OR accepted_by = '$user_id' ORDER BY id DESC";
+                $result = $con->query($sql);
 
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $statusText = '';
-                        $statusClass = '';
-                        $buttonText = '';
-
-                        switch ($row['status']) {
-                            case 0:
-                                $statusText = '- ₹' . $row['profitAmount'];
-                                $statusClass = 'btn-warning';
-                                $buttonText = 'Pending';
-                                break;
-                            case 1:
-                                $statusText = '+ ₹' . $row['profitAmount'];
-                                $statusClass = 'btn-success';
-                                $buttonText = 'You Won';
-                                break;
-                            case 2:
-                                $statusText = '- ₹' . $row['profitAmount'];
-                                $statusClass = 'btn-danger';
-                                $buttonText = 'You Lose';
-                                break;
-                        }
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
                 ?>
                         <li>
                             <div class="driver-box outstation-driver-box">
                                 <div class="profile-head">
                                     <div class="d-flex align-items-center gap-2">
                                         <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/10490/10490256.png" alt="profile">
-                                        <h5><?= $row['title'] ?></h5>
+                                        <h5>Ludo Classic</h5>
                                     </div>
-                                    <h4 class="fw-semibold navbar-expand <?= ($row['status'] == 1) ? 'success-color' : (($row['status'] == 2) ? 'error-color' : 'secondary-color') ?>">
-                                        <?= $statusText ?>
-                                    </h4>
+                                    <?php
+                                    if ($row['winner'] == $user_id) {
+                                    ?>
+                                        <h4 class="fw-semibold navbar-expand success-color">
+                                            + 100
+                                        </h4>
+                                    <?php
+                                    } elseif ($row['winner'] == null) {
+                                    ?>
+                                        <h4 class="fw-semibold navbar-expand secondary-color">
+                                            - 100 (Pending)
+                                        </h4>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <h4 class="fw-semibold navbar-expand error-color">
+                                           - 100
+                                        </h4>
+                                    <?php
+                                    }
+                                    ?>
+
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mt-2">
-                                    <h5 class="fw-normal title-color"><?= $row['remark'] ?>..</h5>
+                                    <h5 class="fw-normal title-color">Battle ID : <span id="gameid" class="content-color fw-normal"><?=$row['game_id'] ?></span> <img onclick="copyb()" src="https://cdn-icons-png.flaticon.com/512/54/54702.png" alt="" width="15"> </h5>
+                                    
+
                                     <div class="d-flex align-items-start gap-1">
                                         <img class="clock" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/clock-circle.svg" alt="clock">
-                                        <h6 class="fw-normal lh-base content-color"><?= $row['created_at'] ?></h6>
+                                        <h6 class="fw-normal lh-base content-color">12 Jan 2024</h6>
                                     </div>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mt-2">
                                     <div class="d-flex align-items-center gap-1">
-                                        <h5 class="fw-normal title-color">Remark : <?= $row['bid_value'] ?></h5>
-                                        <span class="content-color fw-normal">(<?= $row['bid_type'] ?>)</span>
+                                        <h5 class="fw-normal title-color">Status : </h5>
+                                        <span class="content-color fw-normal">(<?=$row['status'] ?>)</span>
                                     </div>
                                 </div>
 
                                 <div class="grid-btn mt-2">
-                                    <a href="#0" class="btn <?= $statusClass ?> w-100 m-0"><?= $buttonText ?></a>
+                                    <a href="#0" class="btn btn-success w-100 m-0">You Won</a>
                                 </div>
                             </div>
                         </li>
@@ -162,6 +161,10 @@ include('includes/sessions.php');
                 <?php
                 }
                 ?>
+
+
+
+
 
             </ul>
         </div>
@@ -248,6 +251,37 @@ include('includes/sessions.php');
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <!-- swal fire js  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+function copyb() {
+    // Get the text from the span element
+    var gameID = document.getElementById("gameid").innerText;
+
+    // Create a temporary input element to hold the text
+    var tempInput = document.createElement("input");
+    tempInput.value = gameID;
+    document.body.appendChild(tempInput);
+
+    // Select the text inside the input and copy it
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); // For mobile devices
+    document.execCommand("copy");
+
+    // Remove the temporary input element
+    document.body.removeChild(tempInput);
+
+    // Optionally, show an alert or message to confirm copy
+    swal.fire({
+        title: 'Copied',
+        text: 'Game ID copied to clipboard',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+    });
+}
+</script>
 </body>
 
 

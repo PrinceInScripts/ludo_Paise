@@ -15,7 +15,7 @@ if(isset($_POST['submit']) && isset($_POST['roomcode']) && isset($_POST['battle_
     if($result){
         
             // Fallback: Redirect to a default page if HTTP_REFERER is not set
-            header('Location: ../newbattle.php');
+            header('Location: ../room?battle='.$battle_id);
             exit();
        
     }else{
