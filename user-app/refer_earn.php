@@ -304,9 +304,43 @@ $userid = $_SESSION['id'];
             <div class="tab-content">
                 <div class="active tab-pane" id="invite">
                     <!-- Content Sections -->
+                   
+                    <div class="faq-item">
+                        <h5>What is the referral program?</h5>
+                        <p>Our referral program lets you earn cash back by inviting friends.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h5>How can I invite friends?</h5>
+                        <p>Use the Invite Now tab to share the referral link via various platforms.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h5>What rewards do I get?</h5>
+                        <p>You earn INR 25 when your friend signs up and shops, plus 20% of their earnings.</p>
+                    </div>
                     <div class="invite-now">
                         <h2>Invite Now</h2>
                         <p>Share your referral link with friends and earn rewards based on their activity!</p>
+
+
+                        <!-- Referral Link Section -->
+                        <div class="referral-link mb-4">
+                            <h4>Your Referral Link:</h4>
+                            <div class="input-group">
+                                <input type="text" id="referralLink" value="https://example.com/referral?code=YOURCODE" class="form-control" readonly>
+                                <button class="btn btn-primary" id="copyLinkButton">Copy Referral Link</button>
+                            </div>
+                        </div>
+
+                        <!-- Social Share Buttons -->
+                        <div class="social-share mb-4">
+                            <h4>Share on:</h4>
+                            <div class="btn-group col-10">
+                                <button class="btn btn-outline-success" onclick="shareOn('whatsapp')">WhatsApp</button>
+                                <button class="btn btn-outline-primary" onclick="shareOn('facebook')">Facebook</button>
+                                <button class="btn btn-outline-info" onclick="shareOn('twitter')">Twitter</button>
+                                <button class="btn btn-outline-danger" onclick="shareOn('telegram')">Telegram</button>
+                            </div>
+                        </div>
 
                         <div class="referral-tiers mb-4">
                             <div class="tier" id="tier1">
@@ -328,26 +362,6 @@ $userid = $_SESSION['id'];
                             <div class="tier" id="tier5">
                                 <h4>Tier 5</h4>
                                 <p>Earn 30% on every referral's first purchase after 50 successful invites!</p>
-                            </div>
-                        </div>
-
-                        <!-- Referral Link Section -->
-                        <div class="referral-link mb-4">
-                            <h4>Your Referral Link:</h4>
-                            <div class="input-group">
-                                <input type="text" id="referralLink" value="https://example.com/referral?code=YOURCODE" class="form-control" readonly>
-                                <button class="btn btn-primary" id="copyLinkButton">Copy Referral Link</button>
-                            </div>
-                        </div>
-
-                        <!-- Social Share Buttons -->
-                        <div class="social-share mb-4">
-                            <h4>Share on:</h4>
-                            <div class="btn-group col-10">
-                                <button class="btn btn-outline-success" onclick="shareOn('whatsapp')">WhatsApp</button>
-                                <button class="btn btn-outline-primary" onclick="shareOn('facebook')">Facebook</button>
-                                <button class="btn btn-outline-info" onclick="shareOn('twitter')">Twitter</button>
-                                <button class="btn btn-outline-danger" onclick="shareOn('telegram')">Telegram</button>
                             </div>
                         </div>
                     </div>
@@ -402,19 +416,146 @@ $userid = $_SESSION['id'];
                     </div>
                 </div>
                 <div class="tab-pane" id="faqs">
-                    <h3>FAQ</h3>
-                    <div class="faq-item">
-                        <h5>What is the referral program?</h5>
-                        <p>Our referral program lets you earn cash back by inviting friends.</p>
+                <section class="content">
+        <div class="row">
+            <div class="col-12" id="accordion">
+                <div class="card card-primary card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                1. Lorem ipsum dolor sit amet
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                        </div>
                     </div>
-                    <div class="faq-item">
-                        <h5>How can I invite friends?</h5>
-                        <p>Use the Invite Now tab to share the referral link via various platforms.</p>
+                </div>
+                <div class="card card-primary card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                2. Aenean massa
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        </div>
                     </div>
-                    <div class="faq-item">
-                        <h5>What rewards do I get?</h5>
-                        <p>You earn INR 25 when your friend signs up and shops, plus 20% of their earnings.</p>
+                </div>
+                <div class="card card-primary card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                3. Donec quam felis
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                        </div>
                     </div>
+                </div>
+                <div class="card card-warning card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                4. Donec pede justo
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseFour" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-warning card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseFive">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                5. In enim justo
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseFive" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-warning card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseSix">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                6. Integer tincidunt
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseSix" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-danger card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseSeven">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                7. Aenean leo ligula
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseSeven" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-danger card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseEight">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                8. Aliquam lorem ante
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseEight" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-danger card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseNine">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                9.  Quisque rutrum
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseNine" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3 text-center">
+                <p class="lead">
+                    <a href="contact-us.html">Contact us</a>,
+                    if you found not the right anwser or you have a other question?<br />
+                </p>
+            </div>
+        </div>
+    </section>
                 </div>
             </div>
         </div>
