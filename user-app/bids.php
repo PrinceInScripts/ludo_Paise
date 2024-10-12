@@ -78,11 +78,17 @@ $user_id = $_SESSION['id'];
             <ul class="driver-list">
                 <?php
 
-                $sql = "SELECT * FROM games WHERE created_by = '$user_id' OR accepted_by = '$user_id' ORDER BY id DESC";
+                $sql = "SELECT * FROM game_record WHERE user_id = '$user_id' ORDER BY id DESC";
                 $result = $con->query($sql);
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        // fetch battle id 
+                        $sql = "SELECT game_id FROM games WHERE id = '" . $row['game_id'] . "'";
+                        $result2 = $con->query($sql);
+                        $row2 = $result2->fetch_assoc();
+
+                        $row['game_id'] = $row2['game_id'];
                 ?>
                         <li>
                             <div class="driver-box outstation-driver-box">
@@ -92,48 +98,74 @@ $user_id = $_SESSION['id'];
                                         <h5>Ludo Classic</h5>
                                     </div>
                                     <?php
-                                    if ($row['winner'] == $user_id) {
-                                    ?>
-                                        <h4 class="fw-semibold navbar-expand success-color">
-                                            + 100
-                                        </h4>
-                                    <?php
-                                    } elseif ($row['winner'] == null) {
-                                    ?>
-                                        <h4 class="fw-semibold navbar-expand secondary-color">
-                                            - 100 (Pending)
-                                        </h4>
-                                    <?php
-                                    } else {
+                                    if ($row['status'] == 'game_join') {
                                     ?>
                                         <h4 class="fw-semibold navbar-expand error-color">
-                                           - 100
+                                            - ₹<?= $row['ProfitAmount'] ?>
+                                        </h4>
+                                    <?php
+                                    } elseif ($row['status'] == 'won' || $row['status'] == 'lost') {
+                                    ?>
+                                        <h4 class="fw-semibold navbar-expand success-color">
+                                            + ₹<?= $row['ProfitAmount'] ?>
                                         </h4>
                                     <?php
                                     }
                                     ?>
 
+                                    <!-- <h4 class="fw-semibold navbar-expand secondary-color">
+                                            - 100 (Pending)
+                                        </h4>
+                                   
+                                        <h4 class="fw-semibold navbar-expand error-color">
+                                           - 100
+                                        </h4> -->
+
+
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mt-2">
-                                    <h5 class="fw-normal title-color">Battle ID : <span id="gameid" class="content-color fw-normal"><?=$row['game_id'] ?></span> <img onclick="copyb()" src="https://cdn-icons-png.flaticon.com/512/54/54702.png" alt="" width="15"> </h5>
-                                    
+                                    <h5 class="fw-normal title-color">Battle ID : <span id="gameid" class="content-color fw-normal"><?= $row['game_id'] ?></span> <img onclick="copyb()" src="https://cdn-icons-png.flaticon.com/512/54/54702.png" alt="" width="15"> </h5>
+
 
                                     <div class="d-flex align-items-start gap-1">
                                         <img class="clock" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/clock-circle.svg" alt="clock">
-                                        <h6 class="fw-normal lh-base content-color">12 Jan 2024</h6>
+                                        <h6 class="fw-normal lh-base content-color"><?= $row['created_at'] ?></h6>
                                     </div>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mt-2">
                                     <div class="d-flex align-items-center gap-1">
-                                        <h5 class="fw-normal title-color">Status : </h5>
-                                        <span class="content-color fw-normal">(<?=$row['status'] ?>)</span>
+                                        <h5 class="fw-normal title-color">Remark : </h5>
+                                        <span class="content-color fw-normal">
+                                            <?php
+                                            if ($row['status'] == 'game_join') {
+                                                echo 'Balance Deducted for Joining Game';
+                                            } else {
+                                                echo $row['status'];
+                                            }
+                                            ?>
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="grid-btn mt-2">
-                                    <a href="#0" class="btn btn-success w-100 m-0">You Won</a>
+                                    <?php
+                                    if ($row['status'] == 'game_join') {
+                                    ?>
+                                        <a href="#0" class="btn btn-danger w-100 m-0">Game Joined</a>
+                                    <?php
+                                    } elseif($row['status'] == 'won'){
+                                    ?>
+                                        <a href="#0" class="btn btn-success w-100 m-0">You Won</a>
+                                    <?php
+                                    } elseif($row['status'] == 'lost'){
+                                    ?>
+                                        <a href="#0" class="btn btn-danger w-100 m-0">You Lost</a>
+                                    <?php
+                                    }
+                                    ?>
+
                                 </div>
                             </div>
                         </li>
@@ -256,32 +288,32 @@ $user_id = $_SESSION['id'];
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-function copyb() {
-    // Get the text from the span element
-    var gameID = document.getElementById("gameid").innerText;
+        function copyb() {
+            // Get the text from the span element
+            var gameID = document.getElementById("gameid").innerText;
 
-    // Create a temporary input element to hold the text
-    var tempInput = document.createElement("input");
-    tempInput.value = gameID;
-    document.body.appendChild(tempInput);
+            // Create a temporary input element to hold the text
+            var tempInput = document.createElement("input");
+            tempInput.value = gameID;
+            document.body.appendChild(tempInput);
 
-    // Select the text inside the input and copy it
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999); // For mobile devices
-    document.execCommand("copy");
+            // Select the text inside the input and copy it
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
 
-    // Remove the temporary input element
-    document.body.removeChild(tempInput);
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
 
-    // Optionally, show an alert or message to confirm copy
-    swal.fire({
-        title: 'Copied',
-        text: 'Game ID copied to clipboard',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-    });
-}
-</script>
+            // Optionally, show an alert or message to confirm copy
+            swal.fire({
+                title: 'Copied',
+                text: 'Game ID copied to clipboard',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
+        }
+    </script>
 </body>
 
 

@@ -66,6 +66,12 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         <h3>Leaderboard</h3>
                     </a>
                 </li>
+                <li>
+                    <a href="refer_earn" class="pages">
+                        <i class="iconsax sidebar-icon" data-icon="trophy"></i>
+                        <h3>Refer & Earn</h3>
+                    </a>
+                </li>
 
                 <li>
                     <a href="setting" class="pages">

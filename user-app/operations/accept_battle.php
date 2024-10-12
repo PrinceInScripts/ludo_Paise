@@ -60,14 +60,14 @@ if(isset($_GET['battle_id'])){
         VALUES ('$accepted_by', '$battle_id', '$joining_fee', '$joining_fee', 'game_join', 'balance Deduct for joining game from deposit wallet', '$joining_fee', '0')";
         $insertRecordResult = mysqli_query($con, $insertRecord);
     }else{
-        $joining_fee = $joining_fee - $acceptorBalance;
+        $upjoining_fee = $joining_fee - $acceptorBalance;
         $updateAcceptorBalance
-            = "UPDATE users SET deposit_wallet = 0, withdraw_wallet = withdraw_wallet - '$joining_fee' WHERE id = '$accepted_by'";
+            = "UPDATE users SET deposit_wallet = 0, withdraw_wallet = withdraw_wallet - '$upjoining_fee' WHERE id = '$accepted_by'";
         $updateAcceptorBalanceResult = mysqli_query($con, $updateAcceptorBalance);
 
         // update game_record
         $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark, deposit_balance , withdraw_balance)
-        VALUES ('$accepted_by', '$battle_id', '$joining_fee', '$joining_fee', 'game_join', 'balance Deduct for joining game from both wallet', '$acceptorBalance', '$joining_fee')";
+        VALUES ('$accepted_by', '$battle_id', '$joining_fee', '$joining_fee', 'game_join', 'balance Deduct for joining game from both wallet', '$acceptorBalance', '$upjoining_fee')";
         $insertRecordResult = mysqli_query($con, $insertRecord);
 
 
