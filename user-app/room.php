@@ -515,12 +515,21 @@ if ($created_by != '' && $accepted_by != '') {
 
             </section>
         <?php
-        } else {
+        } elseif($accepted_by == $user_id && $acceptor_join_ss != null){ 
         ?>
             <section class="game-result-section">
                 <h1 class="game-result-heading">Room Join Screenshot</h1>
                 <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
-                <button class="btn-success btn">Screenshot Uploaded</button>
+                <button class="btn-success btn" onclick="viewJoinSSA()">View Screenshot</button>
+
+            </section>
+    <?php
+        }else{
+            ?>
+            <section class="game-result-section">
+                <h1 class="game-result-heading">Room Join Screenshot</h1>
+                <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
+                <button class="btn-success btn" onclick="viewJoinSSC()">View Screenshot</button>
 
             </section>
     <?php
@@ -892,6 +901,31 @@ if ($created_by != '' && $accepted_by != '') {
                 });
             });
         });
+
+
+        function viewJoinSSA(){
+            // show acceptor join ss in swal.fire 
+            swal.fire({
+                title: 'Room Join Screenshot',
+                html: `
+                    <img src="../assets/games/<?=$battle_id ?>/<?= $acceptor_join_ss ?>" width="50%" alt="profile">
+                `,
+                confirmButtonText: 'Close'
+            });
+        }
+        function viewJoinSSC(){
+            // show acceptor join mobile width ss in swal.fire
+            swal.fire({
+                title: 'Room Join Screenshot',
+                html: `
+                    <img src="../assets/games/<?=$battle_id ?>/<?= $creator_join_ss ?>" width="50%" alt="profile">
+                `,
+                confirmButtonText: 'Close'
+            });
+        }
+
+
+
     </script>
 </body>
 
