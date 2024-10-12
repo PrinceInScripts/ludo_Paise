@@ -54,4 +54,10 @@ function sendOTP($number, $otp) {
     }
 }
 
+function generateCode(){
+    // alpha numeric 10 digit code
+    $code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+    return $code;
+}
+
 ?>

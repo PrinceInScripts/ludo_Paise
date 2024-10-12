@@ -82,7 +82,8 @@ if(isset($_POST['submit'])){
     }else{
         $username=generateUsername();
         $profile=rand(1, 22);
-        $query = "INSERT INTO users (mobile,otp,username,profile_pic) VALUES ('$mobile','$otp','$username','$profile')";
+        $selfcode = generateCode();
+        $query = "INSERT INTO users (mobile,otp,username,profile_pic,referrer_id) VALUES ('$mobile','$otp','$username','$profile','$selfcode')";
         $result = mysqli_query($con,$query);
     }
     $mobileNew = "91".$mobile;

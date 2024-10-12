@@ -213,7 +213,6 @@ if ($created_by != '' && $accepted_by != '') {
             border-radius: 10px;
             display: inline-block;
             margin: 10px 0;
-
         }
 
         .btn-copy {
@@ -873,6 +872,8 @@ if ($created_by != '' && $accepted_by != '') {
                                 text: response.message,
                                 icon: 'error',
                                 confirmButtonText: 'Ok'
+                            }).then(() => {
+                                location.reload();
                             });
                         } else {
                             swal.fire({
@@ -880,6 +881,8 @@ if ($created_by != '' && $accepted_by != '') {
                                 text: response.message,
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     },

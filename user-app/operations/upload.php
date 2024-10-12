@@ -12,7 +12,7 @@ $user_id = $_SESSION['id'];
 if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screenshotType'])) {
 
     $ssType = $_POST['screenshotType'];
-    if ($ssType == 'win') {
+    if ($ssType == 'won') {
         $battle_id = mysqli_real_escape_string($con, $_POST['battle_id']);
 
         // Prepare SQL to prevent SQL injection

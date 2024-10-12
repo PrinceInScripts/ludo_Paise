@@ -3,6 +3,10 @@ include('db.php');
 include('includes/sessions.php');
 $userid = $_SESSION['id'];
 
+// get user data 
+$user = mysqli_query($con, "SELECT * FROM users WHERE id = '$userid'");
+$user = mysqli_fetch_assoc($user);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -326,7 +330,7 @@ $userid = $_SESSION['id'];
                         <div class="referral-link mb-4">
                             <h4>Your Referral Link:</h4>
                             <div class="input-group">
-                                <input type="text" id="referralLink" value="https://example.com/referral?code=YOURCODE" class="form-control" readonly>
+                                <input type="text" id="referralLink" value="https://example.com/referral?code=<?=$user['referrer_id'] ?>" class="form-control" readonly>
                                 <button class="btn btn-primary" id="copyLinkButton">Copy Referral Link</button>
                             </div>
                         </div>
