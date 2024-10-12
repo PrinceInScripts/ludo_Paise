@@ -555,11 +555,16 @@ if ($created_by != '' && $accepted_by != '') {
             <?php
             } elseif ($creator_ss != null && $acceptor_ss == null) {
             ?>
-                <p>Game Result Uploaded and waiting for opponent</p>
+                <p>Game Result Uploaded and waiting for opponent</p> <br>
+                <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             <?php
             } elseif ($creator_ss != null && $acceptor_ss != null && $acceptor_ss != 'lost') {
             ?>
+                <div class="game-result">
                 <p>Game Conflicted</p>
+                
+            </div> <br>
+            <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             <?php
             } else {
             ?>
@@ -576,11 +581,20 @@ if ($created_by != '' && $accepted_by != '') {
             <?php
             } elseif ($acceptor_ss != null && $creator_ss == null) {
             ?>
-                <p>Game Result Uploaded and waiting for opponent</p>
+                <p>Game Result Uploaded and waiting for opponent</p> <br>
+                <!-- view ss button  -->
+
+                <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
+
+
             <?php
             } elseif ($acceptor_ss != null && $creator_ss != null && $creator_ss != 'lost') {
             ?>
+                <div class="game-result">
                 <p>Game Conflicted</p>
+                
+            </div> <br>
+            <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
             <?php
             } else {
             ?>
@@ -923,6 +937,26 @@ if ($created_by != '' && $accepted_by != '') {
                 confirmButtonText: 'Close'
             });
         }
+        function winSSA(){
+            // show acceptor join ss in swal.fire 
+            swal.fire({
+                title: 'Win Screenshot',
+                html: `
+                    <img src="../assets/games/<?=$battle_id ?>/<?= $acceptor_ss ?>" width="50%" alt="profile">
+                `,
+                confirmButtonText: 'Close'
+            });
+        }
+        function winSSC(){
+            // show acceptor join mobile width ss in swal.fire
+            swal.fire({
+                title: 'Win Screenshot',
+                html: `
+                    <img src="../assets/games/<?=$battle_id ?>/<?= $creator_ss ?>" width="50%" alt="profile">
+                `,
+                confirmButtonText: 'Close'
+            });
+        }
 
 
 
@@ -930,6 +964,5 @@ if ($created_by != '' && $accepted_by != '') {
 </body>
 
 
-<!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/home by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:00 GMT -->
 
 </html>
