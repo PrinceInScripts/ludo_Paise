@@ -1,11 +1,63 @@
-
 <?php
 include('db.php');
 include('includes/sessions.php');
 
+$session_user_id = $_SESSION['id']; // Fetch user_id from the session
 
+// Initialize variables
+$userEarning = 0; // Default earning is 0
+$userRank = null;
 
+// Get leaderboard data
+$sql = "SELECT user_id, SUM(ProfitAmount) as total FROM game_record WHERE status='won' GROUP BY user_id ORDER BY total DESC";
+$sql_run = mysqli_query($con, $sql);
+
+$teamData = [];
+$rank = 1;
+
+while ($row = mysqli_fetch_assoc($sql_run)) {
+    $user_id = $row['user_id'];
+    $total = $row['total'];
+
+    $user_sql = "SELECT * FROM users WHERE id='$user_id'";
+    $user_result = mysqli_query($con, $user_sql);
+    $user_data = mysqli_fetch_assoc($user_result);
+
+    $img_id = $user_data['profile_pic'];
+    $img_sql = "SELECT * FROM profile_pic WHERE id='$img_id'";
+    $img_result = mysqli_query($con, $img_sql);
+    $img_data = mysqli_fetch_assoc($img_result);
+
+    // If this is the session user, save their rank and earnings
+    if ($user_id == $session_user_id) {
+        $userRank = $rank;
+        $userEarning = $total; // Update earning with actual amount
+    }
+
+    $teamData[] = [
+        'rank' => $rank++,
+        'name' => $user_data['username'],
+        'handle' => $user_data['mobile'],
+        'img' => $img_data['profile'],
+        'kudos' => $total,
+        'sent' => rand(1, 50)
+    ];
+}
+
+// If user rank was not found, assign them the last rank
+if ($userRank === null) {
+    $userRank = $rank;
+}
+
+// Output data as JSON and pass user rank and earning
+echo "<script>
+        const team = " . json_encode($teamData) . ";
+        const userRank = $userRank;
+        const userEarning = $userEarning;
+      </script>";
 ?>
+
+
 
 
 
@@ -726,7 +778,7 @@ include('includes/sessions.php');
 
 <body>
     <div class="l-wrapper">
-        <div class="c-header"><img class="c-logo" src="http://localhost/ludopaisa/assets/images/logo/logo-1.png" draggable="false" />
+        <div class="c-header"><img class="c-logo" src="../assets/images/logo/logo-1.png" draggable="false" />
             <a href="home" class="c-button c-button--primary"> Go Back</a>
         </div>
         <div class="l-grid">
@@ -736,188 +788,83 @@ include('includes/sessions.php');
                         <div class="u-display--flex u-justify--space-between">
                             <div class="u-text--left">
                                 <div class="u-text--small">My Rank</div>
-                                <h2>3rd Place</h2>
+                                <h2 id="user-rank"></h2>
                             </div>
                             <div class="u-text--right">
                                 <div class="u-text--small">My Earning</div>
-                                <h2>24</h2>
+                                <h2 id="user-earning"></h2>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="c-card">
-                    <div class="c-card__body">
-                        <div class="u-text--center" id="winner"></div>
+                    <div class="c-card">
+                        <div class="c-card__body">
+                            <div class="u-text--center" id="winner"></div>
+                        </div>
                     </div>
                 </div>
+               
             </div>
             <div class="l-grid__item">
-                <div class="c-card">
-                    <div class="c-card__header">
-                        <h3>Received Kudos</h3>
-                        <select class="c-select">
-                            <option selected="selected">Sunday, Feb. 23 - Sunday, Feb. 30</option>
-                        </select>
+                    <div class="c-card">
+                        <div class="c-card__header">
+                            <h3></h3>
+                           <select id="dateFilter" class="c-select" onchange="fetchLeaderboardData()">
+    <option value="7" selected>Last 7 Days</option>
+    <option value="30">Last Month</option>
+    <option value="365">Last Year</option>
+</select>
+                        </div>
+                        <div class="c-card__body">
+                            <ul class="c-list" id="list">
+                                <li class="c-list__item">
+                                    <div class="c-list__grid">
+                                        <div class="u-text--left u-text--small u-text--medium">Rank</div>
+                                        <div class="u-text--left u-text--small u-text--medium">Player</div>
+                                        <div class="u-text--right u-text--small u-text--medium">Profit</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="c-card__body">
-                        <ul class="c-list" id="list">
-                            <li class="c-list__item">
-                                <div class="c-list__grid">
-                                    <div class="u-text--left u-text--small u-text--medium">Rank</div>
-                                    <div class="u-text--left u-text--small u-text--medium">Team Member</div>
-                                    <div class="u-text--right u-text--small u-text--medium"># of Kudos</div>
-                                </div>
-                            </li>
-                        </ul>
+                </div>
+        </div>
+
+
+        <script>
+            function randomEmoji() {
+                const emojis = ["😊", "🌟", "🏆", "💪", "👏"];
+                return emojis[Math.floor(Math.random() * emojis.length)];
+            }
+            document.addEventListener("DOMContentLoaded", function() {
+                // Set user rank and earning dynamically
+                document.getElementById("user-rank").innerText = userRank + ' Place';
+                document.getElementById("user-earning").innerText = userEarning || 0; // Display 0 if userEarning is null or 0
+
+                // Append team data to the list
+                team.forEach((member) => {
+                    let newRow = document.createElement("li");
+                    newRow.classList = "c-list__item";
+                    newRow.innerHTML = `
+            <div class="c-list__grid">
+                <div class="c-flag c-place u-bg--transparent">${member.rank}</div>
+                <div class="c-media">
+                    <img class="c-avatar c-media__img" src="../assets/images/profile/${member.img}" />
+                    <div class="c-media__content">
+                        <div class="c-media__title">${member.name}</div>
+                        <a class="c-media__link u-text--small" href="#" target="_blank">@${member.handle}</a>
+                    </div>
+                </div>
+                <div class="u-text--right c-kudos">
+                    <div class="u-mt--8">
+                        <strong>${member.kudos}</strong>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    <script>
-        console.clear();
-
-        const team = [{
-                rank: 1,
-                name: "Lewis Hamilton",
-                handle: "lewishamilton",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/2col-retina/image.png",
-                kudos: 36,
-                sent: 31,
-            },
-            {
-                rank: 2,
-                name: "Kimi Raikkonen",
-                handle: "kimimatiasraikkonen",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/K/KIMRAI01_Kimi_R%C3%A4ikk%C3%B6nen/kimrai01.png.transform/2col-retina/image.png",
-                kudos: 31,
-                sent: 21,
-            },
-            {
-                rank: 3,
-                name: "Sebastian Vettel",
-                handle: "vettelofficial",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/S/SEBVET01_Sebastian_Vettel/sebvet01.png.transform/2col-retina/image.png",
-                kudos: 24,
-                sent: 7,
-            },
-            {
-                rank: 4,
-                name: "Max Verstappen",
-                handle: "maxverstappen1",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col-retina/image.png",
-                kudos: 22,
-                sent: 4,
-            },
-            {
-                rank: 5,
-                name: "Lando Norris",
-                handle: "landonorris",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/2col-retina/image.png",
-                kudos: 18,
-                sent: 16,
-            },
-            {
-                rank: 6,
-                name: "Charles Leclerc",
-                handle: "charles_leclerc",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/2col-retina/image.png",
-                kudos: 16,
-                sent: 6,
-            },
-            {
-                rank: 7,
-                name: "George Russell",
-                handle: "georgerussell63",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/G/GEORUS01_George_Russell/georus01.png.transform/2col-retina/image.png",
-                kudos: 10,
-                sent: 21,
-            },
-            {
-                rank: 8,
-                name: "Daniel Ricciardo",
-                handle: "danielricciardo",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/D/DANRIC01_Daniel_Ricciardo/danric01.png.transform/2col-retina/image.png",
-                kudos: 7,
-                sent: 46,
-            },
-            {
-                rank: 9,
-                name: "Alexander Albon",
-                handle: "alex_albon",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png.transform/2col-retina/image.png",
-                kudos: 4,
-                sent: 2,
-            },
-            {
-                rank: 10,
-                name: "Carlos Sainz Jr.",
-                handle: "carlossainz55",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/C/CARSAI01_Carlos_Sainz/carsai01.png.transform/2col-retina/image.png",
-                kudos: 1,
-                sent: 24,
-            },
-        ];
-
-        const randomEmoji = () => {
-            const emojis = ["👏", "👍", "🙌", "🤩", "🔥", "⭐️", "🏆", "💯"];
-            let randomNumber = Math.floor(Math.random() * emojis.length);
-            return emojis[randomNumber];
-        };
-
-        team.forEach((member) => {
-            let newRow = document.createElement("li");
-            newRow.classList = "c-list__item";
-            newRow.innerHTML = `
-		<div class="c-list__grid">
-			<div class="c-flag c-place u-bg--transparent">${member.rank}</div>
-			<div class="c-media">
-				<img class="c-avatar c-media__img" src="${member.img}" />
-				<div class="c-media__content">
-					<div class="c-media__title">${member.name}</div>
-					<a class="c-media__link u-text--small" href="https://instagram.com/${
-            member.handle
-          }" target="_blank">@${member.handle}</a>
-				</div>
-			</div>
-			<div class="u-text--right c-kudos">
-				<div class="u-mt--8">
-					<strong>${member.kudos}</strong> ${randomEmoji()}
-				</div>
-			</div>
-		</div>
-	`;
-            if (member.rank === 1) {
-                newRow.querySelector(".c-place").classList.add("u-text--dark");
-                newRow.querySelector(".c-place").classList.add("u-bg--yellow");
-                newRow.querySelector(".c-kudos").classList.add("u-text--yellow");
-            } else if (member.rank === 2) {
-                newRow.querySelector(".c-place").classList.add("u-text--dark");
-                newRow.querySelector(".c-place").classList.add("u-bg--teal");
-                newRow.querySelector(".c-kudos").classList.add("u-text--teal");
-            } else if (member.rank === 3) {
-                newRow.querySelector(".c-place").classList.add("u-text--dark");
-                newRow.querySelector(".c-place").classList.add("u-bg--orange");
-                newRow.querySelector(".c-kudos").classList.add("u-text--orange");
-            }
-            list.appendChild(newRow);
-        });
-
-        // Find Winner from sent kudos by sorting the drivers in the team array
-        let sortedTeam = team.sort((a, b) => b.sent - a.sent);
-        let winner = sortedTeam[0];
-
-        // Render winner card
-        const winnerCard = document.getElementById("winner");
-        winnerCard.innerHTML = `
-	<div class="u-text-small u-text--medium u-mb--16">Top Sender Last Week</div>
-	<img class="c-avatar c-avatar--lg" src="${winner.img}"/>
-	<h3 class="u-mt--16">${winner.name}</h3>
-	<span class="u-text--teal u-text--small">${winner.name}</span>
-`;
-    </script>
+        `;
+                    document.getElementById("list").appendChild(newRow);
+                });
+            });
+        </script>
 </body>
 
 </html>
