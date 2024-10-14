@@ -8,12 +8,12 @@ $rule_run = mysqli_query($con, $rule_sql);
 $existing_rule = '';
 if ($rule_run && mysqli_num_rows($rule_run) > 0) {
     $row = mysqli_fetch_assoc($rule_run);
-    $existing_rule = $row['rule'];
+    $existing_rule = $row['game_rules'];
 }
 
 if(isset($_POST['submit'])){
     $rule = mysqli_real_escape_string($con, $_POST['rule']);
-    $sql = "UPDATE settings SET rule = '$rule' WHERE id = '1'";
+    $sql = "UPDATE settings SET game_rules = '$rule' WHERE id = '1'";
     $result = mysqli_query($con, $sql);
     echo '<script><?php echo $result?></script>';
     if ($result) {
@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
         $rule_run = mysqli_query($con, $rule_sql);
         if ($rule_run && mysqli_num_rows($rule_run) > 0) {
             $row = mysqli_fetch_assoc($rule_run);
-            $existing_rule = $row['rule'];
+            $existing_rule = $row['game_rules'];
         }
         echo '<script>
                 swal({
@@ -72,7 +72,7 @@ if(isset($_POST['submit'])){
                     <form method="post">
                     <div class="card-body">
                         <textarea id="summernote" name="rule" class="form-control" rows="10">
-                          Write <em>Game</em> <u>Rule</u> <strong>here</strong>
+                          <?php echo  $existing_rule; ?>
                         </textarea>
                     </div>
                     <div class="card-footer text-right">
@@ -94,17 +94,7 @@ if(isset($_POST['submit'])){
                     <?php if (!empty($existing_rule)): ?>
                         <div class="rules-list">
                             <?php
-                           
-                            $dom = new DOMDocument();
-                            @$dom->loadHTML($existing_rule); 
-                            $paragraphs = $dom->getElementsByTagName('p');
-
-                            foreach ($paragraphs as $paragraph) {
-                                $text = $paragraph->textContent; // Get the text inside the <p> tag
-                                if (!empty(trim($text))) { // Only display non-empty paragraphs
-                                    echo '<div>' . htmlspecialchars($text) . '</div>'; // Display each rule in a block
-                                }
-                            }
+                            echo $existing_rule;
                             ?>
                         </div>
                     <?php else: ?>

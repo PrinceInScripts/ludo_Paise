@@ -6,7 +6,7 @@ $rule_run = mysqli_query($con, $rule_sql);
 $existing_rule = '';
 if ($rule_run && mysqli_num_rows($rule_run) > 0) {
     $row = mysqli_fetch_assoc($rule_run);
-    $existing_rule = $row['rule'];
+    $existing_rule = $row['game_rules'];
 }
 
 ?>
@@ -87,19 +87,7 @@ if ($rule_run && mysqli_num_rows($rule_run) > 0) {
                     <?php if (!empty($existing_rule)): ?>
                         <div class="driver-box outstation-driver-box">
                             <?php
-                            // Parse HTML and display each rule in styled divs
-                            $dom = new DOMDocument();
-                            @$dom->loadHTML($existing_rule); // Load HTML with warnings suppressed
-                            $paragraphs = $dom->getElementsByTagName('p');
-
-                            foreach ($paragraphs as $paragraph) {
-                                $text = $paragraph->textContent; 
-                                if (!empty(trim($text))) {
-                                    echo '<div class="grid-btn mt-2">
-                                            <a href="#" class="btn gray-btn w-100 m-0">' . htmlspecialchars($text) . '</a>
-                                          </div>';
-                                }
-                            }
+                            echo $existing_rule;
                             ?>
                         </div>
                     <?php else: ?>
