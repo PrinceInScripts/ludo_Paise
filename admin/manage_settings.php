@@ -32,7 +32,7 @@ if (isset($_POST['update_recharge'])) {
     } else {
         echo "Error updating Min Recharge: " . mysqli_error($con);
     }
-}else{
+} else {
     echo "Error updating Min Recharge: " . mysqli_error($con);
 }
 
@@ -76,7 +76,7 @@ if (isset($_POST['recharge_status'])) {
 
     if ($result) {
         echo "Recharge Status updated successfully.";
-        header("Location: limits.php"); // Redirect back to the page
+        header("Location: limits.php?status=true"); // Redirect back to the page
         exit();
     } else {
         echo "Error updating Recharge Status: " . mysqli_error($con);
@@ -91,7 +91,7 @@ if (isset($_POST['withdraw_status'])) {
 
     if ($result) {
         echo "Withdraw Status updated successfully.";
-        header("Location: limits.php"); // Redirect back to the page
+        header("Location: limits.php?status=true"); // Redirect back to the page
         exit();
     } else {
         echo "Error updating Withdraw Status: " . mysqli_error($con);
@@ -153,7 +153,3 @@ if (isset($_POST['update_game4Fees'])) {
         echo "Error updating Min Withdraw: " . mysqli_error($con);
     }
 }
-
-
-
-?>
