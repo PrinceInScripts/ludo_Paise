@@ -397,13 +397,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="deposit.php" class="nav-link">
+                <a href="limits.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Adjust limit</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="withdraw.php" class="nav-link">
+                <a href="adjust_fees.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Adjust Fees</p>
                 </a>
