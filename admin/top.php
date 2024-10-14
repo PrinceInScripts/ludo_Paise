@@ -7,6 +7,8 @@
   <title>Ludopaisa </title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -409,17 +411,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="bonus.php" class="nav-link">
+                <a href="add_message.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Adjust Message</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="penalty.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Adjust Status</p>
-                </a>
-              </li>
+             
               <li class="nav-item">
                 <a href="add_gamerule.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
