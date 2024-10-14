@@ -386,9 +386,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               'Success!',
               'You have won the challenge.',
               'success'
-            ).then((value) => {
-              window.location = 'index.php';
-            });
+            )
           }
         });
       }
@@ -396,34 +394,46 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
   }
 
   function addPenalty(mobile) {
+
+    // ask amount for penalty 
     Swal.fire({
-      title: 'Are you sure?',
-      text: "Penalty will be added to : " + mobile,
-      icon: 'warning',
+      title: 'Enter Penalty Amount',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Add Penalty!'
-    }).then((result) => {
-      if (result.isConfirmed) {
+      confirmButtonText: 'Add Penalty',
+      showLoaderOnConfirm: true,
+      preConfirm: (amount) => {
         $.ajax({
           url: 'addPenalty.php',
           type: 'POST',
           data: {
             mobile: mobile,
-            id: '<?=$row['id']?>'
+            id: '<?=$row['id']?>',
+            amount: amount
           },
           success: function(data) {
-            Swal.fire(
-              'Success!',
-              'Penalty has been added.',
-              'success'
-            ).then((value) => {
-              window.location = 'index.php';
-            });
+            response = JSON.parse(data);
+
+            if(response.status == 'success'){
+              Swal.fire(
+                'Success!',
+                'Penalty added successfully.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Error!',
+                response.message,
+                'error'
+              );
+            }
           }
         });
-      }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
     })
   }
 
