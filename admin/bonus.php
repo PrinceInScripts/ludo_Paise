@@ -23,9 +23,8 @@ include ("top.php");
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Mobile No.</th>
+                        <th>User ID</th>
                         <th>Amount</th>
-                        <th>Created By</th>
                         <th>Created At</th>
                         <th>Remark</th>
                     </tr>
@@ -36,24 +35,13 @@ include ("top.php");
                 $res = mysqli_query($con, $sql);
 
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $id = $row['userid'];
-                    
-                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                    $userResult = mysqli_query($con, $userQuery);
-                    $user = mysqli_fetch_assoc($userResult); 
-
                    
-                    $id1=$row['created_by'];
-                    $cratedByQuery = "SELECT mobile FROM users WHERE id='$id1'";
-                    $createdByResult = mysqli_query($con, $cratedByQuery);
-                    $createdByUser = mysqli_fetch_assoc($createdByResult); 
                     ?>
 
                     <tr>
                         <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $user['mobile']; ?></td>
+                        <td><?php echo $row['userid']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
-                        <td><?php echo $createdByUser['mobile']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         

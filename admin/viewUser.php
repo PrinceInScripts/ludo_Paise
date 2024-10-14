@@ -55,6 +55,8 @@ if (isset($_GET['id'])) {
         </div>
     </section>
 
+
+
     <!-- Main Profile Section -->
     <section class="content">
         <div class="container-fluid">
@@ -62,7 +64,10 @@ if (isset($_GET['id'])) {
 
                 <!-- Left Column: User Profile Information -->
                 <div class="col-md-3">
-                    <div class="card card-primary card-outline">
+                    <?php
+                    if($user['kyc_status'] == 1){
+                       ?>
+                       <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
@@ -72,12 +77,12 @@ if (isset($_GET['id'])) {
 
                             <h3 class="profile-username text-center"><?php echo $personal_data['full_name'] ?></h3>
                             <p class="text-muted text-center"><?php echo $user['username'] ?></p>
-                           
+
 
                             <ul class="list-group list-group-unbordered mb-3">
-                            <li class="list-group-item">
-                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
-                </li>
+                                <li class="list-group-item">
+                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                </li>
                                 <li class="list-group-item">
                                     <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
                                 </li>
@@ -159,46 +164,130 @@ if (isset($_GET['id'])) {
 
 
                         </div>
-                       
+
                     </div>
+                       <?php
                     
-  
+                    } else{
+                        ?>
+                        <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                    src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>"
+                                    alt="User profile picture">
+                            </div>
 
-    <!-- Bonus Feature -->
-<div class="card mt-3">
-    <div class="card-header bg-success text-white">
-        <h5 class="mb-0">Add Bonus</h5>
-    </div>
-    <div class="card-body">
-        <form action="update_wallet.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-            <div class="input-group mb-3">
-                <input type="number" class="form-control" name="bonus" placeholder="Bonus Amount" required>
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-success" name="action" value="bonus">Apply Bonus</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+                           
+                            <p class="text-muted text-center"><?php echo $user['username'] ?></p>
 
-<!-- Penalty Feature -->
-<div class="card mt-3">
-    <div class="card-header bg-danger text-white">
-        <h5 class="mb-0">Add Penalty</h5>
-    </div>
-    <div class="card-body">
-        <form action="update_wallet.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-            <div class="input-group mb-3">
-                <input type="number" class="form-control" name="penalty" placeholder="Penalty Amount" required>
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-danger" name="action" value="penalty">Apply Penalty</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Mobile</b> <a class="float-right"><?php echo $user['mobile'] ?></a>
+                                </li>
+                                <?php
+                                if ($user['email']) {
+                                ?>
+                                    <li class="list-group-item">
+                                        <b>Email</b> <a class="float-right"><?php echo $user['email'] ?></a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                                <li class="list-group-item">
+                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                </li>
+                                <?php
+                                if ($user['adhaar_no'] == '') {
+                                ?>
+                                    <li class="list-group-item">
+                                        <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
+                                    </li>
+                                <?php
+                                } else {
+                                ?>
+                                    <li class="list-group-item">
+                                        <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                                <li class="list-group-item">
+                                    <b>Account Create</b> <a class="float-right"><?php echo $user['created_at'] ?></a>
+                                </li>
+                               
+                                <?php
+                                if ($bank_data != '') {
+                                    if ($bank_data['bank_status']) {
+                                ?>
+                                        <li class="list-group-item">
+                                            <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
+                                        </li>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                        </li>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </ul>
+
+
+                        </div>
+
+                    </div>
+                        <?php
+
+                    }
+                    ?>
+
+
+
+                    <!-- Bonus Feature -->
+                    <div class="card mt-3">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Add Bonus</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="update_wallet.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" name="bonus" placeholder="Bonus Amount" required>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-success" name="action" value="bonus">Apply Bonus</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Penalty Feature -->
+                    <div class="card mt-3">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0">Add Penalty</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="update_wallet.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" name="penalty" placeholder="Penalty Amount" required>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-danger" name="action" value="penalty">Apply Penalty</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
                 </div>
 

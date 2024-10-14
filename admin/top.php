@@ -358,6 +358,12 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="battle_transition.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Battle Transition</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="deposit.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Deposit Transition</p>

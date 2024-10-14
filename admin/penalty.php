@@ -23,38 +23,30 @@ include ("top.php");
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Mobile No.</th>
+                        <th>User ID</th>
                         <th>Amount</th>
                         <th>Game ID</th>
-                        <th>Created By</th>
+                        <th>Admin ID</th>
+                        <th>Remarks</th>
                         <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT * FROM penalty";
+                $sql = "SELECT * FROM penalties";
                 $res = mysqli_query($con, $sql);
 
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $id = $row['userid'];
-                    
-                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                    $userResult = mysqli_query($con, $userQuery);
-                    $user = mysqli_fetch_assoc($userResult); 
-
                    
-                    $id1=$row['created_by'];
-                    $cratedByQuery = "SELECT mobile FROM users WHERE id='$id1'";
-                    $createdByResult = mysqli_query($con, $cratedByQuery);
-                    $createdByUser = mysqli_fetch_assoc($createdByResult); 
                     ?>
 
                     <tr>
                         <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $user['mobile']; ?></td>
+                        <td><?php echo $row['user_id']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
-                        <td><?php echo $row['game_id']; ?></td>
-                        <td><?php echo $createdByUser['mobile']; ?></td>
+                        <td><?php echo $row['battle_id']; ?></td>
+                        <td><?php echo $row['admin_id']; ?></td>
+                        <td><?php echo $row['remark']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         
                     </tr>
