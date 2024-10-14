@@ -5,6 +5,7 @@ include('db.php');
 if(isset($_POST['mobile']) && isset($_POST['amount']) && isset($_POST['id'])){
     $mobile = $_POST['mobile'];
     $amount = $_POST['amount'];
+    $remark = $_POST['remark'];
     $id = $_POST['id'];
     $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
     $result = mysqli_query($con, $sql);
@@ -22,9 +23,9 @@ if(isset($_POST['mobile']) && isset($_POST['amount']) && isset($_POST['id'])){
             $withdraw_wallet -= $amount;
         }
 
-        
 
-        $sql = "INSERT INTO penalties (user_id, amount, admin_id, battle_id) VALUES ('$user_id', '$amount',0, '$id')";
+
+        $sql = "INSERT INTO penalties (user_id, amount, admin_id, battle_id, remark) VALUES ('$user_id', '$amount',0, '$id','$remark')";
         $result = mysqli_query($con, $sql);
         if($result){
             echo json_encode(array('status' => 'success'));

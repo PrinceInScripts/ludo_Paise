@@ -395,46 +395,52 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
   function addPenalty(mobile) {
 
-    // ask amount for penalty 
+    // ask amount for penalty and ask remark for penalty
+
     Swal.fire({
-      title: 'Enter Penalty Amount',
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
+      title: 'Add Penalty',
+      html: '<input type="number" id="amount" class="swal2-input" placeholder="Amount">' +
+        '<input type="text" id="remark" class="swal2-input" placeholder="Remark">',
+      showCloseButton: true,
       showCancelButton: true,
+      focusConfirm: false,
       confirmButtonText: 'Add Penalty',
-      showLoaderOnConfirm: true,
-      preConfirm: (amount) => {
+      confirmButtonColor: '#d33',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#3085d6',
+      preConfirm: () => {
+        const amount = Swal.getPopup().querySelector('#amount').value
+        const remark = Swal.getPopup().querySelector('#remark').value
+        if (!amount || !remark) {
+          Swal.showValidationMessage(`Please enter amount and remark`)
+        }
+        return {
+          amount: amount,
+          remark: remark
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
           url: 'addPenalty.php',
           type: 'POST',
           data: {
             mobile: mobile,
+            amount: result.value.amount,
             id: '<?=$row['id']?>',
-            amount: amount
+            remark: result.value.remark
           },
           success: function(data) {
-            response = JSON.parse(data);
-
-            if(response.status == 'success'){
-              Swal.fire(
-                'Success!',
-                'Penalty added successfully.',
-                'success'
-              )
-            } else {
-              Swal.fire(
-                'Error!',
-                response.message,
-                'error'
-              );
-            }
+            Swal.fire(
+              'Success!',
+              'Penalty added successfully.',
+              'success'
+            )
           }
         });
-      },
-      allowOutsideClick: () => !Swal.isLoading()
+      }
     })
+   
   }
 
 </script>
