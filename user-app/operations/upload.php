@@ -59,8 +59,22 @@ if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screen
 
                             // Prepare SQL for updating screenshot
                             if ($fetch['created_by'] == $user_id) {
+                                if($fetch['acceptor_ss'] != null ){
+                                    $conflict = "UPDATE games SET status = 'conflict' WHERE id = ? AND created_by = ?";
+                                    $stmt = mysqli_prepare($con, $conflict);
+                                    mysqli_stmt_bind_param($stmt, 'ii', $battle_id, $user_id);
+                                    mysqli_stmt_execute($stmt);
+
+                                }
                                 $sql = "UPDATE games SET creator_ss = ? WHERE id = ? AND created_by = ?";
                             } else {
+                                if($fetch['creator_ss'] != null ){
+                                    $conflict = "UPDATE games SET status = 'conflict' WHERE id = ? AND accepted_by = ?";
+                                    $stmt = mysqli_prepare($con, $conflict);
+                                    mysqli_stmt_bind_param($stmt, 'ii', $battle_id, $user_id);
+                                    mysqli_stmt_execute($stmt);
+
+                                }
                                 $sql = "UPDATE games SET acceptor_ss = ? WHERE id = ? AND accepted_by = ?";
                             }
 

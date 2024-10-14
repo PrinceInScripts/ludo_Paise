@@ -38,7 +38,7 @@ include ("top.php");
                   </thead>
                   <tbody>
                   <?php
-                    $sql="SELECT * FROM games WHERE status='conflict'";
+                    $sql="SELECT * FROM games WHERE status='conflict' ORDER BY id DESC";
                     $res=mysqli_query($con,$sql);
                     while($row=mysqli_fetch_assoc($res)){ ?>
                         <tr>
