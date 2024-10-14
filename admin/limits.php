@@ -13,6 +13,17 @@ if (mysqli_num_rows($res) > 0) {
     $minRecharge = $row['minRecharge'];
 }
 
+$recharge_status = "";
+$withdraw_status = "";
+$sql = "SELECT * FROM settings WHERE id='1'";
+$res = mysqli_query($con, $sql);
+
+if (mysqli_num_rows($res) > 0) {
+    $row = mysqli_fetch_assoc($res);
+    $recharge_status = $row['recharge_status'];
+    $withdraw_status = $row['withdraw_status'];
+}
+
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -59,8 +70,54 @@ if (mysqli_num_rows($res) > 0) {
         </form>
     </div>
 
+    
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Adjust Status</h1>
+                </div>
+                <div class="col-sm-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <!-- First Section: Recharge Status -->
+        <form action="manage_settings.php" method="post" id="rechargeForm">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4" for="recharge_status">Recharge Status</label>
+                <div class="col-sm-8 d-flex align-items-center">
+                    <input type="hidden" name="recharge_status" value="OFF">
+                    <input type="checkbox" id="recharge_status" name="recharge_status" value="on"
+                        <?php echo ($recharge_status == 'on') ? 'checked' : ''; ?>
+                        data-toggle="toggle" onchange="document.getElementById('rechargeForm').submit();">
+                </div>
+            </div>
+        </form>
+
+        <!-- Second Section: Withdraw Status -->
+        <form action="manage_settings.php" method="post" id="withdrawForm">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4" for="withdraw_status">Withdraw Status</label>
+                <div class="col-sm-8 d-flex align-items-center">
+                    <input type="hidden" name="withdraw_status" value="OFF">
+                    <input type="checkbox" id="withdraw_status" name="withdraw_status" value="on"
+                        <?php echo ($withdraw_status == 'on') ? 'checked' : ''; ?>
+                        data-toggle="toggle" onchange="document.getElementById('withdrawForm').submit();">
+                </div>
+            </div>
+        </form>
+ 
+</div>
+
+
 
 </div>
+
+
 
 <?php
 include ("footer.php");
