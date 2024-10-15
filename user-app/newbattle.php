@@ -21,7 +21,7 @@ $user_id = $_SESSION['id'];
     <meta name="author" content="taxify">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
-    <title>Matka Play </title>
+    <title>Ludo Paisa </title>
 
     <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
     <meta name="title-color" content="#01AA85">
