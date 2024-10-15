@@ -11,7 +11,7 @@ date_default_timezone_set('Asia/Kolkata');
 
 $user_id = $_SESSION['id'];
         // Query to fetch battles created by opponents
-        $sql = "SELECT * FROM games WHERE (status = 'pending' OR status = 'running') AND created_by != '$user_id'";
+        $sql = "SELECT * FROM games WHERE (status = 'pending' OR status = 'running') AND created_by != '$user_id' AND (accepted_by = '$user_id' OR accepted_by is null) ORDER BY id DESC";
         $result = mysqli_query($con, $sql);
         $time_limit = 120; // Time limit in seconds
 
@@ -58,7 +58,7 @@ $user_id = $_SESSION['id'];
                     }elseif($row['accepted_by'] == $user_id && $row['isJoined'] == 1){
                         ?>
                         <div class="grid-btn mt-2">
-                        <a href="room?battle=<?=$game_id?>" class="btn btn-primary w-100 m-0">Enter Room</a>
+                        <a href="room?battle=<?=$game_id?>" class="btn btn-primary w-100 m-0">View Room</a>
                     </div>
                         <?php 
                     }else{

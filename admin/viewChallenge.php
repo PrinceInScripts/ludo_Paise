@@ -173,39 +173,66 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
 
                   <div class="container">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card card-primary card-outline">
-                      <div class="card-header">
-                        <h3 class="card-title">
-                          <i class="fas fa-edit"></i>
-                          Take Action
-                        </h3>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card card-primary card-outline">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="fas fa-edit"></i>
+                                Take Action
+                              </h3>
+                            </div>
+                            <div class="card-body pad table-responsive">
+                              <table class="table table-bordered text-center">
+
+                                <?php
+                                if ($row['status'] == 'conflict') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="winA('<?= $creator['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
+                                    </td>
+                                    <td>
+                                      <button type="button" onclick="addPenalty('<?= $creator['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                } elseif ($row['status'] == 'complete') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="comingsoon()" class="btn btn-block btn-warning btn-lg">Revert Battle</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                }elseif($row['status'] == 'pending'){
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Waiting</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                }
+                                ?>
+
+
+                              </table>
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                        <!-- /.col -->
                       </div>
-                      <div class="card-body pad table-responsive">
-                        <table class="table table-bordered text-center">
-
-
-                          <tr>
-
-                            <td>
-                              <button type="button" onclick="winA('<?=$creator['mobile']?>')" class="btn btn-block btn-success btn-lg">Win</button>
-                            </td>
-                            <td>
-                              <button type="button" onclick="addPenalty('<?=$creator['mobile']?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
-                            </td>
-
-                          </tr>
-                        </table>
-                      </div>
-                      <!-- /.card -->
                     </div>
                   </div>
-                  <!-- /.col -->
-                </div>
-              </div>
-            </div> 
 
 
                 <?php
@@ -280,39 +307,39 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                       </div>
                   </div>
                   <div class="container">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card card-primary card-outline">
-                      <div class="card-header">
-                        <h3 class="card-title">
-                          <i class="fas fa-edit"></i>
-                          Take Action
-                        </h3>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card card-primary card-outline">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="fas fa-edit"></i>
+                                Take Action
+                              </h3>
+                            </div>
+                            <div class="card-body pad table-responsive">
+                              <table class="table table-bordered text-center">
+
+
+                                <tr>
+
+                                  <td>
+                                    <button type="button" onclick="winA('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
+                                  </td>
+                                  <td>
+                                    <button type="button" onclick="addPenalty('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
+                                  </td>
+
+                                </tr>
+                              </table>
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                        <!-- /.col -->
                       </div>
-                      <div class="card-body pad table-responsive">
-                        <table class="table table-bordered text-center">
-
-
-                          <tr>
-
-                            <td>
-                              <button type="button" onclick="winA('<?=$acceptor['mobile']?>')" class="btn btn-block btn-success btn-lg">Win</button>
-                            </td>
-                            <td>
-                              <button type="button" onclick="addPenalty('<?=$acceptor['mobile']?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
-                            </td>
-
-                          </tr>
-                        </table>
-                      </div>
-                      <!-- /.card -->
                     </div>
                   </div>
-                  <!-- /.col -->
-                </div>
-              </div>
-            </div>
                 <?php
                     } else {
                 ?>
@@ -327,7 +354,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             </div>
             <!-- /.col -->
 
-            
+
 
 
             <!-- /.row -->
@@ -340,6 +367,15 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
+
+  function comingsoon() {
+    Swal.fire({
+      icon: 'info',
+      title: 'Coming Soon',
+      text: 'This feature is coming soon.',
+    })
+  }
+
   // swal.fire with html to show mobile screenshot 
   function viewssC() {
 
@@ -379,14 +415,25 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
           type: 'POST',
           data: {
             mobile: mobile,
-            id: '<?=$row['id']?>'
+            id: '<?= $row['id'] ?>'
           },
           success: function(data) {
-            Swal.fire(
-              'Success!',
-              'You have won the challenge.',
-              'success'
-            )
+            response = JSON.parse(data);
+
+            if (response.status == 'success') {
+              Swal.fire(
+                'Success!',
+                'Challenge won successfully.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Error!',
+                'Error winning challenge.',
+                'error'
+              )
+            }
+
           }
         });
       }
@@ -427,7 +474,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
           data: {
             mobile: mobile,
             amount: result.value.amount,
-            id: '<?=$row['id']?>',
+            id: '<?= $row['id'] ?>',
             remark: result.value.remark
           },
           success: function(data) {
@@ -440,9 +487,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         });
       }
     })
-   
-  }
 
+  }
 </script>
 
 
