@@ -8,8 +8,14 @@ $session_user_id = $_SESSION['id']; // Fetch user_id from the session
 $userEarning = 0; // Default earning is 0
 $userRank = null;
 
-// Get leaderboard data
-$sql = "SELECT user_id, SUM(ProfitAmount) as total FROM game_record WHERE status='won' GROUP BY user_id ORDER BY total DESC";
+// Fetch leaderboard data based on last 7 days (default)
+$days = 7;
+$sql = "SELECT user_id, SUM(ProfitAmount) as total 
+        FROM game_record 
+        WHERE status='won' 
+        AND created_at >= DATE_SUB(CURDATE(), INTERVAL $days DAY)
+        GROUP BY user_id 
+        ORDER BY total DESC";
 $sql_run = mysqli_query($con, $sql);
 
 $teamData = [];
@@ -56,8 +62,6 @@ echo "<script>
         const userEarning = $userEarning;
       </script>";
 ?>
-
-
 
 
 
@@ -777,9 +781,10 @@ echo "<script>
 </head>
 
 <body>
-    <div class="l-wrapper">
-        <div class="c-header"><img class="c-logo" src="../assets/images/logo/logo-1.png" draggable="false" />
-            <a href="home" class="c-button c-button--primary"> Go Back</a>
+<div class="l-wrapper">
+        <div class="c-header">
+            <img class="c-logo" src="../assets/images/logo/logo-1.png" draggable="false" />
+            <a href="home" class="c-button c-button--primary">Go Back</a>
         </div>
         <div class="l-grid">
             <div class="l-grid__item l-grid__item--sticky">
@@ -796,75 +801,68 @@ echo "<script>
                             </div>
                         </div>
                     </div>
-                    <div class="c-card">
-                        <div class="c-card__body">
-                            <div class="u-text--center" id="winner"></div>
-                        </div>
-                    </div>
                 </div>
-               
             </div>
             <div class="l-grid__item">
-                    <div class="c-card">
-                        <div class="c-card__header">
-                            <h3></h3>
-                           <select id="dateFilter" class="c-select" onchange="fetchLeaderboardData()">
-    <option value="7" selected>Last 7 Days</option>
-    <option value="30">Last Month</option>
-    <option value="365">Last Year</option>
-</select>
-                        </div>
-                        <div class="c-card__body">
-                            <ul class="c-list" id="list">
-                                <li class="c-list__item">
-                                    <div class="c-list__grid">
-                                        <div class="u-text--left u-text--small u-text--medium">Rank</div>
-                                        <div class="u-text--left u-text--small u-text--medium">Player</div>
-                                        <div class="u-text--right u-text--small u-text--medium">Profit</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                <div class="c-card">
+                    <div class="c-card__header">
+                        <h3>Leaderboard</h3>
+                        <select id="dateFilter" class="c-select" onchange="fetchLeaderboardData()">
+                            <option value="7" selected>Last 7 Days</option>
+                            <option value="30">Last Month</option>
+                            <option value="365">Last Year</option>
+                        </select>
                     </div>
-                </div>
-        </div>
-
-
-        <script>
-            function randomEmoji() {
-                const emojis = ["😊", "🌟", "🏆", "💪", "👏"];
-                return emojis[Math.floor(Math.random() * emojis.length)];
-            }
-            document.addEventListener("DOMContentLoaded", function() {
-                // Set user rank and earning dynamically
-                document.getElementById("user-rank").innerText = userRank + ' Place';
-                document.getElementById("user-earning").innerText = userEarning || 0; // Display 0 if userEarning is null or 0
-
-                // Append team data to the list
-                team.forEach((member) => {
-                    let newRow = document.createElement("li");
-                    newRow.classList = "c-list__item";
-                    newRow.innerHTML = `
-            <div class="c-list__grid">
-                <div class="c-flag c-place u-bg--transparent">${member.rank}</div>
-                <div class="c-media">
-                    <img class="c-avatar c-media__img" src="../assets/images/profile/${member.img}" />
-                    <div class="c-media__content">
-                        <div class="c-media__title">${member.name}</div>
-                        <a class="c-media__link u-text--small" href="#" target="_blank">@${member.handle}</a>
-                    </div>
-                </div>
-                <div class="u-text--right c-kudos">
-                    <div class="u-mt--8">
-                        <strong>${member.kudos}</strong>
+                    <div class="c-card__body">
+                        <ul class="c-list" id="list">
+                            <!-- List items will be dynamically generated here -->
+                        </ul>
                     </div>
                 </div>
             </div>
-        `;
-                    document.getElementById("list").appendChild(newRow);
-                });
-            });
-        </script>
-</body>
+        </div>
+    </div>
 
+    <script>
+        // JavaScript for populating data
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("user-rank").textContent = userRank;
+            document.getElementById("user-earning").textContent = userEarning;
+            fetchLeaderboardData(); // Fetch data for default 7 days
+        });
+
+        function fetchLeaderboardData() {
+            const dateFilter = document.getElementById("dateFilter").value;
+            const list = document.getElementById("list");
+            list.innerHTML = ""; // Clear the list
+
+            fetch(`leaderboard.php?days=${dateFilter}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach((member) => {
+                        let newRow = document.createElement("li");
+                        newRow.classList = "c-list__item";
+                        newRow.innerHTML = `
+                            <div class="c-list__grid">
+                                <div class="c-flag c-place u-bg--transparent">${member.rank}</div>
+                                <div class="c-media">
+                                    <img class="c-avatar c-media__img" src="../assets/images/profile/${member.img}" />
+                                    <div class="c-media__content">
+                                        <div class="c-media__title">${member.name}</div>
+                                        <a class="c-media__link u-text--small" href="#" target="_blank">@${member.handle}</a>
+                                    </div>
+                                </div>
+                                <div class="u-text--right c-kudos">
+                                    <div class="u-mt--8">
+                                        <strong>${member.kudos}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        list.appendChild(newRow);
+                    });
+                });
+        }
+    </script>
+</body>
 </html>
