@@ -87,7 +87,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 </li>
 
                 <li>
-                    <a href="rates" class="pages">
+                    <a href="game_rules" class="pages">
                         <i class="iconsax sidebar-icon" data-icon="document-text-1"> </i>
                         <h3> Game Rules</h3>
                     </a>
