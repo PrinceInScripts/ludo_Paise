@@ -41,7 +41,7 @@
 
   
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-Transaction sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -352,27 +352,27 @@
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-exchange-alt"></i>
               <p>
-                Transition Manager
+                Transaction Manager
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="battle_transition.php" class="nav-link">
+                <a href="battle_Transaction.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Battle Transition</p>
+                  <p>Battle Transaction</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="deposit.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Deposit Transition</p>
+                  <p>Deposit Transaction</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="withdraw.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Withdraw Transition</p>
+                  <p>Withdraw Transaction</p>
                 </a>
               </li>
               <li class="nav-item">

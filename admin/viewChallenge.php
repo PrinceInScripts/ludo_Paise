@@ -425,13 +425,17 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                 'Success!',
                 'Challenge won successfully.',
                 'success'
-              )
+              ).then(() => {
+                location.reload();
+              })
             } else {
               Swal.fire(
                 'Error!',
                 'Error winning challenge.',
                 'error'
-              )
+              ).then(() => {
+                location.reload();
+              })
             }
 
           }
@@ -482,7 +486,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               'Success!',
               'Penalty added successfully.',
               'success'
-            )
+            ).then(() => {
+              location.reload();
+            })
           }
         });
       }
