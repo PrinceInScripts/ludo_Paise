@@ -75,7 +75,7 @@ if(isset($_GET['battle_id'])){
 
 
 
-    $sql = "UPDATE games SET isJoined = 1 AND status = 'pending' WHERE id = '$battle_id' AND created_by = '$user_id'";
+    $sql = "UPDATE games SET isJoined = 1, status = 'running' WHERE id = '$battle_id' AND created_by = '$user_id'";
 
     $result = mysqli_query($con, $sql);
     if($result){

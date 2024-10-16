@@ -100,6 +100,13 @@ $userid = $_SESSION['id'];
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="ludoclassic" checked>
                     </div>
                 </li>
+                <li class="w-100" onclick="selectRadio('ludocondition')">
+                    <div class="form-check mt-3 pb-3">
+                        <label class="form-check-label" for="panachart"><img class="flag"
+                                src="https://cdn-icons-png.flaticon.com/512/8176/8176145.png" alt="">Ludo Condition</label>
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="ludocondition">
+                    </div>
+                </li>
                 <li class="w-100" onclick="selectRadio('ludoclassictournament')">
                     <div class="form-check mt-3 pb-3">
                         <label class="form-check-label" for="panachart"><img class="flag"
@@ -110,7 +117,7 @@ $userid = $_SESSION['id'];
             </ul>
         </div>
         <div class="offcanvas-footer border-0">
-            <button onclick="viewChart()" class="btn theme-btn w-100 mt-0">Enter Room</button>
+            <button onclick="viewChart()" class="btn theme-btn w-100 mt-0">Play</button>
         </div>
     </div>
     <!-- Change language offcanvas end -->
@@ -283,7 +290,15 @@ function selectRadio(id) {
                             icon: 'info',
                             confirmButtonText: 'OK'
                         });
+                    }else if (ele[i].id == 'ludocondition'){
+                        swal.fire({
+                            title: 'Coming Soon',
+                            text: 'This feature is coming soon',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        });
                     }
+
                     
 
                 }
