@@ -303,6 +303,8 @@ if (isset($_GET['id'])) {
                                 <li class="nav-item"><a class="nav-link" href="#bank" data-toggle="tab">Bank Card</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#game_activity" data-toggle="tab">Games Activity</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#action" data-toggle="tab">Take Action</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#bonus" data-toggle="tab">Bonus History</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#penalty" data-toggle="tab">Penalty History</a></li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -484,6 +486,7 @@ if (isset($_GET['id'])) {
                                         </table>
                                     </div>
                                 </div>
+
                                 <!-- Bank-Details -->
                                 <div class="tab-pane" id="bank">
                                     <div class="card mt-4">
@@ -519,6 +522,7 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- Game Activity -->
                                 <div class="tab-pane" id="game_activity">
                                     <?php
@@ -561,6 +565,7 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- Action -->
                                 <div class="tab-pane" id="action">
                                     <?php
@@ -612,6 +617,102 @@ if (isset($_GET['id'])) {
                                                 <p>User is permanently banned and cannot be re-activated.</p>
                                             <?php endif; ?>
                                         </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bonus History -->
+                                <div class="tab-pane" id="bonus">
+                                    <div class="card">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Mobile No.</th>
+                                                    <th>User ID</th>
+                                                    <th>Amount</th>
+                                                    <th>Admin ID</th>
+                                                    <th>Created At</th>
+                                                    <th>Remark</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                  if (isset($_GET['id'])) {
+                                                    $id = mysqli_real_escape_string($con, $_GET['id']);
+
+                                                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
+                                                        $userResult = mysqli_query($con, $userQuery);
+                                                        $user = mysqli_fetch_assoc($userResult);
+            
+                                                    // Fetch user status from the 'users' table
+                                                    $bonus_query = "SELECT * FROM bonus WHERE userid='$id'";
+                                                    $bonus_result = mysqli_query($con, $bonus_query);
+            
+                                                    while ($row = mysqli_fetch_assoc($bonus_result)) {
+                                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $user['mobile']; ?></td>
+                                                        <td><?php echo $row['userid']; ?></td>
+                                                        <td><?php echo $row['amount']; ?></td>
+                                                        <td><?php echo $row['created_by']; ?></td>
+                                                        <td><?php echo $row['created_at']; ?></td>
+                                                        <td><?php echo $row['remark']; ?></td>
+                                                    </tr>
+                                                        <?php
+                                                    }
+                                                        
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                                <!-- Penalty History -->
+                                <div class="tab-pane" id="penalty">
+                                    <div class="card">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>User ID</th>
+                                                    <th>Amount</th>
+                                                    <th>Admin ID</th>
+                                                    <th>Battle ID</th>
+                                                    <th>Remark</th>
+                                                    <th>Created At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                  if (isset($_GET['id'])) {
+                                                    $id = mysqli_real_escape_string($con, $_GET['id']);
+
+                                                   
+            
+                                                    $penalty_query = "SELECT * FROM penalties WHERE user_id='$id'";
+                                                    $penalty_result = mysqli_query($con, $penalty_query);
+            
+                                                    while ($row = mysqli_fetch_assoc($penalty_result)) {
+                                                        ?>
+                                                    <tr>
+                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $row['user_id']; ?></td>
+                                                        <td><?php echo $row['amount']; ?></td>
+                                                        <td><?php echo $row['admin_id']; ?></td>
+                                                        <td><?php echo $row['battle_id']; ?></td>
+                                                        <td><?php echo $row['remark']; ?></td>
+                                                        <td><?php echo $row['created_at']; ?></td>
+                                                    </tr>
+                                                        <?php
+                                                    }
+                                                        
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
                             </div>
