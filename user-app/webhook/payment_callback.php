@@ -1,4 +1,6 @@
 <?php 
+
+include('../db.php');
 // callback url page for payment gateway
 if(isset($_GET['txn_id']) && $_GET['status'] == 'success'){
     $txn_id = $_GET['txn_id'];
