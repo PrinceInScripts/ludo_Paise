@@ -11,6 +11,9 @@ if(isset($_GET['txn_id']) && $_GET['status'] == 'success'){
 
     if($count > 0){
         $sql = "UPDATE paymenthistory SET status = 1, remark = 'Payment Received' WHERE order_id = '$txn_id'";
+        // update wallet 
+        $sql2 = "UPDATE users SET deposit_wallet = deposit_wallet + ".$payment['amount']." WHERE id = ".$payment['userid'];
+        $result2 = mysqli_query($con, $sql2);
         $result = mysqli_query($con, $sql);
         if($result){
             echo "Payment Received";

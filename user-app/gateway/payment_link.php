@@ -74,6 +74,8 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         if (isset($response['payment_link'])) {
 
             // insert data into paymenthistory table 
+           
+            
 
             $sql = "INSERT INTO `paymenthistory`(`userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`) VALUES ('$user_id','$txn_id','$amount','deposit','phonepe',0,'Pending Payment')";
             $result = mysqli_query($con, $sql);
