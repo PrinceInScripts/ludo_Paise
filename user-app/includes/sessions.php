@@ -8,7 +8,7 @@ if (!isset($_SESSION['isLogin'])) {
         $token = $_COOKIE['login_token'];
 
         // Fetch user from the database by token
-        $query = "SELECT id, login_token FROM users WHERE login_token = '$token' LIMIT 1";
+        $query = "SELECT id, login_token,mobile FROM users WHERE login_token = '$token' LIMIT 1";
         $result = mysqli_query($con, $query);
 
         if (mysqli_num_rows($result) > 0) {
@@ -16,6 +16,7 @@ if (!isset($_SESSION['isLogin'])) {
             // Re-create the session
             $_SESSION['isLogin'] = true;
             $_SESSION['id'] = $user['id'];
+            $_SESSION['mobile'] = $user['mobile'];
             $_SESSION['session_token'] = $user['login_token'];
         } else {
             // Invalid token, redirect to login
@@ -37,12 +38,20 @@ if (!isset($_SESSION['isLogin'])) {
     $result = mysqli_query($con, $query);
     $user = mysqli_fetch_assoc($result);
 
-    if ($user['login_token'] !== $session_token) {
-        // Token mismatch, invalidate session and force login
-        session_destroy();
+    if(mysqli_num_rows($result) < 1) {
+        // User not found, redirect to login
         header('location:login.php');
         exit();
+    }else{
+        if ($user['login_token'] !== $session_token) {
+            // Token mismatch, invalidate session and force login
+            session_destroy();
+            header('location:login.php');
+            exit();
+        }
     }
+
+    
 }
 
 ?>

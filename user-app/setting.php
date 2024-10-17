@@ -1,8 +1,8 @@
 <?php
 include './db.php';
 include('includes/sessions.php');
-$mobile = $_SESSION['mobile'];
-$query = "SELECT * FROM users WHERE mobile = '$mobile'";
+$userid = $_SESSION['id'];
+$query = "SELECT * FROM users WHERE id = '$userid'";
 $run = mysqli_query($con, $query);
 $data = mysqli_fetch_assoc($run);
 

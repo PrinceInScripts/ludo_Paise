@@ -23,7 +23,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         $txn_id = uniqid('txn_');
 
         // API URLs
-        $callback_url = 'http://ludopaisa.com/payment/payment_callback.php?txn_id=' . $txn_id;
+        $callback_url = 'http://ludopaisa.com/user-app/webhook/payment_callback.php?txn_id=' . $txn_id;
         $redirect_url = 'http://ludopaisa.com/user-app/history';
 
         // Prepare request data
@@ -72,7 +72,15 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
 
         // Check for success or failure in response
         if (isset($response['payment_link'])) {
+
+            // insert data into paymenthistory table 
+
+            $sql = "INSERT INTO `paymenthistory`(`userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`) VALUES ('$user_id','$txn_id','$amount','deposit','phonepe',0,'Pending Payment')";
+            $result = mysqli_query($con, $sql);
+
+
             // Return success response with payment link
+
             echo json_encode(array('status' => 'success', 'url' => $response['payment_link']));
         } else {
             // Handle API failure response
