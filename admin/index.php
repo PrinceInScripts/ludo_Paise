@@ -395,7 +395,7 @@ include("top.php");
           <div class="card">
             <div class="card-header">
               <div class="d-flex justify-content-between w-100">
-                <h1 class="card-title"  style="font-size: 2rem; font-family:serif; font-weight:800px;">Recent Users</h1>
+                <h1 class="card-title"  style="font-size: 1.5rem; font-family:serif; font-weight:800px;">Recent Users</h1>
                 <button type="button" class="btn btn-danger btn-sm" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
                 </button>
@@ -450,7 +450,7 @@ include("top.php");
           <div class="card">
             <div class="card-header">
               <div class="d-flex justify-content-between w-100">
-                <h3 class="card-title" style="font-size: 2rem; font-family:serif; font-weight:800px;">Recent Deposit Transition</h3>
+                <h3 class="card-title" style="font-size: 1.5rem; font-family:serif; font-weight:800px;">Recent Deposit Transition</h3>
                 <button type="button" class="btn btn-danger btn-sm" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
                 </button>
@@ -540,7 +540,7 @@ include("top.php");
           <div class="card">
             <div class="card-header">
               <div class="d-flex justify-content-between w-100">
-                <h3 class="card-title" style="font-size: 2rem; font-family:serif; font-weight:800px;">Recent Withdraw Transition</h3>
+                <h3 class="card-title" style="font-size: 1.5rem; font-family:serif; font-weight:800px;">Recent Withdraw Transition</h3>
                 <button type="button" class="btn btn-danger btn-sm" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
                 </button>
