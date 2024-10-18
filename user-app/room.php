@@ -958,10 +958,30 @@ if ($created_by != '' && $accepted_by != '') {
             });
         }
 
+        <?php
+        if(isset($_GET['error'])){
+            if($_GET['error'] == 'Roomcode error'){
+                ?>
+                swal.fire({
+                    title: 'Error',
+                    text: 'Roomcode must be 8 characters',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    location.href = 'room?battle=<?= $battle_id ?>';
+                });
+                <?php
+            }
+        }
+        ?>
+
 
 
     </script>
+
+
 </body>
+
 
 
 
