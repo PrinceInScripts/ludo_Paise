@@ -39,7 +39,7 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3><?php echo $total_earning ?></h3>
+              <h3><?php echo "₹". number_format($total_earning,2) ?></h3>
 
               <p>Total Earning</p>
             </div>
