@@ -50,11 +50,12 @@ include ("top.php");
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=0";
+                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=0 ORDER BY id DESC"; 
                                                 $res = mysqli_query($con, $sql);
-
+                                                $i = 1;
                                                 while ($row = mysqli_fetch_assoc($res)) {
                                                     $id = $row['userid'];
+                                                    
 
                                                     $userQuery = "SELECT mobile FROM users WHERE id='$id'";
                                                     $userResult = mysqli_query($con, $userQuery);
@@ -62,7 +63,7 @@ include ("top.php");
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $i ?></td>
                                                         <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
@@ -76,12 +77,15 @@ include ("top.php");
                                                             <a href="depositAction.php?id=<?php echo $row['id']; ?>&action=1" class="btn btn-success">Accept</a>
                                                             <?php
                                                             if($row['payment_ss']!=NULL){
-                                                                echo '<a href="depositAction.php?id='.$row['id'].'&action=3" class="btn btn-primary">View Screenshot</a>';
+                                                                ?>
+                                                                <button class="btn btn-primary" onclick="viewPayment('<?=$row['payment_ss']?>','<?=$row['order_id']?>')">View Screenshot</button>
+                                                                <?php 
                                                             }
                                                             ?>
                                                         </td>
                                                     </tr>
                                                 <?php
+                                                $i = $i + 1;
                                                 }
                                                 ?>
                                             </tbody>
@@ -105,13 +109,14 @@ include ("top.php");
                                                     <!-- <th>Remark</th> -->
                                                     <th>UTR</th>
                                                     <th>Time</th>
-                                                    <th>Action</th>
+                                                    <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=1";
+                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=1 ORDER BY id DESC";
                                                 $res = mysqli_query($con, $sql);
+                                                $j = 1;
 
                                                 while ($row = mysqli_fetch_assoc($res)) {
                                                     $id = $row['userid'];
@@ -122,7 +127,7 @@ include ("top.php");
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $j++ ?></td>
                                                         <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
@@ -131,10 +136,7 @@ include ("top.php");
                                                         <!-- <td><?php echo $row['remark']; ?></td> -->
                                                         <td><?php echo $row['utr']; ?></td>
                                                         <td><?php echo $row['created_at']; ?></td>
-                                                        <td> 
-                                                            <a href="depositAction.php?id=<?php echo $row['id']; ?>&action=2" class="btn btn-danger">Reject</a>
-                                                            <a href="depositAction.php?id=<?php echo $row['id']; ?>&action=1" class="btn btn-success">Accept</a>
-                                                        </td>
+                                                        
                                                     </tr>
                                                 <?php
                                                 }
@@ -164,8 +166,9 @@ include ("top.php");
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=2";
+                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND status=2 ORDER BY id DESC";
                                                 $res = mysqli_query($con, $sql);
+                                                $k = 1;
 
                                                 while ($row = mysqli_fetch_assoc($res)) {
                                                     $id = $row['userid'];
@@ -176,7 +179,7 @@ include ("top.php");
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $k++ ?></td>
                                                         <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
@@ -205,6 +208,31 @@ include ("top.php");
     </div>
     
 </div>
+
+<!-- swal fire cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    function viewPayment(payment_ss,txn_id){
+    //    swal fire to show mobile screenshot of payment src = payment_ss with html tag
+    
+    Swal.fire({
+        title: 'Payment Screenshot',
+        html: `<img src="../assets/payment/screenshot/${txn_id}/${payment_ss}" class="img-fluid" alt="Payment Screenshot">`,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: false,
+        focusConfirm: false,
+        confirmButtonText: 'Close',
+    })
+
+
+
+
+
+
+    }
+</script>
 
 <?php
 include ("footer.php");
