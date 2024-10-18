@@ -288,23 +288,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="kycPending.php" class="nav-link">
+                <a href="kyc_status.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>KYC Pending</p>
+                  <p>KYC Status</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="kycComplete.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>KYC Completed</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>KYC Rejected</p>
-                </a>
-              </li>
+              
             </ul>
           </li>
           <li class="nav-item">

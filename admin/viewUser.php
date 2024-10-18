@@ -316,7 +316,6 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mobile No.</th>
                                                     <th>Order ID</th>
                                                     <th>Amount</th>
                                                     <th>Type</th>
@@ -342,7 +341,6 @@ if (isset($_GET['id'])) {
 
                                                     <tr>
                                                         <td><?php echo $row['id']; ?></td>
-                                                        <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
@@ -375,7 +373,6 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mobile No.</th>
                                                     <th>Order ID</th>
                                                     <th>Amount</th>
                                                     <th>Type</th>
@@ -401,7 +398,6 @@ if (isset($_GET['id'])) {
 
                                                     <tr>
                                                         <td><?php echo $row['id']; ?></td>
-                                                        <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
@@ -435,7 +431,6 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mobile No.</th>
                                                     <th>Order ID</th>
                                                     <th>Amount</th>
                                                     <th>Type</th>
@@ -461,7 +456,6 @@ if (isset($_GET['id'])) {
 
                                                     <tr>
                                                         <td><?php echo $row['id']; ?></td>
-                                                        <td><?php echo $user['mobile']; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
