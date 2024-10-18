@@ -29,7 +29,7 @@ if(isset($_POST['amount'])){
 
             // check pending record exist or not 
 
-            $sql = "SELECT * FROM games WHERE is_complete = 0 AND created_by = '$userid'";
+            $sql = "SELECT * FROM games WHERE is_complete = 0 AND (created_by = '$userid' OR accepted_by = '$userid') ";
             $result = mysqli_query($con, $sql);
             if(mysqli_num_rows($result) > 0){
                 $data = array("status" => "error", "message" => "You have already created a battle");
