@@ -202,18 +202,18 @@ include('includes/sessions.php');
     </header>
     <!-- header end -->
 
-    <?php 
-    
+    <?php
+
     $user_id = $_SESSION['id'];
-    if(isset($_GET['txn_id'])){
+    if (isset($_GET['txn_id'])) {
         $txn_id = $_GET['txn_id'];
-        $sql = "SELECT * FROM paymenthistory WHERE order_id = '$txn_id' AND userid = '$user_id'";
+        $sql = "SELECT * FROM paymenthistory WHERE order_id = '$txn_id' AND userid = '$user_id' AND utr is null AND payment_ss is null ";
         $result = mysqli_query($con, $sql);
         $payment = mysqli_fetch_assoc($result);
         $count = mysqli_num_rows($result);
-        if($count == 0){
+        if ($count == 0) {
             // swal alert and redirect to payment page
-            ?>
+    ?>
             <script>
                 Swal.fire({
                     icon: 'error',
@@ -221,15 +221,15 @@ include('includes/sessions.php');
                     text: 'Payment not found. Please make payment first!',
                     showConfirmButton: false,
                     timer: 1500
-                }).then(function(){
+                }).then(function() {
                     window.location.href = './payment';
                 });
-                </script>
-            <?php 
-        }else{
-            if($payment['status'] == 1){
+            </script>
+            <?php
+        } else {
+            if ($payment['status'] == 1) {
                 // swal alert and redirect to payment page
-                ?>
+            ?>
                 <script>
                     Swal.fire({
                         icon: 'success',
@@ -237,14 +237,14 @@ include('includes/sessions.php');
                         text: 'Payment Already Received!',
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(function(){
+                    }).then(function() {
                         window.location.href = './payment';
                     });
-                    </script>
-                <?php 
-            }elseif($payment['status'] == 2){
+                </script>
+            <?php
+            } elseif ($payment['status'] == 2) {
                 // swal alert and redirect to payment page
-                ?>
+            ?>
                 <script>
                     Swal.fire({
                         icon: 'error',
@@ -252,22 +252,22 @@ include('includes/sessions.php');
                         text: 'Payment has been failed. Please try again!',
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(function(){
+                    }).then(function() {
                         window.location.href = './payment';
                     });
-                    </script>
-                <?php
-            }else{
+                </script>
+    <?php
+            } else {
                 $upi = $payment['upi'];
                 $amount = $payment['amount'];
                 $upi_data = urlencode("upi://pay?pa=$upi&pn=Ludopaisa&mc=0000&tid=$txn_id&tr=$txn_id&tn=Add%20Funds&am=$amount&cu=INR");
-                $qr_img = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=".$upi_data;
+                $qr_img = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" . $upi_data;
             }
         }
-    }else{
+    } else {
         header('Location: ./payment');
     }
-    
+
     ?>
 
     <!-- finding driver list starts -->
@@ -292,47 +292,48 @@ include('includes/sessions.php');
                 <li>
                     <div class="game-container">
                         <div class="card">
-                            <img src="<?=$qr_img ?>" alt="">
+                            <img src="<?= $qr_img ?>" alt="">
                         </div>
                     </div>
                 </li>
             </ul>
             <br>
             <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="upiId">UPI ID :</label>
-                        <input type="text" class="form-control" id="upiId" value="<?=$upi ?>" disabled>
-                    </div>
-                    
+                <label class="form-label mb-2" for="upiId">UPI ID :</label>
+                <input type="text" class="form-control" id="upiId" value="<?= $upi ?>" disabled>
+            </div>
+
             <div class="grid-btn mt-4">
                 <button onclick="copyUPI()" class="btn btn-primary w-100 m-0">Copy UPI ID</button>
             </div>
             <div class="condition-part">
-            <h4 class="fw-semibold title-color">Step 2 :</h4>
-            <ul class="condition-list">
-                <li>
-                    <h5>Upload Payment Proof</h5>
-                    <p>Upload your payment Screenshot</p>
-                </li>
-                <li>
-                    <h5>Fill UTR </h5>
-                    <p>Enter your UTR no.</p>
-                </li>
-            </ul>
-        </div>
+                <h4 class="fw-semibold title-color">Step 2 :</h4>
+                <ul class="condition-list">
+                    <li>
+                        <h5>Upload Payment Proof</h5>
+                        <p>Upload your payment Screenshot</p>
+                    </li>
+                    <li>
+                        <h5>Fill UTR </h5>
+                        <p>Enter your UTR no.</p>
+                    </li>
+                </ul>
+            </div>
             <div>
-                <form class="auth-form">
+                <form class="auth-form" enctype="multipart/form-data">
                     <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="Inputname">Upload Screenshot :</label>
-                        <input type="file" class="form-control" id="Inputname">
+                        <label class="form-label mb-2" for="ss">Upload Screenshot : <span style="color:red">* <sup>(Required)</sup></span></label>
+                        <input type="file" class="form-control" name="ss" id="ss">
+                        <input type="hidden" class="form-control" name="txn_id" id="txn_id" value="<?= $_GET['txn_id'] ?>">
                     </div>
                     <br>
                     <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="utr">Enter UTR :</label>
-                        <input type="number" class="form-control" id="utr" placeholder="Enter Bank Reference Number">
+                        <label class="form-label mb-2" for="utr">Enter UTR : <span style="color:red">* <sup>(Required)</sup> </span></label>
+                        <input type="number" class="form-control" name="utr" id="utr" placeholder="Enter Bank Reference Number">
                     </div>
                     <br>
 
-                    <a href="history" class="btn theme-btn w-100 auth-btn">UPLOAD</a>
+                    <div onclick="uploadRef()" name="submit" class="btn theme-btn w-100 auth-btn">UPLOAD</div>
                 </form>
             </div>
         </div>
@@ -356,29 +357,111 @@ include('includes/sessions.php');
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
-    function copyUPI() {
-        // Get the UPI ID value from the disabled input field
-        var upiId = document.getElementById("upiId").value;
-        
-        // Create a temporary input element to copy the text
-        var tempInput = document.createElement("input");
-        tempInput.value = upiId;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-        
-        // Show SweetAlert success message
-        Swal.fire({
-            icon: 'success',
-            title: 'UPI ID Copied',
-            text: 'UPI ID has been copied successfully!',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-</script>
+        function uploadRef() {
+            // submit form with upload screenshot and reference no using ajax
+
+            // Get the UTR value from the input field
+            var utr = document.getElementById("utr").value;
+
+            // Check if UTR is empty and length must be 12 
+            if (utr == "" || utr.length != 12) {
+                // Show SweetAlert error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid UTR',
+                    text: 'Please enter a valid 12 digit UTR number!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+
+
+            // Get the uploaded screenshot file
+            var ss = document.getElementById("ss").files[0];
+
+            // Check if screenshot is empty
+            if (ss == undefined) {
+                // Show SweetAlert error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Screenshot Required',
+                    text: 'Please upload the payment screenshot!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+
+            // submit form using ajax to upload screenshot and reference no to gateway/upload_ref.php $.ajax 
+
+            $.ajax({
+                url: './gateway/upload_ref.php',
+                type: 'POST',
+                data: new FormData($('.auth-form')[0]),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    // Check if response is success
+                    if (response == 'success') {
+                        // Show SweetAlert success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Proof Uploaded',
+                            text: 'Payment proof has been uploaded successfully!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            // Redirect to payment page
+                            window.location.href = './payment';
+                        });
+                    } else {
+                        // Show SweetAlert error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error in Uploading',
+                            text: 'Error in uploading payment proof. Please try again!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+
+
+
+
+
+
+        }
+
+        function copyUPI() {
+            // Get the UPI ID value from the disabled input field
+            var upiId = document.getElementById("upiId").value;
+
+            // Create a temporary input element to copy the text
+            var tempInput = document.createElement("input");
+            tempInput.value = upiId;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // Show SweetAlert success message
+            Swal.fire({
+                icon: 'success',
+                title: 'UPI ID Copied',
+                text: 'UPI ID has been copied successfully!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
