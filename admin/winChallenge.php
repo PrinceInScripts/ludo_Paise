@@ -21,6 +21,7 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
     $deposit_wallet = $users['deposit_wallet'];
 
     if($user_id == $accepted_by){
+        
 
         // update user withdraw_wallet 
         $sql = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winAmount' WHERE id = '$user_id'";
