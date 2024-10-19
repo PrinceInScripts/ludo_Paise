@@ -200,13 +200,15 @@ include("top.php");
 
         <!-- Total Transactions -->
         <?php
-
+         $total_withdraw_hold_sql="SELECT SUM(amount) as withdraw_hold FROM withdrawrecord WHERE status=0";
+          $total_withdraw_hold_run=mysqli_query($con,$total_withdraw_hold_sql);
+          $total_withdraw_hold_data=mysqli_fetch_assoc($total_withdraw_hold_run);
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>0</h3>
-              <p>New Field</p>
+              <h3><h3><?php echo "₹" . number_format($total_withdraw_hold_data['withdraw_hold'], 2) ?></h3></h3>
+              <p>Total Withdraw Hold Money</p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
