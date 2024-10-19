@@ -21,16 +21,13 @@ $bankdetails = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM bankdetails 
 if(!$bankdetails){
     echo json_encode(array('status' => 'error', 'message' => 'Please add bank details first','url'=>'bank'));
     exit();
-}elseif($bankdetails['status'] == 0){
-    echo json_encode(array('status' => 'error', 'message' => 'Bank details not verified yet','url'=>'bank'));
-    exit();
 }elseif($bankdetails['upi'] == ''){
     echo json_encode(array('status' => 'error', 'message' => 'Please add UPI first','url'=>'bank'));
     exit();
-}elseif($bankdetails['account'] == ''){
+}elseif($bankdetails['bank_acc'] == ''){
     echo json_encode(array('status' => 'error', 'message' => 'Please add account number first','url'=>'bank'));
     exit();
-}elseif($bankdetails['ifsc'] == ''){
+}elseif($bankdetails['bank_ifsc'] == ''){
     echo json_encode(array('status' => 'error', 'message' => 'Please add IFSC code first','url'=>'bank'));
     exit();
 }
@@ -49,7 +46,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
     $mobile = $user['mobile'];  // assuming mobile is passed in the POST data
 
     if ($wallet < $amount) {
-        echo json_encode(array('status' => 'error', 'message' => 'Insufficient balance'));
+        echo json_encode(array('status' => 'error', 'message' => 'Insufficient balance', 'url' => 'payment'));
     } else if ($amount < $minWithdraw) {
         echo json_encode(array('status' => 'error', 'message' => 'Minimum withdraw amount is ' . $minWithdraw));
     } else {
@@ -61,7 +58,9 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             $sql = "UPDATE users SET withdraw_wallet = '$newWallet' WHERE id = '$user_id'";
             $result = mysqli_query($con, $sql);
             $txn_id = uniqid('txn_');
-            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, status) VALUES ('$user_id', '$amount', 'upi', '$txn_id', 0)";
+            $payment_info = array('is_upi' => true, 'is_bank' => false, 'upi' => $bankdetails['upi'], 'bank' => ["ac" => null, "ifsc" => null]);
+            $payment_info = json_encode($payment_info);
+            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, payment_info , status) VALUES ('$user_id', '$amount', 'upi', '$txn_id', '$payment_info', 0)";
             $result = mysqli_query($con, $sql);
             if ($result) {
                 
@@ -74,7 +73,10 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             $sql = "UPDATE users SET withdraw_wallet = '$newWallet' WHERE id = '$user_id'";
             $result = mysqli_query($con, $sql);
             $txn_id = uniqid('txn_');
-            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, status) VALUES ('$user_id', '$amount', 'bank', '$txn_id', 0)";
+            // {"is_upi":false,"is_bank":false,"upi":null,"bank" : {"ac":5463573,"ifsc":null}} 
+            $payment_info = array('is_upi' => false, 'is_bank' => true,'upi' =>null, 'bank' => array('ac' => $bankdetails['bank_acc'], 'ifsc' => $bankdetails['bank_ifsc']));
+            $payment_info = json_encode($payment_info);
+            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, payment_info, status) VALUES ('$user_id', '$amount', 'bank', '$txn_id', '$payment_info' , 0)";
             $result = mysqli_query($con, $sql);
             if ($result) {
                 
