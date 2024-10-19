@@ -35,14 +35,14 @@ include ("top.php");
                 <?php
                 $sql = "SELECT * FROM penalties";
                 $res = mysqli_query($con, $sql);
-
+                $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
-                   
+                   $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['user_id']."'"));
                     ?>
 
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['user_id']; ?></td>
+                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
                         <td><?php echo $row['battle_id']; ?></td>
                         <td><?php echo $row['admin_id']; ?></td>

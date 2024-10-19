@@ -38,17 +38,13 @@ include ("top.php");
                 <?php
                 $sql = "SELECT * FROM paymenthistory";
                 $res = mysqli_query($con, $sql);
-
+                $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $id = $row['userid'];
-                    
-                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                    $userResult = mysqli_query($con, $userQuery);
-                    $user = mysqli_fetch_assoc($userResult); 
+                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
                     ?>
 
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $i++; ?></td>
                         <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['order_id']; ?></td>
                         <td><?php echo $row['amount']; ?></td>

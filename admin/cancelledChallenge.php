@@ -32,25 +32,30 @@ include ("top.php");
                     <th>Win Amount</th>
                     <th>Created By</th>
                     <th>Accepted By</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php
-                    $sql="SELECT * FROM games WHERE status='cancel'";
+                    $sql="SELECT * FROM games WHERE status='cancel' order by id desc";
                     $res=mysqli_query($con,$sql);
+                    $i=1;
                     while($row=mysqli_fetch_assoc($res)){ ?>
+                     <?php
+                        $created_user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['created_by']."'"));
+                        $accepted_user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['accepted_by']."'"));
+                        ?>
                         <tr>
-                          <td><?php echo $row['id']?></td>
+                          <td><?php echo $i++?></td>
                           <td><?php echo $row['game_id']?></td>
                           <td><?php echo $row['game_type']?></td>
                           <td><?php echo $row['roomcode']?></td>
                           <td><?php echo $row['amount']?></td>
                           <td><?php echo $row['winAmount']?></td>
-                          <td><?php echo $row['created_by']?></td>
-                          <td><?php echo $row['accepted_by']?></td>
-                          <td><?php echo $row['status']?></td>
+                          <td><?php echo $created_user['mobile']?></td>
+                          <td><?php echo $accepted_user['mobile']?></td>
+                          <!-- <td><?php echo $row['status']?></td> -->
                           <td>
                             <a href="viewChallenge?id=<?php echo $row['id']?>"> <button class="btn btn-danger">View</button></a>
                          </td>

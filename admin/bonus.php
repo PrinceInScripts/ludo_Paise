@@ -33,14 +33,14 @@ include ("top.php");
                 <?php
                 $sql = "SELECT * FROM bonus";
                 $res = mysqli_query($con, $sql);
-
+                $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
-                   
+                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
                     ?>
 
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['userid']; ?></td>
+                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
