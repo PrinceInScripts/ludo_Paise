@@ -551,7 +551,7 @@ if ($created_by != '' && $accepted_by != '') {
                 <p class="game-result-description">After completion of your game, select the status of the game and post your screenshot below</p>
                 <button class="btn btn-won" onclick="openUploadPopup('won')">I Won</button>
                 <button class="btn btn-lost" onclick="lost()">I Lost</button>
-                <button class="btn btn-cancel">Cancel</button>
+                <button class="btn btn-cancel" onclick="cancel()">Cancel</button>
             <?php
             } elseif ($creator_ss != null && $acceptor_ss == null) {
             ?>
@@ -577,7 +577,7 @@ if ($created_by != '' && $accepted_by != '') {
                 <p class="game-result-description">After completion of your game, select the status of the game and post your screenshot below</p>
                 <button class="btn btn-success" onclick="openUploadPopup('won')">I Won</button>
                 <button class="btn btn-danger" onclick="lost()">I Lost</button>
-                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-secondary" onclick="cancel()">Cancel</button>
             <?php
             } elseif ($acceptor_ss != null && $creator_ss == null) {
             ?>
@@ -613,7 +613,20 @@ if ($created_by != '' && $accepted_by != '') {
             <div class="game-result-win">
                 <p>Congratulations! You won the game</p>
             </div>
+            <?php
+        } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $status == 'cancel') {
+            ?>
+            <div class="game-result">
+                <p>Game Cancelled</p>
+            </div>
+        
 
+        <?php
+        } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $status == 'cancel') {
+        ?>
+            <div class="game-result">
+                <p>Game Cancelled</p>
+            </div>
         <?php
         } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
         ?>
@@ -803,6 +816,61 @@ if ($created_by != '' && $accepted_by != '') {
             });
 
         }
+
+        function cancel(){
+
+            swal.fire({
+                title: 'Are you sure you want to cancel the game?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Cancel!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Use ajax to update the database
+                    $.ajax({
+                        url: 'operations/cancel.php',
+                        type: 'POST',
+                        data: {
+                            battle_id: '<?= $battle_id ?>',
+                            user_id: '<?= $user_id ?>'
+                        },
+                        success: function(response) {
+                            response = JSON.parse(response);
+                            if (response.error) {
+                                // reload after response message
+                                swal.fire({
+                                    title: 'Error',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                // reload after response message
+                                swal.fire({
+                                    title: 'Success',
+                                    text: response.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error: ' + error);
+                        }
+                    });
+                }
+            });
+
+        }
+
+
 
         function seeExample() {
             // swal fire two scroll mobile screenshot images 
