@@ -236,7 +236,7 @@ function changeUPI(){
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: 'changeGateway.php',
+              url: 'changeGatewayWithdraw.php',
               type: 'post',
               data: {
                 action: 'SwitchGateway',
