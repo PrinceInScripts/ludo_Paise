@@ -47,37 +47,27 @@
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <style>
-        .home-img{
-            /* opacity: 20; */
-            width: 100%;
-            height: 100%;
-        }
-        .home-img img{
-            width: 100%;
-            height: 560px;
-        }
-
-        @media screen and (min-width: 1024px) {
-            .home-img img{
-                height: 600px;
-            }
-        }
-
-        .onboarding-section {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            background: #fff;
-        }
-        @media screen and (min-width: 1024px) {
-            .onboarding-section .user-onboarding-content-box{
-                padding: 40px 20px 20px 20px;
-            }
-        }
+        
+       .onboarding-section pt-0{
+           background-color: #fff;
+       }
        
+         .home-img{
+             height: 65%;
+             width: 100%;
+
+         }
+
+         .home-img img{
+             width: 100%;
+             height: 100%;
+         }
+
+        .user-onboarding-content-box {
+           height: 35%;
+        }
+
+        
 
 
     </style>
@@ -103,7 +93,8 @@
             <!-- <img class="img-fluid union-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union.svg" alt="union">
             <img class="img-fluid union-img-dark" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union-dark.svg" alt="union"> -->
             <h2>Play Win Repeat</h2>
-            <p>Bet smart, play hard, and watch your fortune grow. hi</p>
+            <!-- <p>Bet smart, play hard, and watch your fortune grow. hi</p> -->
+            <p>This Game invloes an elements financial risk and may be addictive. Please Play responsibly and at you own risk.</p>
 
             <a href="login" class="onboarding-next">
                 <i class="iconsax icon" data-icon="chevron-right"></i>
