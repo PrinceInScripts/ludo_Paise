@@ -11,6 +11,8 @@ $user = mysqli_fetch_assoc($result);
 
 $withdrawable_balance = $user['withdraw_wallet'];
 
+$setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -224,9 +226,17 @@ $withdrawable_balance = $user['withdraw_wallet'];
         </div>
     </header>
     <!-- header end -->
+    <div class="container mt-5">
+        <!-- Withdraw Notice Alert Box -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Notice:</strong> <?=$setting['withdraw_msg'] ?>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
 
     <!-- finding driver list starts -->
     <section class="driver-request section-b-space">
+        
         <?php
         $sql = "SELECT * FROM withdraw_modes WHERE status = 1";
         $check = mysqli_query($con, $sql);
@@ -297,7 +307,7 @@ $withdrawable_balance = $user['withdraw_wallet'];
                 <ul class="condition-list">
                     <li>
                         <h5>Minimum Withdraw</h5>
-                        <p>Minimum Withdraw is 1000 INR</p>
+                        <p>Minimum Withdraw is <?=$setting['minWithdraw'] ?> INR</p>
                     </li>
                     <li>
                         <h5>Withdraw Frequency </h5>
