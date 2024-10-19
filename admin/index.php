@@ -39,7 +39,7 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3><?php echo "₹". number_format($total_earning,2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_earning, 2) ?></h3>
 
               <p>Total Earning</p>
             </div>
@@ -67,12 +67,12 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3><?php echo "₹". number_format($monthly_earning,2) ?></h3>
+              <h3><?php echo "₹" . number_format($monthly_earning, 2) ?></h3>
 
               <p>Monthly Earning</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -94,12 +94,12 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3><?php echo "₹". number_format($today_earning,2) ?></h3>
+              <h3><?php echo "₹" . number_format($today_earning, 2) ?></h3>
 
               <p>Today Earning</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -120,7 +120,7 @@ include("top.php");
               <p>Total Transactions</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -142,7 +142,7 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3><?php echo "₹". number_format($total_money,2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_money, 2) ?></h3>
 
               <p>Total Balance</p>
             </div>
@@ -161,17 +161,17 @@ include("top.php");
         $total_deposit = mysqli_fetch_assoc($total_run);
 
 
-        
+
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3><?php echo "₹". number_format($total_deposit['total_deposit'],2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_deposit['total_deposit'], 2) ?></h3>
 
               <p>Total Deposit Wallet</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -186,12 +186,12 @@ include("top.php");
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3><?php echo "₹". number_format($total_withdraw['total_withdraw'],2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_withdraw['total_withdraw'], 2) ?></h3>
 
               <p>Total Withdraw Balance</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -200,7 +200,7 @@ include("top.php");
 
         <!-- Total Transactions -->
         <?php
-       
+
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
@@ -209,7 +209,7 @@ include("top.php");
               <p>New Field</p>
             </div>
             <div class="icon">
-            <i class="ion ion-cash"></i>
+              <i class="ion ion-cash"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -256,7 +256,7 @@ include("top.php");
               <p>Monthly New Users</p>
             </div>
             <div class="icon">
-            <i class="ion ion-person"></i>
+              <i class="ion ion-person"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -276,7 +276,7 @@ include("top.php");
               <p>Today’s New Users</p>
             </div>
             <div class="icon">
-            <i class="ion ion-person"></i>
+              <i class="ion ion-person"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -297,7 +297,7 @@ include("top.php");
               <p>Active Users</p>
             </div>
             <div class="icon">
-            <i class="ion ion-person"></i>
+              <i class="ion ion-person"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -344,7 +344,7 @@ include("top.php");
               <p>Total Complete Battle</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -364,7 +364,7 @@ include("top.php");
               <p>Total Conflict Battle</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -373,10 +373,10 @@ include("top.php");
 
         <!-- Cancelled Games -->
         <?php
-          $cancelled_total_sql = "SELECT COUNT(*) as cancelled FROM games WHERE status='cancel'";
-          $cancelled_total_run = mysqli_query($con, $cancelled_total_sql);
-          $cancelled_total_data = mysqli_fetch_assoc($cancelled_total_run);
-          $cancelled_total = $cancelled_total_data['cancelled'];
+        $cancelled_total_sql = "SELECT COUNT(*) as cancelled FROM games WHERE status='cancel'";
+        $cancelled_total_run = mysqli_query($con, $cancelled_total_sql);
+        $cancelled_total_data = mysqli_fetch_assoc($cancelled_total_run);
+        $cancelled_total = $cancelled_total_data['cancelled'];
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
@@ -385,18 +385,18 @@ include("top.php");
               <p>Total Cancelled Battle</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
       </div>
-      
+
       <!--Today's Total Battle -->
       <h2 class="my-2">Today’s Battles</h2>
       <div class="row">
-        
+
         <!-- Today's Total Game Battles -->
         <?php
         $total_battles_today_sql = "SELECT COUNT(*) as total_battles FROM games WHERE DATE(created_at) = CURDATE()";
@@ -431,7 +431,7 @@ include("top.php");
               <p>Today's Completed Battles</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -451,7 +451,7 @@ include("top.php");
               <p>Today's Conflicted Battles</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -471,7 +471,7 @@ include("top.php");
               <p>Today's Cancelled Battles</p>
             </div>
             <div class="icon">
-            <i class="ion ion-trophy"></i>
+              <i class="ion ion-trophy"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
@@ -487,7 +487,7 @@ include("top.php");
           <div class="card">
             <div class="card-header">
               <div class="d-flex justify-content-between w-100">
-                <h1 class="card-title"  style="font-size: 1.5rem; font-family:serif; font-weight:800px;">Recent Users</h1>
+                <h1 class="card-title" style="font-size: 1.5rem; font-family:serif; font-weight:800px;">Recent Users</h1>
                 <button type="button" class="btn btn-danger btn-sm" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
                 </button>
@@ -512,7 +512,7 @@ include("top.php");
                   <?php
                   $sql = "SELECT * FROM users ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
-                  $i=1;
+                  $i = 1;
                   while ($row = mysqli_fetch_assoc($res)) {
                   ?>
                     <tr>
@@ -563,17 +563,17 @@ include("top.php");
                     <th>UTR</th>
                     <th>Time</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th >Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
                   $sql = "SELECT * FROM paymenthistory WHERE type='deposit' ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
-                  $i=1;
+                  $i = 1;
 
                   while ($row = mysqli_fetch_assoc($res)) {
-                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
+                    $user = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM users WHERE id='" . $row['userid'] . "'"));
                   ?>
 
                     <tr>
@@ -597,12 +597,10 @@ include("top.php");
                       <?php
                       if ($row['status'] == 0) {
                       ?>
-                        <form action="update_status.php" method="post">
-                          <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                          <input type="hidden" name="type" value="deposit">
-                          <input type="hidden" name="status" value="1">
-                          <td><button class="btn btn-success" name="update_status">Update Status</button></td>
-                        </form>
+                      <td>
+                        <button class="btn btn-success" onclick="approve(<?php echo $row['order_id']?>)">Approve</button>
+                        <button class="btn btn-danger" onclick="decline(<?php echo $row['order_id']?>)">Decline</button>
+                      </td>
 
                       <?php
                       } else {
@@ -657,9 +655,9 @@ include("top.php");
                   <?php
                   $sql = "SELECT * FROM paymenthistory WHERE type='withdraw' ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
-                  $i=1;
+                  $i = 1;
                   while ($row = mysqli_fetch_assoc($res)) {
-                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
+                    $user = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM users WHERE id='" . $row['userid'] . "'"));
                   ?>
 
                     <tr>
@@ -695,6 +693,14 @@ include("top.php");
     </div>
   </section>
 </div>
+
+<script>
+  function approve(order_id){
+    //approve request using ajax and swal fire
+
+    
+  }
+</script>
 
 <?php
 include("footer.php");

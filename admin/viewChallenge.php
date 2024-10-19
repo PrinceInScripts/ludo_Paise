@@ -210,12 +210,22 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                                   </tr>
                                 <?php
-                                }elseif($row['status'] == 'pending'){
+                                } elseif ($row['status'] == 'pending') {
                                 ?>
                                   <tr>
 
                                     <td>
                                       <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Waiting</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                } elseif($row['status'] == 'cancel'){
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="comingsoon()" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
                                     </td>
 
                                   </tr>
@@ -367,7 +377,6 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-
   function comingsoon() {
     Swal.fire({
       icon: 'info',
@@ -378,24 +387,53 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
   // swal.fire with html to show mobile screenshot 
   function viewssC() {
-
+    <?php
+    if($row['creator_ss'] == 'cancel'){
+    ?>
+    Swal.fire({
+      title: 'Creator Screenshot',
+      html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+      showCloseButton: true,
+      showConfirmButton: false,
+    })
+    <?php
+    }  else{
+    ?>
     Swal.fire({
       title: 'Creator Screenshot',
       html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_ss'] ?>" class="img-fluid" alt="Photo">',
       showCloseButton: true,
       showConfirmButton: false,
     })
+    <?php
+    }
+    ?>
 
+   
   }
 
   function viewssA() {
-
-    Swal.fire({
-      title: 'Accestor Screenshot',
-      html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['acceptor_ss'] ?>" class="img-fluid" alt="Photo">',
-      showCloseButton: true,
-      showConfirmButton: false,
-    })
+    <?php
+    if ($row['acceptor_ss'] == 'cancel') {
+    ?>
+      Swal.fire({
+        title: 'Accestor Screenshot',
+        html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
+    <?php
+    } else {
+    ?>
+      Swal.fire({
+        title: 'Accestor Screenshot',
+        html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['acceptor_ss'] ?>" class="img-fluid" alt="Photo">',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
+    <?php
+    }
+    ?>
 
   }
 
