@@ -568,7 +568,7 @@ include("top.php");
                 </thead>
                 <tbody>
                   <?php
-                  $sql = "SELECT * FROM paymenthistory WHERE type='deposit' ORDER BY created_at DESC";
+                  $sql = "SELECT * FROM paymenthistory WHERE type='deposit' AND status=0 ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
                   $i = 1;
 
@@ -587,11 +587,11 @@ include("top.php");
                       <td><?php echo $row['created_at']; ?></td>
                       <td> <?php
                             if ($row['status'] == 2) {
-                              echo "<span style='color: orange;'>Failed</span>";
+                              echo "<span style='color: red;'>Failed</span>";
                             } elseif ($row['status'] == 1) {
                               echo "<span style='color: green;'>Success</span>";
                             } else if ($row['status'] == 0) {
-                              echo "<span style='color: red;'>Pending</span>";
+                              echo "<span style='color: orange;'>Pending</span>";
                             }
                             ?></td>
                       <?php
@@ -642,18 +642,19 @@ include("top.php");
                   <tr>
                     <th>ID</th>
                     <th>Mobile No.</th>
-                    <th>Order ID</th>
+                    <th>Transition ID</th>
                     <th>Amount</th>
-                    <th>UPI</th>
+                    <th>Type</th>
+                    <th>Payment Way</th>
                     <th>Remark</th>
-                    <th>UTR</th>
-                    <th>Time</th>
+                    <th>Created At</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
-                  $sql = "SELECT * FROM paymenthistory WHERE type='withdraw' ORDER BY created_at DESC";
+                  $sql = "SELECT * FROM withdrawrecord WHERE status=0 ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
                   $i = 1;
                   while ($row = mysqli_fetch_assoc($res)) {
@@ -663,21 +664,29 @@ include("top.php");
                     <tr>
                       <td><?php echo $i++; ?></td>
                       <td><?php echo $user['mobile']; ?></td>
-                      <td><?php echo $row['order_id']; ?></td>
+                      <td><?php echo $row['txnid']; ?></td>
                       <td><?php echo $row['amount']; ?></td>
-                      <td><?php echo $row['upi']; ?></td>
+                      <td><?php echo $row['type']; ?></td>
+                      <td><?php 
+                      // if($row['type']=='bank' && $row['payment_info'].is_bank){
+
+                      // }
+                      ?></td>
                       <td><?php echo $row['remark']; ?></td>
-                      <td><?php echo $row['utr']; ?></td>
-                      <td><?php echo $row['created_at']; ?></td>
+=                      <td><?php echo $row['created_at']; ?></td>
                       <td> <?php
                             if ($row['status'] == 2) {
-                              echo "<span style='color: orange;'>Failed</span>";
+                              echo "<span style='color: red;'>Failed</span>";
                             } elseif ($row['status'] == 1) {
                               echo "<span style='color: green;'>Success</span>";
                             } else if ($row['status'] == 0) {
-                              echo "<span style='color: red;'>Pending</span>";
+                              echo "<span style='color: orange;'>Pending</span>";
                             }
                             ?></td>
+                      <td>
+                        <button class="btn btn-success" onclick="withdraw_approve('<?php echo $row['txnid']?>','confirm')">Approve</button>
+                        <button class="btn btn-warning" onclick="withdraw_approve('<?php echo $row['txnid']?>','decline')">Refund</button>
+                      </td>
                     </tr>
                   <?php
                   }
@@ -715,6 +724,60 @@ include("top.php");
         response = JSON.parse(data);
 
         if(response.type == 'credit'){
+          if(response.status == 'success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Transaction Approved Successfully',
+          }).then((result) => {
+            location.reload();
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message,
+          });
+        }
+        }else{
+          if(response.status == 'success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Transaction Declined Successfully',
+          }).then((result) => {
+            location.reload();
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message,
+          });
+        }
+        }
+
+        
+      }
+    });
+
+  }
+
+
+  function withdraw_approve(order_id,r_type){
+    //approve request using ajax and swal fire
+    $.ajax({
+      url: 'approveWithdraw.php',
+      type: 'POST',
+      data: {
+        order_id: order_id,
+        r_type: r_type
+
+      },
+      success: function(data){
+        response = JSON.parse(data);
+
+        if(response.type == 'confirm'){
           if(response.status == 'success'){
           Swal.fire({
             icon: 'success',
