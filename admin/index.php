@@ -671,8 +671,12 @@ include("top.php");
                         
                         <?php 
                         $arr = json_decode($row['payment_info'], true);
-                        if($arr['is_upi'] == false){
-                          echo $arr['bank'][''];
+                        if($row['type']=='bank' && $arr['is_bank'] == true){
+                          echo "Bank Acc. :- ".$arr['bank']['ac'].'<br/>'."IFSC Code :- ".$arr['bank']['ifsc'];
+                        } else if($row['type']=='upi' && $arr['is_upi'] == true){
+                          echo "UPI :- ".$arr['upi'];
+                        } else{
+                          echo "N/A";
                         }
                         ?>
                       </td>
@@ -768,13 +772,13 @@ include("top.php");
   }
 
 
-  function withdraw_approve(order_id, r_type) {
+  function withdraw_approve(txnid, r_type) {
     //approve request using ajax and swal fire
     $.ajax({
       url: 'approveWithdraw.php',
       type: 'POST',
       data: {
-        order_id: order_id,
+        txnid: txnid,
         r_type: r_type
 
       },
