@@ -95,50 +95,8 @@ if ($created_by != '' && $accepted_by != '') {
 
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
-    <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style1.css">
+    <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
     <style>
-        .flag {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-
-        .add-cash-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 20px;
-            background-color: #551A8B;
-            border: none;
-            border-radius: 20px;
-            text-decoration: none;
-            display: flex;
-            gap: 4px;
-
-        }
-
-        .add-cash-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
-            font-weight: 600;
-
-
-        }
-
-        .add-cash-content p {
-            font-size: 10px;
-        }
-
-        .add-cash-circle {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: white;
-        }
-
         .rules {
             display: flex;
             flex-direction: row;
@@ -389,22 +347,17 @@ if ($created_by != '' && $accepted_by != '') {
                     </a>
 
                 </div>
-
-                <div class="add-cash-button">
-
-                    <a href="wallet" class="add-cash-content">
-
-                        <p>Add cash</p>
-                        <p>₹<?php echo $wallet ?> </p>
-
-
-
-                    </a>
-                    <div class="add-cash-circle">
-
+                <a href="payment">
+                    <div class="add-cash-button">
+                        <div class="add-cash-content">
+                            <p>Add cash</p>
+                            <p>₹<?php echo $wallet ?> </p>
+                        </div>
+                        <div class="add-cash-circle">
+                            +
+                        </div>
                     </div>
-
-                </div>
+                </a>
             </div>
         </div>
     </header>
@@ -515,7 +468,7 @@ if ($created_by != '' && $accepted_by != '') {
 
             </section>
         <?php
-        } elseif($accepted_by == $user_id && $acceptor_join_ss != null){ 
+        } elseif ($accepted_by == $user_id && $acceptor_join_ss != null) {
         ?>
             <section class="game-result-section">
                 <h1 class="game-result-heading">Room Join Screenshot</h1>
@@ -523,9 +476,9 @@ if ($created_by != '' && $accepted_by != '') {
                 <button class="btn-success btn" onclick="viewJoinSSA()">View Screenshot</button>
 
             </section>
-    <?php
-        }else{
-            ?>
+        <?php
+        } else {
+        ?>
             <section class="game-result-section">
                 <h1 class="game-result-heading">Room Join Screenshot</h1>
                 <p class="game-result-description">Before joining the game, take screenshot and upload here</p>
@@ -561,10 +514,10 @@ if ($created_by != '' && $accepted_by != '') {
             } elseif ($creator_ss != null && $acceptor_ss != null && $acceptor_ss != 'lost') {
             ?>
                 <div class="game-result">
-                <p>Game Conflicted</p>
-                
-            </div> <br>
-            <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
+                    <p>Game Conflicted</p>
+
+                </div> <br>
+                <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             <?php
             } else {
             ?>
@@ -591,10 +544,10 @@ if ($created_by != '' && $accepted_by != '') {
             } elseif ($acceptor_ss != null && $creator_ss != null && $creator_ss != 'lost') {
             ?>
                 <div class="game-result">
-                <p>Game Conflicted</p>
-                
-            </div> <br>
-            <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
+                    <p>Game Conflicted</p>
+
+                </div> <br>
+                <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
             <?php
             } else {
             ?>
@@ -613,13 +566,13 @@ if ($created_by != '' && $accepted_by != '') {
             <div class="game-result-win">
                 <p>Congratulations! You won the game</p>
             </div>
-            <?php
+        <?php
         } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $status == 'cancel') {
-            ?>
+        ?>
             <div class="game-result">
                 <p>Game Cancelled</p>
             </div>
-        
+
 
         <?php
         } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $status == 'cancel') {
@@ -817,7 +770,7 @@ if ($created_by != '' && $accepted_by != '') {
 
         }
 
-        function cancel(){
+        function cancel() {
 
             swal.fire({
                 title: 'Are you sure you want to cancel the game?',
@@ -985,51 +938,54 @@ if ($created_by != '' && $accepted_by != '') {
         });
 
 
-        function viewJoinSSA(){
+        function viewJoinSSA() {
             // show acceptor join ss in swal.fire 
             swal.fire({
                 title: 'Room Join Screenshot',
                 html: `
-                    <img src="../assets/games/<?=$battle_id ?>/<?= $acceptor_join_ss ?>" width="50%" alt="profile">
+                    <img src="../assets/games/<?= $battle_id ?>/<?= $acceptor_join_ss ?>" width="50%" alt="profile">
                 `,
                 confirmButtonText: 'Close'
             });
         }
-        function viewJoinSSC(){
+
+        function viewJoinSSC() {
             // show acceptor join mobile width ss in swal.fire
             swal.fire({
                 title: 'Room Join Screenshot',
                 html: `
-                    <img src="../assets/games/<?=$battle_id ?>/<?= $creator_join_ss ?>" width="50%" alt="profile">
+                    <img src="../assets/games/<?= $battle_id ?>/<?= $creator_join_ss ?>" width="50%" alt="profile">
                 `,
                 confirmButtonText: 'Close'
             });
         }
-        function winSSA(){
+
+        function winSSA() {
             // show acceptor join ss in swal.fire 
             swal.fire({
                 title: 'Win Screenshot',
                 html: `
-                    <img src="../assets/games/<?=$battle_id ?>/<?= $acceptor_ss ?>" width="50%" alt="profile">
+                    <img src="../assets/games/<?= $battle_id ?>/<?= $acceptor_ss ?>" width="50%" alt="profile">
                 `,
                 confirmButtonText: 'Close'
             });
         }
-        function winSSC(){
+
+        function winSSC() {
             // show acceptor join mobile width ss in swal.fire
             swal.fire({
                 title: 'Win Screenshot',
                 html: `
-                    <img src="../assets/games/<?=$battle_id ?>/<?= $creator_ss ?>" width="50%" alt="profile">
+                    <img src="../assets/games/<?= $battle_id ?>/<?= $creator_ss ?>" width="50%" alt="profile">
                 `,
                 confirmButtonText: 'Close'
             });
         }
 
         <?php
-        if(isset($_GET['error'])){
-            if($_GET['error'] == 'Roomcode error'){
-                ?>
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] == 'Roomcode error') {
+        ?>
                 swal.fire({
                     title: 'Error',
                     text: 'Roomcode must be 8 characters',
@@ -1038,13 +994,10 @@ if ($created_by != '' && $accepted_by != '') {
                 }).then(() => {
                     location.href = 'room?battle=<?= $battle_id ?>';
                 });
-                <?php
+        <?php
             }
         }
         ?>
-
-
-
     </script>
 
 

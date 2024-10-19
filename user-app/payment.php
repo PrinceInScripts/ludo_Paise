@@ -1,6 +1,13 @@
 <?php
 include 'db.php';
 include('includes/sessions.php');
+
+
+$user_id = $_SESSION['id'];
+$query = "SELECT * FROM users WHERE id = '$user_id'";
+$run = mysqli_query($con, $query);
+$data = mysqli_fetch_assoc($run);
+$wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
 ?>
 <!DOCTYPE html>
@@ -46,6 +53,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
 
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
     <style>
         .driver-list {
             display: flex;
@@ -211,6 +219,17 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 </a>
 
                 <h3 class="fw-semibold title-color">Add Funds</h3>
+                <a href="payment">
+                    <div class="add-cash-button">
+                        <div class="add-cash-content">
+                            <p>Add cash</p>
+                            <p>₹<?php echo $wallet ?> </p>
+                        </div>
+                        <div class="add-cash-circle">
+                            +
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </header>
