@@ -2,6 +2,13 @@
 <?php 
 include './db.php';
 include './functions.php';
+
+
+if(isset($_SESSION['id'])){
+    header('location:home.php');
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

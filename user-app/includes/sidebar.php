@@ -106,10 +106,25 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
             </ul>
 
             <div class="bottom-sidebar">
-                <a href="login" class="pages">
+                <div onclick="logout()" style="cursor:pointer" class="pages">
                     <i class="iconsax sidebar-icon" data-icon="logout-2"> </i>
                     <h3>Logout</h3>
-                </a>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function logout() {
+            $.ajax({
+                url: 'logout.php',
+                type: 'POST',
+                success: function(data) {
+                    if (data == 1) {
+                        window.location.href = 'login';
+                    }
+                }
+            })
+        }
+        
+    </script>
