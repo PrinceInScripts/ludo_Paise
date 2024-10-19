@@ -563,7 +563,7 @@ include("top.php");
                     <th>UTR</th>
                     <th>Time</th>
                     <th>Status</th>
-                    <th >Action</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -597,10 +597,10 @@ include("top.php");
                       <?php
                       if ($row['status'] == 0) {
                       ?>
-                      <td>
-                        <button class="btn btn-success" onclick="approve('<?php echo $row['order_id']?>','credit')">Approve</button>
-                        <button class="btn btn-danger" onclick="approve('<?php echo $row['order_id']?>','debit')">Decline</button>
-                      </td>
+                        <td>
+                          <button class="btn btn-success" onclick="approve('<?php echo $row['order_id'] ?>','credit')">Approve</button>
+                          <button class="btn btn-danger" onclick="approve('<?php echo $row['order_id'] ?>','debit')">Decline</button>
+                        </td>
 
                       <?php
                       } else {
@@ -667,13 +667,17 @@ include("top.php");
                       <td><?php echo $row['txnid']; ?></td>
                       <td><?php echo $row['amount']; ?></td>
                       <td><?php echo $row['type']; ?></td>
-                      <td><?php 
-                      // if($row['type']=='bank' && $row['payment_info'].is_bank){
-
-                      // }
-                      ?></td>
+                      <td>
+                        
+                        <?php 
+                        $arr = json_decode($row['payment_info'], true);
+                        if($arr['is_upi'] == false){
+                          echo $arr['bank'][''];
+                        }
+                        ?>
+                      </td>
                       <td><?php echo $row['remark']; ?></td>
-=                      <td><?php echo $row['created_at']; ?></td>
+                      <td><?php echo $row['created_at']; ?></td>
                       <td> <?php
                             if ($row['status'] == 2) {
                               echo "<span style='color: red;'>Failed</span>";
@@ -684,8 +688,8 @@ include("top.php");
                             }
                             ?></td>
                       <td>
-                        <button class="btn btn-success" onclick="withdraw_approve('<?php echo $row['txnid']?>','confirm')">Approve</button>
-                        <button class="btn btn-warning" onclick="withdraw_approve('<?php echo $row['txnid']?>','decline')">Refund</button>
+                        <button class="btn btn-success" onclick="withdraw_approve('<?php echo $row['txnid'] ?>','confirm')">Approve</button>
+                        <button class="btn btn-warning" onclick="withdraw_approve('<?php echo $row['txnid'] ?>','decline')">Refund</button>
                       </td>
                     </tr>
                   <?php
@@ -710,7 +714,7 @@ include("top.php");
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script>
-  function approve(order_id,r_type){
+  function approve(order_id, r_type) {
     //approve request using ajax and swal fire
     $.ajax({
       url: 'approveRecharge.php',
@@ -720,51 +724,51 @@ include("top.php");
         r_type: r_type
 
       },
-      success: function(data){
+      success: function(data) {
         response = JSON.parse(data);
 
-        if(response.type == 'credit'){
-          if(response.status == 'success'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Transaction Approved Successfully',
-          }).then((result) => {
-            location.reload();
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.message,
-          });
-        }
-        }else{
-          if(response.status == 'success'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Transaction Declined Successfully',
-          }).then((result) => {
-            location.reload();
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.message,
-          });
-        }
+        if (response.type == 'credit') {
+          if (response.status == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Transaction Approved Successfully',
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message,
+            });
+          }
+        } else {
+          if (response.status == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Transaction Declined Successfully',
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message,
+            });
+          }
         }
 
-        
+
       }
     });
 
   }
 
 
-  function withdraw_approve(order_id,r_type){
+  function withdraw_approve(order_id, r_type) {
     //approve request using ajax and swal fire
     $.ajax({
       url: 'approveWithdraw.php',
@@ -774,44 +778,44 @@ include("top.php");
         r_type: r_type
 
       },
-      success: function(data){
+      success: function(data) {
         response = JSON.parse(data);
 
-        if(response.type == 'confirm'){
-          if(response.status == 'success'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Transaction Approved Successfully',
-          }).then((result) => {
-            location.reload();
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.message,
-          });
-        }
-        }else{
-          if(response.status == 'success'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Transaction Declined Successfully',
-          }).then((result) => {
-            location.reload();
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.message,
-          });
-        }
+        if (response.type == 'confirm') {
+          if (response.status == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Transaction Approved Successfully',
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message,
+            });
+          }
+        } else {
+          if (response.status == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Transaction Declined Successfully',
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message,
+            });
+          }
         }
 
-        
+
       }
     });
 
