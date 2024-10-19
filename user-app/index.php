@@ -71,7 +71,7 @@ if(isset($_SESSION['id'])){
          }
 
         .user-onboarding-content-box {
-           height: 35%;
+           /* height: 35%; */
         }
 
         
