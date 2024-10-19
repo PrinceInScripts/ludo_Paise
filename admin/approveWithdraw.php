@@ -20,7 +20,8 @@ if(isset($_POST['txnid']) && isset($_POST['r_type'])){
         $userid = $data['userid'];
         $amount = $data['amount'];
         mysqli_query($con, "UPDATE users SET withdraw_wallet = withdraw_wallet + '$amount' WHERE id = '$userid'");
-        $sql = "UPDATE withdrawrecord SET status = 2 WHERE txnid = '$txnid' AND status = 0";
+        $txt = "Amount Refunded + ".$amount;
+        $sql = "UPDATE withdrawrecord SET status = 2, remark = '$txt' WHERE txnid = '$txnid' AND status = 0";
         $result = mysqli_query($con, $sql);
 
         if($result){

@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
 include('includes/sessions.php');
+$setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,6 +216,24 @@ include('includes/sessions.php');
     </header>
     <!-- header end -->
 
+    <?php 
+    if($setting['deposit_msg'] == ''){
+        
+    }else{
+        ?>
+        <div class="container mt-5">
+            <!-- Withdraw Notice Alert Box -->
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Notice:</strong> <?=$setting['deposit_msg'] ?>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+
+    
+
     <!-- finding driver list starts -->
     <section class="driver-request section-b-space">
         <div class="custom-container">
@@ -280,7 +299,7 @@ include('includes/sessions.php');
                 <ul class="condition-list">
                     <li>
                         <h5>Minimum Recharge</h5>
-                        <p>Minimum Recharge is 1000 INR</p>
+                        <p>Minimum Recharge is <?=$setting['minRecharge'] ?> INR</p>
                     </li>
                     <li>
                         <h5>Fill UTR </h5>

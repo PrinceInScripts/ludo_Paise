@@ -51,7 +51,17 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         echo json_encode(array('status' => 'error', 'message' => 'Minimum withdraw amount is ' . $minWithdraw));
     } else {
 
+        $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
+        $withdraw_status = $setting['withdraw_status'];
+
+        if ($withdraw_status == 'off') {
+            echo json_encode(array('status' => 'error', 'message' => 'Withdrawal is disabled by admin', 'url' => 'withdraw'));
+            exit();
+        }
+
         sleep(1);
+
+        
 
         if ($payment_mode == 'upi') {
             $newWallet = $wallet - $amount;
