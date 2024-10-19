@@ -38,12 +38,16 @@ include ("top.php");
                   </thead>
                   <tbody>
                   <?php
-                    $sql="SELECT * FROM game_record";
+                    $sql="SELECT * FROM game_record order by id desc";
                     $res=mysqli_query($con,$sql);
+                    $i=1;
                     while($row=mysqli_fetch_assoc($res)){ ?>
+                    <?php
+                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['user_id']."'"));
+                    ?>
                         <tr>
-                          <td><?php echo $row['id']?></td>
-                          <td><?php echo $row['user_id']?></td>
+                          <td><?php echo $i++?></td>
+                          <td><?php echo $user['mobile']?></td>
                           <td><?php echo $row['game_id']?></td>
                           <td><?php echo $row['amount']?></td>
                           <td><?php echo $row['ProfitAmount']?></td>

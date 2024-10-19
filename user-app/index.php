@@ -46,25 +46,55 @@
 
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
+    <style>
+        
+       .onboarding-section pt-0{
+           background-color: #fff;
+       }
+       
+         .home-img{
+             height: 65%;
+             width: 100%;
+
+         }
+
+         .home-img img{
+             width: 100%;
+             height: 100%;
+         }
+
+        .user-onboarding-content-box {
+           height: 35%;
+        }
+
+        
+
+
+    </style>
 </head>
 
 <body class="box-background">
     <!-- onboarding section start -->
     <section class="onboarding-section pt-0">
-        <div class="onboarding-wrapper user-intro">
+        <!-- <div class="onboarding-wrapper user-intro">
             <img class="img-fluid vehicle1" src="https://cdn-icons-png.flaticon.com/512/12254/12254603.png" alt="bike"
                 data-aos="zoom-in" data-aos-duration="500" data-aos-delay="1000">
             <img class="img-fluid vehicle2" src="https://cdn-icons-png.flaticon.com/128/10490/10490256.png" alt="bike"
                 data-aos="zoom-in" data-aos-duration="500" data-aos-delay="1000">
             <img class="img-fluid vehicle3" src="https://cdn-icons-png.flaticon.com/512/2460/2460454.png" alt="car" data-aos="zoom-in"
                 data-aos-duration="500" data-aos-delay="1000">
+               
+        </div> -->
+        <div class="home-img">
+        <img src="../assets/images/background/home.png"  alt="">
         </div>
-
+       
         <div class="user-onboarding-content-box">
-            <img class="img-fluid union-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union.svg" alt="union">
-            <img class="img-fluid union-img-dark" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union-dark.svg" alt="union">
+            <!-- <img class="img-fluid union-img" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union.svg" alt="union">
+            <img class="img-fluid union-img-dark" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/union-dark.svg" alt="union"> -->
             <h2>Play Win Repeat</h2>
-            <p>Bet smart, play hard, and watch your fortune grow. hi</p>
+            <!-- <p>Bet smart, play hard, and watch your fortune grow. hi</p> -->
+            <p>This Game invloes an elements financial risk and may be addictive. Please Play responsibly and at you own risk.</p>
 
             <a href="login" class="onboarding-next">
                 <i class="iconsax icon" data-icon="chevron-right"></i>

@@ -48,19 +48,15 @@ include("top.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM withdrawrecord WHERE status=0";
+                                        $sql = "SELECT * FROM withdrawrecord WHERE status=0 order by id desc";
                                         $res = mysqli_query($con, $sql);
-
+                                        $i=1;
                                         while ($row = mysqli_fetch_assoc($res)) {
-                                            $id = $row['userid'];
-
-                                            $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                            $userResult = mysqli_query($con, $userQuery);
-                                            $user = mysqli_fetch_assoc($userResult);
+                                            $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
                                         ?>
 
                                             <tr>
-                                                <td><?php echo $row['id']; ?></td>
+                                                <td><?php echo $i++; ?></td>
                                                 <td><?php echo $user['mobile']; ?></td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
@@ -96,31 +92,26 @@ include("top.php");
                                             <th>Type</th>
                                             <th>Created At</th>
                                             <th>Remark</th>
-                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM withdrawrecord WHERE status=1";
+                                        $sql = "SELECT * FROM withdrawrecord WHERE status=1 order by id desc";
                                         $res = mysqli_query($con, $sql);
-
+                                        $i=1;
                                         while ($row = mysqli_fetch_assoc($res)) {
-                                            $id = $row['userid'];
-
-                                            $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                            $userResult = mysqli_query($con, $userQuery);
-                                            $user = mysqli_fetch_assoc($userResult);
+                                            $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
                                         ?>
 
                                             <tr>
-                                                <td><?php echo $row['id']; ?></td>
+                                                <td><?php echo $i++; ?></td>
                                                 <td><?php echo $user['mobile']; ?></td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
                                                 <td><?php echo $row['created_at']; ?></td>
                                                 <td><?php echo $row['remark']; ?></td>
-                                                <td></td>
+                                               
                                             </tr>
                                         <?php
                                         }
@@ -151,31 +142,27 @@ include("top.php");
                                             <th>Type</th>
                                             <th>Created At</th>
                                             <th>Remark</th>
-                                            <th>Status</th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM withdrawrecord WHERE status=2";
+                                        $sql = "SELECT * FROM withdrawrecord WHERE status=2 order by id desc";
                                         $res = mysqli_query($con, $sql);
-
+                                        $i=1;
                                         while ($row = mysqli_fetch_assoc($res)) {
-                                            $id = $row['userid'];
-
-                                            $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                            $userResult = mysqli_query($con, $userQuery);
-                                            $user = mysqli_fetch_assoc($userResult);
+                                            $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
                                         ?>
 
                                             <tr>
-                                                <td><?php echo $row['id']; ?></td>
+                                                <td><?php echo $i++ ?></td>
                                                 <td><?php echo $user['mobile']; ?></td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
                                                 <td><?php echo $row['created_at']; ?></td>
                                                 <td><?php echo $row['remark']; ?></td>
-                                                <td></td>
+                                                
                                             </tr>
                                         <?php
                                         }

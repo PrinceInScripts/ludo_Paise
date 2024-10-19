@@ -42,11 +42,12 @@ include ("top.php");
                   </thead>
                   <tbody>
                   <?php
-                    $sql="SELECT * FROM users";
+                    $sql="SELECT * FROM users order by id desc";
                     $res=mysqli_query($con,$sql);
+                    $i=1;
                     while($row=mysqli_fetch_assoc($res)){ ?>
                         <tr>
-                          <td><?php echo $row['id']?></td>
+                          <td><?php echo $i++?></td>
                           <td><?php echo $row['mobile']?></td>
                           <td><?php echo $row['username']?></td>
                           <td><?php echo $row['email']?></td>

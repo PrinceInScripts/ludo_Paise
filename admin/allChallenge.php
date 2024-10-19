@@ -38,11 +38,12 @@ include ("top.php");
                   </thead>
                   <tbody>
                   <?php
-                    $sql="SELECT * FROM games";
+                    $sql="SELECT * FROM games order by id desc";
                     $res=mysqli_query($con,$sql);
+                    $i=1;
                     while($row=mysqli_fetch_assoc($res)){ ?>
                         <tr>
-                          <td><?php echo $row['id']?></td>
+                          <td><?php echo $i++?></td>
                           <td><?php echo $row['game_id']?></td>
                           <td><?php echo $row['game_type']?></td>
                           <td><?php echo $row['roomcode']?></td>
