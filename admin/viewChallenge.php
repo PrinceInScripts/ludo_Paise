@@ -164,6 +164,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                         <h3>Creator Screenshot</h3>
                         <div class="row mb-3">
                           <div class="col-sm-6">
+                            <button class="btn btn-secondary" onclick="viewJssC()">View Join Screenshot</button>
                             <button class="btn btn-secondary" onclick="viewssC()">View Screenshot</button>
                           </div>
 
@@ -310,6 +311,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                         <h3>Acceptor Screenshot</h3>
                         <div class="row mb-3">
                           <div class="col-sm-6">
+                            <button class="btn btn-secondary" onclick="viewJssA()">View Join Screenshot</button>
                             <button class="btn btn-secondary" onclick="viewssA()">View Screenshot</button>
                           </div>
 
@@ -411,6 +413,31 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
    
   }
+  function viewJssC() {
+    <?php
+    if($row['creator_join_ss'] == 'cancel'){
+    ?>
+    Swal.fire({
+      title: 'Creator Screenshot',
+      html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+      showCloseButton: true,
+      showConfirmButton: false,
+    })
+    <?php
+    }  else{
+    ?>
+    Swal.fire({
+      title: 'Creator Screenshot',
+      html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_join_ss'] ?>" class="img-fluid" alt="Photo">',
+      showCloseButton: true,
+      showConfirmButton: false,
+    })
+    <?php
+    }
+    ?>
+
+   
+  }
 
   function viewssA() {
     <?php
@@ -428,6 +455,30 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
       Swal.fire({
         title: 'Accestor Screenshot',
         html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['acceptor_ss'] ?>" class="img-fluid" alt="Photo">',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
+    <?php
+    }
+    ?>
+
+  }
+  function viewJssA() {
+    <?php
+    if ($row['acceptor_join_ss'] == 'cancel') {
+    ?>
+      Swal.fire({
+        title: 'Accestor Screenshot',
+        html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
+    <?php
+    } else {
+    ?>
+      Swal.fire({
+        title: 'Accestor Screenshot',
+        html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['acceptor_join_ss'] ?>" class="img-fluid" alt="Photo">',
         showCloseButton: true,
         showConfirmButton: false,
       })

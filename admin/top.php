@@ -396,7 +396,13 @@
               <li class="nav-item">
                 <a href="gateway.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Gateway</p>
+                  <p>Recharge Gateway</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="gatewayWithdraw.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Withdraw Gateway</p>
                 </a>
               </li>
               <li class="nav-item">
