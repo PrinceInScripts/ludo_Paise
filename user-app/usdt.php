@@ -256,11 +256,12 @@ include('includes/sessions.php');
                         window.location.href = './payment';
                     });
                 </script>
+            
     <?php
             } else {
-                $upi = $payment['upi'];
+                $usdt = $payment['upi'];
                 $amount = $payment['amount'];
-                $upi_data = urlencode("upi://pay?pa=$upi&pn=Ludopaisa&mc=0000&tid=$txn_id&tr=$txn_id&tn=Add%20Funds&am=$amount&cu=INR");
+                $upi_data = urlencode("TF3seZLkjNnHBWGPCTKyDPmD7ZTUfzmKeQ");
                 $qr_img = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" . $upi_data;
             }
         }
@@ -299,12 +300,12 @@ include('includes/sessions.php');
             </ul>
             <br>
             <div class="form-group mt-0">
-                <label class="form-label mb-2" for="upiId">UPI ID :</label>
-                <input type="text" class="form-control" id="upiId" value="<?= $upi ?>" disabled>
+                <label class="form-label mb-2" for="upiId">USDT Address :</label>
+                <input type="text" class="form-control" id="upiId" value="<?= $usdt ?>" disabled>
             </div>
 
             <div class="grid-btn mt-4">
-                <button onclick="copyUPI()" class="btn btn-primary w-100 m-0">Copy UPI ID</button>
+                <button onclick="copyUPI()" class="btn btn-primary w-100 m-0">Copy USDT Address</button>
             </div>
             <div class="condition-part">
                 <h4 class="fw-semibold title-color">Step 2 :</h4>
@@ -314,8 +315,8 @@ include('includes/sessions.php');
                         <p>Upload your payment Screenshot</p>
                     </li>
                     <li>
-                        <h5>Fill UTR </h5>
-                        <p>Enter your UTR no.</p>
+                        <h5>Match Blockchain Network </h5>
+                        <p>TRC 20 (Tron)</p>
                     </li>
                 </ul>
             </div>
@@ -327,10 +328,7 @@ include('includes/sessions.php');
                         <input type="hidden" class="form-control" name="txn_id" id="txn_id" value="<?= $_GET['txn_id'] ?>">
                     </div>
                     <br>
-                    <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="utr">Enter UTR : <span style="color:red">* <sup>(Required)</sup> </span></label>
-                        <input type="number" class="form-control" name="utr" id="utr" placeholder="Enter Bank Reference Number">
-                    </div>
+                  
                     <br>
 
                     <div onclick="uploadRef()" name="submit" class="btn theme-btn w-100 auth-btn">UPLOAD</div>
@@ -364,22 +362,7 @@ include('includes/sessions.php');
         function uploadRef() {
             // submit form with upload screenshot and reference no using ajax
 
-            // Get the UTR value from the input field
-            var utr = document.getElementById("utr").value;
-
-            // Check if UTR is empty and length must be 12 
-            if (utr == "" || utr.length != 12) {
-                // Show SweetAlert error message
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid UTR',
-                    text: 'Please enter a valid 12 digit UTR number!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                return;
-            }
-
+          
 
             // Get the uploaded screenshot file
             var ss = document.getElementById("ss").files[0];

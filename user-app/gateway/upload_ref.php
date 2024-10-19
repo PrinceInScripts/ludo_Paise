@@ -39,24 +39,50 @@ if (isset($_POST['txn_id'])) {
     $filename = uniqid('ss_') . '.' . pathinfo($ss['name'], PATHINFO_EXTENSION);
 
     // Move the uploaded file to the uploads directory
-    if (move_uploaded_file($ss['tmp_name'], '../../assets/payment/screenshot/' . $txn_id . '/' . $filename)) {
-        // Update the reference number in the database
-        $ref_no = $_POST['utr'];
-        $user_id = $_SESSION['id'];
-        $txnRecord = "update paymenthistory set remark = 'Payment Requested', utr = '$ref_no', payment_ss = '$filename' where order_id = '$txn_id'";
-        $result = mysqli_query($con, $txnRecord);
 
-        if ($result) {
-            // Show success message
-            echo 'success';
+    $txn_sql="SELECT * FROM paymenthistory WHERE order_id = '$txn_id'";
+    $txn_result = mysqli_query($con, $txn_sql);
+    $txn = mysqli_fetch_assoc($txn_result);
+    if($txn['type']=='usdt'){
+        if (move_uploaded_file($ss['tmp_name'], '../../assets/payment/screenshot/' . $txn_id . '/' . $filename)) {
+            // Update the reference number in the database
+            $user_id = $_SESSION['id'];
+            $txnRecord = "update paymenthistory set remark = 'Payment Requested', payment_ss = '$filename' where order_id = '$txn_id'";
+            $result = mysqli_query($con, $txnRecord);
+    
+            if ($result) {
+                // Show success message
+                echo 'success';
+            } else {
+                // Show error message
+                echo 'error';
+            }
         } else {
             // Show error message
             echo 'error';
         }
-    } else {
-        // Show error message
-        echo 'error';
+    } else{
+        if (move_uploaded_file($ss['tmp_name'], '../../assets/payment/screenshot/' . $txn_id . '/' . $filename)) {
+            // Update the reference number in the database
+            $ref_no = $_POST['utr'];
+            $user_id = $_SESSION['id'];
+            $txnRecord = "update paymenthistory set remark = 'Payment Requested', utr = '$ref_no', payment_ss = '$filename' where order_id = '$txn_id'";
+            $result = mysqli_query($con, $txnRecord);
+    
+            if ($result) {
+                // Show success message
+                echo 'success';
+            } else {
+                // Show error message
+                echo 'error';
+            }
+        } else {
+            // Show error message
+            echo 'error';
+        }
     }
+    
+   
 }else{
     // Show error message
     echo 'error in submit';
