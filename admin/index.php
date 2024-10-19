@@ -598,8 +598,8 @@ include("top.php");
                       if ($row['status'] == 0) {
                       ?>
                       <td>
-                        <button class="btn btn-success" onclick="approve(<?php echo $row['order_id']?>)">Approve</button>
-                        <button class="btn btn-danger" onclick="decline(<?php echo $row['order_id']?>)">Decline</button>
+                        <button class="btn btn-success" onclick="approve('<?php echo $row['order_id']?>','credit')">Approve</button>
+                        <button class="btn btn-danger" onclick="approve('<?php echo $row['order_id']?>','debit')">Decline</button>
                       </td>
 
                       <?php
@@ -694,11 +694,64 @@ include("top.php");
   </section>
 </div>
 
-<script>
-  function approve(order_id){
-    //approve request using ajax and swal fire
+<!-- swal fire cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    
+<!-- jquery  -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+  function approve(order_id,r_type){
+    //approve request using ajax and swal fire
+    $.ajax({
+      url: 'approveRecharge.php',
+      type: 'POST',
+      data: {
+        order_id: order_id,
+        r_type: r_type
+
+      },
+      success: function(data){
+        response = JSON.parse(data);
+
+        if(response.type == 'credit'){
+          if(response.status == 'success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Transaction Approved Successfully',
+          }).then((result) => {
+            location.reload();
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message,
+          });
+        }
+        }else{
+          if(response.status == 'success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Transaction Declined Successfully',
+          }).then((result) => {
+            location.reload();
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message,
+          });
+        }
+        }
+
+        
+      }
+    });
+
   }
 </script>
 
