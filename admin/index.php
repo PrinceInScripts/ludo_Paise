@@ -219,6 +219,99 @@ include("top.php");
 
       </div>
 
+      <!-- Deposit Transition -->
+
+      <h2 class="my-2">Deposit</h2>
+      <div class="row">
+
+        <!-- Total Deposit -->
+        <?php
+
+        $total_sql = "SELECT SUM(deposit_wallet) as total_deposit_money FROM users";
+        $total_run = mysqli_query($con, $total_sql);
+        $total_data = mysqli_fetch_assoc($total_run);
+        $total_deposit_money = $total_data['total_deposit_money'];
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_deposit_money, 2) ?></h3>
+
+              <p>Total Deposit Balance</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Monthly Earning -->
+        <?php
+        // Monthly Earnings (Last 30 Days)
+        $total_sql = "SELECT SUM(deposit_wallet) as total_monthly_deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+        $total_run = mysqli_query($con, $total_sql);
+        $total_monthly_deposit = mysqli_fetch_assoc($total_run);
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_monthly_deposit['total_monthly_deposit'], 2) ?></h3>
+
+              <p>Total Monthly Deposit Wallet</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Weekly Earning (last 7 days)-->
+        <?php
+        $total_sql = "SELECT SUM(deposit_wallet) as total_weekly__deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+        $total_run = mysqli_query($con, $total_sql);
+        $total_weekly__deposit = mysqli_fetch_assoc($total_run);
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_weekly__deposit['total_weekly__deposit'], 2) ?></h3>
+
+              <p>Total Weekly Deposit Balance</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+
+         <!-- Day Earning (last 1 days)-->
+         <?php
+        $total_sql = "SELECT SUM(deposit_wallet) as total_day__deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+        $total_run = mysqli_query($con, $total_sql);
+        $total_day__deposit = mysqli_fetch_assoc($total_run);
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_day__deposit['total_day__deposit'], 2) ?></h3>
+
+              <p>Total Today Deposit Balance</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+
+
       <!-- Users -->
       <h2 class="my-2">Users</h2>
       <div class="row">
