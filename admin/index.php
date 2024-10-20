@@ -221,23 +221,21 @@ include("top.php");
 
       <!-- Deposit Transition -->
 
-      <h2 class="my-2">Deposit</h2>
+      <h2 class="my-2">Deposit Done</h2>
       <div class="row">
-
         <!-- Total Deposit -->
         <?php
-
-        $total_sql = "SELECT SUM(deposit_wallet) as total_deposit_money FROM users";
-        $total_run = mysqli_query($con, $total_sql);
-        $total_data = mysqli_fetch_assoc($total_run);
-        $total_deposit_money = $total_data['total_deposit_money'];
+        $total_deposit_sql="SELECT SUM(amount) as total_deposit_money FROM paymenthistory WHERE status=1";
+        $total_deposit_run=mysqli_query($con,$total_deposit_sql);
+        $total_deposit_data=mysqli_fetch_assoc($total_deposit_run);
+        $total_deposit_money=$total_deposit_data['total_deposit_money'];
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
               <h3><?php echo "₹" . number_format($total_deposit_money, 2) ?></h3>
 
-              <p>Total Deposit Balance</p>
+              <p>Total Deposit Done</p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
@@ -249,16 +247,18 @@ include("top.php");
         <!-- Monthly Earning -->
         <?php
         // Monthly Earnings (Last 30 Days)
-        $total_sql = "SELECT SUM(deposit_wallet) as total_monthly_deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
-        $total_run = mysqli_query($con, $total_sql);
-        $total_monthly_deposit = mysqli_fetch_assoc($total_run);
+        $monthly_deposit_sql="SELECT SUM(amount) as total_monthly_deposit FROM paymenthistory WHERE status=1 AND created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+        $monthly_deposit_run=mysqli_query($con,$monthly_deposit_sql);
+        $monthly_deposit_data=mysqli_fetch_assoc($monthly_deposit_run);
+        $total_monthly_deposit=$monthly_deposit_data['total_monthly_deposit'];
+
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3><?php echo "₹" . number_format($total_monthly_deposit['total_monthly_deposit'], 2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_monthly_deposit, 2) ?></h3>
 
-              <p>Total Monthly Deposit Wallet</p>
+              <p>Monthly Deposit Done</p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
@@ -269,16 +269,17 @@ include("top.php");
 
         <!-- Weekly Earning (last 7 days)-->
         <?php
-        $total_sql = "SELECT SUM(deposit_wallet) as total_weekly__deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-        $total_run = mysqli_query($con, $total_sql);
-        $total_weekly__deposit = mysqli_fetch_assoc($total_run);
+        $weekly_deposit_sql="SELECT SUM(amount) as total_weekly__deposit FROM paymenthistory WHERE status=1 AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+        $weekly_deposit_run=mysqli_query($con,$weekly_deposit_sql);
+        $weekly_deposit_data=mysqli_fetch_assoc($weekly_deposit_run);
+        $total_weekly__deposit=$weekly_deposit_data['total_weekly__deposit'];
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3><?php echo "₹" . number_format($total_weekly__deposit['total_weekly__deposit'], 2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_weekly__deposit, 2) ?></h3>
 
-              <p>Total Weekly Deposit Balance</p>
+              <p>Weekly Deposit Done </p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
@@ -290,16 +291,111 @@ include("top.php");
 
          <!-- Day Earning (last 1 days)-->
          <?php
-        $total_sql = "SELECT SUM(deposit_wallet) as total_day__deposit FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
-        $total_run = mysqli_query($con, $total_sql);
-        $total_day__deposit = mysqli_fetch_assoc($total_run);
+         $today_deposit_sql="SELECT SUM(amount) as total_day__deposit FROM paymenthistory WHERE status=1 AND DATE(created_at) = CURDATE()";
+          $today_deposit_run=mysqli_query($con,$today_deposit_sql);
+          $today_deposit_data=mysqli_fetch_assoc($today_deposit_run);
+          $total_day__deposit=$today_deposit_data['total_day__deposit'];
         ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3><?php echo "₹" . number_format($total_day__deposit['total_day__deposit'], 2) ?></h3>
+              <h3><?php echo "₹" . number_format($total_day__deposit, 2) ?></h3>
 
-              <p>Total Today Deposit Balance</p>
+              <p>Today Deposit Done</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Withdraw Transition -->
+
+      <h2 class="my-2">Withdraw Done</h2>
+      <div class="row">
+        <!-- Total Deposit -->
+        <?php
+        $total_withdraw_sql="SELECT SUM(amount) as total_withdraw_money FROM withdrawrecord WHERE status=1";
+        $total_withdraw_run=mysqli_query($con,$total_withdraw_sql);
+        $total_withdraw_data=mysqli_fetch_assoc($total_withdraw_run);
+        $total_withdraw_money=$total_withdraw_data['total_withdraw_money'];
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_withdraw_money, 2) ?></h3>
+
+              <p>Total Withdraw Done</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Monthly Earning -->
+        <?php
+        // Monthly Earnings (Last 30 Days)
+        $monthly_withdraw_sql="SELECT SUM(amount) as total_monthly_withdraw FROM withdrawrecord WHERE status=1 AND created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+        $monthly_withdraw_run=mysqli_query($con,$monthly_withdraw_sql);
+        $monthly_withdraw_data=mysqli_fetch_assoc($monthly_withdraw_run);
+        $total_monthly_withdraw=$monthly_withdraw_data['total_monthly_withdraw'];
+
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_monthly_withdraw, 2) ?></h3>
+
+              <p>Monthly Withdraw Done</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Weekly Earning (last 7 days)-->
+        <?php
+        $weekly_deposit_sql="SELECT SUM(amount) as total_weekly_withdraw FROM paymenthistory WHERE status=1 AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+        $weekly_deposit_run=mysqli_query($con,$weekly_deposit_sql);
+        $weekly_deposit_data=mysqli_fetch_assoc($weekly_deposit_run);
+        $total_weekly_withdraw=$weekly_deposit_data['total_weekly_withdraw'];
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_weekly_withdraw, 2) ?></h3>
+
+              <p>Weekly Withdraw Done</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+
+         <!-- Day Earning (last 1 days)-->
+         <?php
+        $today_withdraw_sql="SELECT SUM(amount) as total_day__withdraw FROM withdrawrecord WHERE status=1 AND DATE(created_at) = CURDATE()";
+        $today_withdraw_run=mysqli_query($con,$today_withdraw_sql);
+        $today_withdraw_data=mysqli_fetch_assoc($today_withdraw_run);
+        $total_day__withdraw=$today_withdraw_data['total_day__withdraw'];
+        ?>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3><?php echo "₹" . number_format($total_day__withdraw, 2) ?></h3>
+
+              <p>Today Withdraw Done</p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
@@ -663,7 +759,7 @@ include("top.php");
                 </thead>
                 <tbody>
                   <?php
-                  $sql = "SELECT * FROM paymenthistory WHERE type='deposit' AND status=0 ORDER BY created_at DESC";
+                  $sql = "SELECT * FROM paymenthistory WHERE status=0 ORDER BY created_at DESC";
                   $res = mysqli_query($con, $sql);
                   $i = 1;
 
