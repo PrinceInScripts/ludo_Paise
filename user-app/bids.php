@@ -147,6 +147,22 @@ $user_id = $_SESSION['id'];
                                             ?>
                                         </span>
                                     </div>
+                                    <div class="d-flex align-items-start gap-1">
+                                        <img class="clock" src="https://cdn-icons-png.flaticon.com/128/17401/17401872.png" alt="roomcode">
+                                        <h6 class="fw-normal lh-base content-color">
+                                            <?php 
+                                            $fetchRoom = "SELECT roomcode FROM games WHERE game_id = '".$row['game_id']."' ";
+                                            $resultRoom = $con->query($fetchRoom);
+                                            $room = $resultRoom->fetch_assoc();
+
+                                            if($room['roomcode'] != '') {
+                                                echo 'Room Code : '.$room['roomcode'];
+                                            } else {
+                                                echo 'Room Code : Not Available';
+                                            }
+                                            ?>
+                                        </h6>
+                                    </div>
                                 </div>
 
                                 <div class="grid-btn mt-2">
