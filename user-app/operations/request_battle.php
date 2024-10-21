@@ -14,7 +14,7 @@ $fetchBalanceRow = mysqli_fetch_assoc($fetchBalanceResult);
 $balance = $fetchBalanceRow['withdraw_wallet'] + $fetchBalanceRow['deposit_wallet'];
 
     // first check battle exits or not, if exist set $user_id to accepted_by field 
-    $sql = "SELECT * FROM games WHERE game_id = '$battle_id' AND status = 'pending'";
+    $sql = "SELECT * FROM games WHERE id = '$battle_id' AND status = 'pending'";
     $result = mysqli_query($con, $sql);
     $fetch = mysqli_fetch_assoc($result);
     $created_by = $fetch['created_by'];
