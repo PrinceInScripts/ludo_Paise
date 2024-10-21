@@ -328,7 +328,7 @@ if (isset($_GET['id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory";
+                                                $sql = "SELECT * FROM paymenthistory WHERE userid='$id'";
                                                 $res = mysqli_query($con, $sql);
 
                                                 while ($row = mysqli_fetch_assoc($res)) {
@@ -385,7 +385,7 @@ if (isset($_GET['id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory where type='deposit'";
+                                                $sql = "SELECT * FROM paymenthistory where type='deposit' AND userid='$id'";
                                                 $res = mysqli_query($con, $sql);
 
                                                 while ($row = mysqli_fetch_assoc($res)) {
@@ -443,7 +443,7 @@ if (isset($_GET['id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT * FROM paymenthistory where type='withdraw'";
+                                                $sql = "SELECT * FROM paymenthistory where type='withdraw' AND userid='$id'";
                                                 $res = mysqli_query($con, $sql);
 
                                                 while ($row = mysqli_fetch_assoc($res)) {
