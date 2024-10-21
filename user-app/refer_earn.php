@@ -331,7 +331,7 @@ $user = mysqli_fetch_assoc($user);
                             <h4>Your Referral Link:</h4>
                             <div class="input-group">
                                 <input type="text" id="referralLink" value="https://example.com/referral?code=<?=$user['referrer_id'] ?>" class="form-control" readonly>
-                                <button class="btn btn-primary" id="copyLinkButton">Copy Referral Link</button>
+                                <button class="btn btn-primary" id="copyLinkButton">Copy Link</button>
                             </div>
                         </div>
 
