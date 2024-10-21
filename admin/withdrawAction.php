@@ -26,7 +26,7 @@
             }
         } else if($action==2){
             $update_query = "UPDATE withdrawrecord SET status='2' WHERE id='$id'";
-            $userw = $withdraw['amount'];
+            $userw = $withdraw['amount'] + $withdraw['fee'];
             $update_user_query = "UPDATE users SET withdraw_wallet= withdraw_wallet + '$userw' WHERE id='$user_id'";
             $update_user_result = mysqli_query($con, $update_user_query);
             $update_result = mysqli_query($con, $update_query);

@@ -323,7 +323,16 @@ $userid = $_SESSION['id'];
                                             <div class="d-flex align-content-center gap-2 lh-base">
                                                 <h5 class="fw-normal title-color">Mode</h5>
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">UPI</span>
+                                                    <span class="count content-color fw-normal">
+                                                    <?php 
+                                                        if($row2['type'] == 'upi'){
+                                                            echo 'UPI';
+                                                        }else{
+                                                            echo 'Bank';
+                                                        }
+                                                        
+                                                        ?>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>
@@ -379,7 +388,16 @@ $userid = $_SESSION['id'];
                                             <div class="d-flex align-content-center gap-2 lh-base">
                                                 <h5 class="fw-normal title-color">Mode : </h5>
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">UPI</span>
+                                                    <span class="count content-color fw-normal">
+                                                    <?php 
+                                                        if($row2['type'] == 'upi'){
+                                                            echo 'UPI';
+                                                        }else{
+                                                            echo 'Bank';
+                                                        }
+                                                        
+                                                        ?>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>
@@ -435,7 +453,16 @@ $userid = $_SESSION['id'];
                                             <div class="d-flex align-content-center gap-2 lh-base">
                                                 <h5 class="fw-normal title-color">Mode : </h5>
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">UPI</span>
+                                                    <span class="count content-color fw-normal">
+                                                        <?php 
+                                                        if($row2['type'] == 'upi'){
+                                                            echo 'UPI';
+                                                        }else{
+                                                            echo 'Bank';
+                                                        }
+
+                                                        ?>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>

@@ -22,6 +22,7 @@ if (mysqli_num_rows($res) > 0) {
     $row = mysqli_fetch_assoc($res);
     $recharge_status = $row['recharge_status'];
     $withdraw_status = $row['withdraw_status'];
+    $withdrawCount = $row['withdraw_count'];
 }
 
 ?>
@@ -65,6 +66,17 @@ if (mysqli_num_rows($res) > 0) {
                 <div class="col-sm-8 d-flex">
                     <input type="text" class="form-control" id="minRecharge" name="minRecharge" value="<?php echo $minRecharge; ?>" style="width: 50%;">
                     <button type="submit" name="update_recharge" class="btn btn-primary ml-2">Update</button>
+                </div>
+            </div>
+        </form>
+        <form action="manage_settings.php" class="auth-form" method="post">
+
+            <!-- Second Section: Min Recharge -->
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4" for="withdrawCount">Daily Free Withdrawal</label>
+                <div class="col-sm-8 d-flex">
+                    <input type="text" class="form-control" id="withdrawCount" name="withdrawCount" value="<?php echo $withdrawCount; ?>" style="width: 50%;">
+                    <button type="submit" name="withdraw_count" class="btn btn-primary ml-2">Update</button>
                 </div>
             </div>
         </form>

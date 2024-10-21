@@ -8,6 +8,8 @@ $query = "SELECT * FROM users WHERE id = '$user_id'";
 $result = mysqli_query($con, $query);
 $user = mysqli_fetch_assoc($result);
 
+$userWithdrawCount = $user['withdraw_count'];
+
 $wallet = $user['withdraw_wallet'];
 
 $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
@@ -48,7 +50,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
     if ($wallet < $amount) {
         echo json_encode(array('status' => 'error', 'message' => 'Insufficient balance', 'url' => 'payment'));
     } else if ($amount < $minWithdraw) {
-        echo json_encode(array('status' => 'error', 'message' => 'Minimum withdraw amount is ' . $minWithdraw));
+        echo json_encode(array('status' => 'error', 'message' => 'Minimum withdraw amount is ' . $minWithdraw . ' INR', 'url' => 'withdraw'));
     } else {
 
         $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
@@ -70,13 +72,26 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             $txn_id = uniqid('txn_');
             $payment_info = array('is_upi' => true, 'is_bank' => false, 'upi' => $bankdetails['upi'], 'bank' => ["ac" => null, "ifsc" => null]);
             $payment_info = json_encode($payment_info);
-            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, payment_info , status) VALUES ('$user_id', '$amount', 'upi', '$txn_id', '$payment_info', 0)";
+            if($userWithdrawCount >= $setting['withdraw_count']){
+                // 1% fee will be deducted from the amount 
+                $fee = $amount * 0.01;
+                $amount = $amount - $fee;
+
+            }else{
+                $fee = 0;
+
+            }
+            $sql = "INSERT INTO withdrawrecord (userid, amount,fee, type, txnid, payment_info , status, remark) VALUES ('$user_id', '$amount','$fee', 'upi', '$txn_id', '$payment_info', 0, 'Convinence fee : ₹ $fee')";
+            $result = mysqli_query($con, $sql);
+
+            // update user withdraw_count 
+            $sql = "UPDATE users SET withdraw_count = withdraw_count + 1 WHERE id = '$user_id'";
             $result = mysqli_query($con, $sql);
             if ($result) {
                 
                 echo json_encode(array('status' => 'success', 'message' => 'Withdraw request submitted successfully','url'=>'history'));
             } else {
-                echo json_encode(array('status' => 'error', 'message' => 'An error occurred'));
+                echo json_encode(array('status' => 'error', 'message' => 'An error occurred', 'url' => 'withdraw'));
             }
         } else if ($payment_mode == 'bankcard') {
             $newWallet = $wallet - $amount;
@@ -86,16 +101,32 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             // {"is_upi":false,"is_bank":false,"upi":null,"bank" : {"ac":5463573,"ifsc":null}} 
             $payment_info = array('is_upi' => false, 'is_bank' => true,'upi' =>null, 'bank' => array('ac' => $bankdetails['bank_acc'], 'ifsc' => $bankdetails['bank_ifsc']));
             $payment_info = json_encode($payment_info);
-            $sql = "INSERT INTO withdrawrecord (userid, amount, type, txnid, payment_info, status) VALUES ('$user_id', '$amount', 'bank', '$txn_id', '$payment_info' , 0)";
+
+            if($userWithdrawCount >= $setting['withdraw_count']){
+                // 1% fee will be deducted from the amount 
+                $fee = $amount * 0.01;
+                $amount = $amount - $fee;
+
+            }else{
+                $fee = 0;
+
+            }
+
+            $sql = "INSERT INTO withdrawrecord (userid, amount,fee, type, txnid, payment_info, status, remark) VALUES ('$user_id', '$amount','$fee', 'bank', '$txn_id', '$payment_info' , 0, 'Convinence fee : ₹ $fee ')";
             $result = mysqli_query($con, $sql);
+
+            // update user withdraw_count
+            $sql = "UPDATE users SET withdraw_count = withdraw_count + 1 WHERE id = '$user_id'";
+            $result = mysqli_query($con, $sql);
+
             if ($result) {
                 
                 echo json_encode(array('status' => 'success', 'message' => 'Withdraw request submitted successfully','url'=>'history'));
             } else {
-                echo json_encode(array('status' => 'error', 'message' => 'An error occurred'));
+                echo json_encode(array('status' => 'error', 'message' => 'An error occurred', 'url' => 'withdraw'));
             }
         }else{
-            echo json_encode(array('status' => 'error', 'message' => 'Invalid payment mode'));
+            echo json_encode(array('status' => 'error', 'message' => 'Invalid payment mode', 'url' => 'withdraw'));
         }
     }
 }

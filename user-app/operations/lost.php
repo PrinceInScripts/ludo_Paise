@@ -50,6 +50,7 @@ if(isset($_POST['battle_id'])){
             $getGamesRow = mysqli_fetch_assoc($getGamesResult);
             $opponent = $getGamesRow['created_by'];
             $prize = $getGamesRow['winAmount'];
+            $amount = $getGamesRow['amount'];
             $status = 'complete';
             $isComplete = 1;
             $reason = 'Game lost by acceptor';

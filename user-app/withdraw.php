@@ -328,7 +328,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                     </li>
                     <li>
                         <h5>Withdraw Frequency </h5>
-                        <p>You can place only 3 Withdraw in a day.</p>
+                        <p>You can place only <?=$setting['withdraw_count'] ?> free Withdraw in a day. After that 1% TDS will be applied</p>
                     </li>
                 </ul>
             </div>

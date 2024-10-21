@@ -22,6 +22,33 @@ if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screen
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
+        // fetch battle details 
+
+        $fetch = mysqli_fetch_assoc($result);
+
+        $creator = $fetch['created_by'];
+        $acceptor = $fetch['accepted_by'];
+
+        if($user_id == $creator){
+            // check if cretor_join_ss uploaded proof ss or not 
+            if($fetch['creator_join_ss'] == null){
+                echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
+                exit;
+            }
+
+        }elseif($user_id == $acceptor){
+            // check if acceptor_join_ss uploaded proof ss or not 
+            if($fetch['acceptor_join_ss'] == null){
+                echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
+                exit;
+            }
+        }
+
+        
+
+       
+        
+
         if (mysqli_num_rows($result) > 0) {
             $file = $_FILES['file'];
             $filename = basename($file['name']);
@@ -54,8 +81,7 @@ if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screen
                         // Move the uploaded file to the server
                         if (move_uploaded_file($fileTmpName, $fileDestination)) {
 
-                            // Fetch battle details to determine who is uploading the screenshot
-                            $fetch = mysqli_fetch_assoc($result);
+                          
 
                             // Prepare SQL for updating screenshot
                             if ($fetch['created_by'] == $user_id) {
