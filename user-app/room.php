@@ -558,20 +558,23 @@ if ($created_by != '' && $accepted_by != '') {
             ?>
             <div class="game-result-win">
                 <p>Congratulations! You won the game</p>
+                <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             </div>
-
+            
         <?php
         } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner == $user_id) {
         ?>
             <div class="game-result-win">
                 <p>Congratulations! You won the game</p>
             </div>
+            <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
         <?php
         } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $status == 'cancel') {
         ?>
             <div class="game-result">
                 <p>Game Cancelled</p>
             </div>
+            <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
 
 
         <?php
@@ -579,18 +582,27 @@ if ($created_by != '' && $accepted_by != '') {
         ?>
             <div class="game-result">
                 <p>Game Cancelled</p>
+                
             </div>
         <?php
         } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
         ?>
             <div class="game-result">
                 <p>Sorry! You lost the game</p>
+                <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             </div>
         <?php
         } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
         ?>
             <div class="game-result">
                 <p>Sorry! You lost the game</p>
+                <?php 
+                if($acceptor_ss != 'lost'){
+                    ?>
+                    <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
+                    <?php
+                }
+                ?>
             </div>
 
         <?php
