@@ -68,7 +68,7 @@ if(isset($_POST['battle_id'])){
                 $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$opponent', '$battle_id', '$amount', '$prize', 'won', 'Game Won')";
                 $insertRecord2 = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$user_id', '$battle_id', '$amount', '$amount', 'lost', 'Game Lost')";
                 $insertRecordResult = mysqli_query($con, $insertRecord);
-                $insertRecordResult2 = mysqli_query($con, $insertRecord2);
+                $insertRecordResult2 = mysqli_query($con, $insertRecord2); 
 
                 
             }

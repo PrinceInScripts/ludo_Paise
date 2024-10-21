@@ -78,7 +78,7 @@ $user_id = $_SESSION['id'];
             <ul class="driver-list">
                 <?php
 
-                $sql = "SELECT * FROM game_record WHERE user_id = '$user_id' ORDER BY id DESC";
+                $sql = "SELECT * FROM game_record WHERE user_id = '$user_id' AND status != 'game_join' ORDER BY id DESC";
                 $result = $con->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -87,8 +87,9 @@ $user_id = $_SESSION['id'];
                         $sql = "SELECT game_id FROM games WHERE id = '" . $row['game_id'] . "'";
                         $result2 = $con->query($sql);
                         $row2 = $result2->fetch_assoc();
-
+                        $gid = $row['game_id'];
                         $row['game_id'] = $row2['game_id'];
+                        
                 ?>
                         <li>
                             <div class="driver-box outstation-driver-box">
@@ -164,6 +165,14 @@ $user_id = $_SESSION['id'];
                                         </h6>
                                     </div>
                                 </div>
+                                <div class="grid-btn mt-2">
+                                <!-- <a href="room?battle= -->
+                                <?php 
+                                // echo $gid;
+                                 ?>
+                                <!-- " class="btn theme-btn w-100 m-0">View Room</a> -->
+                                    
+                                </div>
 
                                 <div class="grid-btn mt-2">
                                     <?php
@@ -181,8 +190,9 @@ $user_id = $_SESSION['id'];
                                     <?php
                                     }
                                     ?>
-
+                                    <a href="room?battle=<?=$gid ?>" class="btn theme-btn w-100 m-0">View Room</a>
                                 </div>
+                                
                             </div>
                         </li>
                     <?php
