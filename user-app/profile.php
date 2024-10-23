@@ -16,7 +16,9 @@ if (mysqli_num_rows($res) > 0) {
     $username = $row['username'];
     $email = $row['email'];
     $aadhar = $row['adhaar_no'];
+    $pan = $row['pan_no'];
     $kyc = $row['kyc_status'];
+    $panStatus = $row['pan_status'];
     $mobile = $row['mobile'];
     $profile = $row['profile_pic'];
 }
@@ -109,7 +111,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             <label class="form-label" for="Inputemail1">Aadhar No</label>
                             <input readonly type="email" class="form-control" id="Inputemail1" minlength="16" maxlength="16" onkeyup="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your Aadhar" value="<?php echo $aadhar; ?>">
                         </div>
-                        <button  class="btn btn-success w-100">Verified</button>
+                        <button  class="btn theme-btn w-100">Verified <img src="https://cdn-icons-png.flaticon.com/128/5962/5962703.png" width="18" alt=""> </button>
                     <?php
                     } else {
                     ?>
@@ -128,6 +130,44 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
 
                         <button id="sendOtpBtn" onclick="sendAadharOtp()" type="menu" class="btn theme-btn w-100">Verify</button>
                         <button id="verifyOtpButton" style="display: none;" onclick="verifyOtp()" type="menu" class="btn theme-btn w-100">Submit OTP</button>
+                        
+                    <?php
+                    }
+                    ?>
+
+
+                </div>
+                <hr>
+                <div class="auth-form">
+                    <?php
+                    if ($panStatus == 1) {
+                    ?>
+                        <div class="form-group mb-4">
+
+                            <label class="form-label" for="Inputemail1">Pan No</label>
+                            <input readonly type="email" class="form-control" id="Inputemail1" minlength="10" maxlength="10" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Please enter a valid PAN number (e.g. ABCDE1234F)" required placeholder="Enter your Pan" value="<?php echo $pan; ?>">
+                        </div>
+                        <button  class="btn btn-success w-100">Verified </button>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="form-group mb-4">
+
+                            <label class="form-label" for="pan">Pan No</label>
+                            <input type="text" class="form-control" id="pan" name="pan" minlength="10" maxlength="10" onkeyup="validatePAN()" title="Please enter a valid PAN number (e.g. ABCDE1234F)" required placeholder="ABCDE1234F" value="<?php echo $pan; ?>">
+                        </div>
+                        <span id="pan-error" style="color: red; display: none;">Invalid PAN format <br> <br></span>
+                        
+
+                        
+                        <div id="otp-box" style="display:none" class="form-group mb-4">
+
+                            <label class="form-label" for="pan-otp">Enter OTP</label>
+                            <input type="text" class="form-control" id="pan-otp" name="pan-otp" minlength="10" maxlength="10" placeholder="Enter OTP">
+                        </div>
+
+                        <button id="sendOtpBtn" onclick="sendPanOtp()" type="menu" class="btn btn-warning w-100">Verify</button>
+                        <button id="verifyPanOtpButton" style="display: none;" onclick="verifyPanOtp()" type="menu" class="btn theme-btn w-100">Submit OTP</button>
                         
                     <?php
                     }
@@ -187,6 +227,66 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
             url: 'operations/send_aadhar_otp.php',
             type: 'POST',
             data: data,
+            beforeSend: function() {
+                    // Show SweetAlert2 loading modal
+                    Swal.fire({
+                        title: 'Processing ...',
+                        text: 'Please wait while we process your request',
+                        allowOutsideClick: false, // Prevent closing by clicking outside
+                        didOpen: () => {
+                            Swal.showLoading(); // Show the loading spinner
+                        }
+                    });
+                },
+            success: function(response){
+                console.log(response);
+                var res = JSON.parse(response);
+                if(res[0].status == 'success'){
+                    document.getElementById('otp-box').style.display = 'block';
+                    document.getElementById('sendOtpBtn').style.display = 'none';
+                    document.getElementById('verifyOtpButton').style.display = 'block';
+
+                   swal.fire({
+                        title: 'Success',
+                        text: res[0].message,
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                }else{
+                    swal.fire({
+                        title: 'Error',
+                        text: res[0].message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            }
+        });
+
+    }
+    function sendPanOtp(){
+        // using ajax 
+
+        var pan = document.getElementById('pan').value;
+        var data = {
+            pan: pan,
+        }
+        
+        $.ajax({
+            url: 'operations/send_pan_otp.php',
+            type: 'POST',
+            data: data,
+            beforeSend: function() {
+                    // Show SweetAlert2 loading modal
+                    Swal.fire({
+                        title: 'Processing ...',
+                        text: 'Please wait while we process your request',
+                        allowOutsideClick: false, // Prevent closing by clicking outside
+                        didOpen: () => {
+                            Swal.showLoading(); // Show the loading spinner
+                        }
+                    });
+                },
             success: function(response){
                 console.log(response);
                 var res = JSON.parse(response);
@@ -224,6 +324,17 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
             url: 'operations/verify_aadhar_otp.php',
             type: 'POST',
             data: data,
+            beforeSend: function() {
+                    // Show SweetAlert2 loading modal
+                    Swal.fire({
+                        title: 'Processing ...',
+                        text: 'Please wait while we process your request',
+                        allowOutsideClick: false, // Prevent closing by clicking outside
+                        didOpen: () => {
+                            Swal.showLoading(); // Show the loading spinner
+                        }
+                    });
+                },
             success: function(response){
                 console.log(response);
                 var res = JSON.parse(response);
@@ -267,6 +378,25 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <script>
+  function validatePAN() {
+    var panInput = document.getElementById("pan");
+    var panValue = panInput.value.toUpperCase();  // Auto-capitalize alphabets
+    panInput.value = panValue;  // Set the value back to the input in uppercase
+
+    var panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    var errorMessage = document.getElementById("pan-error");
+
+    if (panPattern.test(panValue)) {
+      errorMessage.style.display = "none"; // Hide error if valid
+    } else {
+      errorMessage.style.display = "inline"; // Show error if invalid
+    }
+  }
+</script>
+
+
 </body>
 
 

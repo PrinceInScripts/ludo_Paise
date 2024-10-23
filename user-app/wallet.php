@@ -262,22 +262,24 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
-    if (result.isConfirmed) {
-        const response = result.value; // Get the response from the fetch call
-        if (response.success) {
-            Swal.fire({
-                title: response.message, // Use the success message from the response
-                icon: 'success'
+                if (result.isConfirmed) {
+                    const response = result.value; // Get the response from the fetch call
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message, // Use the success message from the response
+                            icon: 'success'
+                        }).then(() => {
+                            location.reload(); // Reload the page after conversion
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message, // Show error message if conversion fails
+                            icon: 'error'
+                        });
+                    }
+                }
             });
-        } else {
-            Swal.fire({
-                title: 'Error',
-                text: response.message, // Show error message if conversion fails
-                icon: 'error'
-            });
-        }
-    }
-});
 
 
 
