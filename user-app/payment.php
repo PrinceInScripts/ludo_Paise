@@ -364,21 +364,15 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
             var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked').id;
           
             <?php
-            if ($wallet < $setting['minRecharge']) {
-            ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Minimum Recharge is <?= $setting['minRecharge'] ?> INR',
-                });
-                return;
-            <?php
-            } else if ($data['kyc_status'] == 0 && $amount > 500) {
+            $amount = "<script>document.write(amount)</script>";
+            if ($data['kyc_status'] == 0 && $amount > 500) {
             ?>
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Please complete KYC first to make payment more than 500 INR',
+                }).then(() => {
+                    window.location.href = 'profile';
                 });
                 return;
             <?php
