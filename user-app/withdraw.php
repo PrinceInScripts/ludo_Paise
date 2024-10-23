@@ -366,8 +366,10 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
 
         function initiateWithdraw() {
             var amount = document.getElementById("amount").value;
-            var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked').id;
-            if (amount == "") {
+            var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked');
+
+
+            if (amount == null || amount == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -375,7 +377,10 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 });
                 return;
             }
-            if (payment_mode == "") {
+
+            if(payment_mode){
+                payment_mode = payment_mode.id;
+            }else{
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -383,6 +388,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 });
                 return;
             }
+           
 
             // Ajax Payment Link Generation and Redirect to Payment Gateway Page 
 

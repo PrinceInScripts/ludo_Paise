@@ -235,14 +235,55 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-        function convert(){
-            // Conversion of withdrawal money to deposit money , swal fire for comming soon
-
+        function convert() {
             Swal.fire({
-                icon: 'info',
-                title: 'Coming Soon',
-                text: 'This feature is coming soon',
-            })
+                title: 'Convert Withdrawal Money to Deposit Money',
+                input: 'text',
+                inputLabel: 'Enter Amount',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Convert',
+                showLoaderOnConfirm: true,
+                preConfirm: (amount) => {
+                    return fetch(`convert.php?amount=${amount}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+    if (result.isConfirmed) {
+        const response = result.value; // Get the response from the fetch call
+        if (response.success) {
+            Swal.fire({
+                title: response.message, // Use the success message from the response
+                icon: 'success'
+            });
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: response.message, // Show error message if conversion fails
+                icon: 'error'
+            });
+        }
+    }
+});
+
+
+
+
+
+
 
         }
     </script>
