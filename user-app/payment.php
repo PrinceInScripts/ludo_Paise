@@ -290,7 +290,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
             <br>
             <ul class="payment-method-list pt-0">
                 <?php
-
+                $i = 1;
                 $sql = "SELECT * FROM payment_modes WHERE status = 1";
                 $result = mysqli_query($con, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -299,10 +299,11 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                         <div class="payment-list-box">
                             <label class="form-check-label" for="flexRadioDefault"> <img class="img-fluid img"
                                     src="<?= $row['icon'] ?>" alt="mastercard"> <?= $row['pay_name'] ?></label>
-                            <input class="form-check-input" id="<?= $row['slug'] ?>" type="radio" name="flexRadioDefault" id="flexRadioDefault">
+                            <input class="form-check-input" id="<?= $row['slug'] ?>" type="radio" name="flexRadioDefault">
                         </div>
                     </li>
                 <?php
+                $i++;
                 }
 
                 ?>
@@ -361,12 +362,17 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
 
         function initiatePayment() {
             var amount = document.getElementById("amount").value;
-            var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked').id;
+            
+            var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked');
+
+            var kyc = <?= $data['kyc_status'] ?>;
+
+            
           
-            <?php
-            $amount = "<script>document.write(amount)</script>";
-            if ($data['kyc_status'] == 0 && $amount > 500) {
-            ?>
+          
+         
+            if (kyc == 0 && amount > 500) {
+           
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -375,12 +381,14 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                     window.location.href = 'profile';
                 });
                 return;
-            <?php
+          
             }
-            ?>
 
            
-            if (amount == "") {
+           
+
+           
+            if (amount == null || amount == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -388,7 +396,10 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 });
                 return;
             }
-            if (payment_mode == "") {
+            if (payment_mode) {
+                payment_mode = payment_mode.id;
+                
+            }else{
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

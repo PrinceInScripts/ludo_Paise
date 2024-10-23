@@ -16,7 +16,17 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
 
     $payment_mode = $_POST['payment_mode'];
     $amount = $_POST['amount'];
-    $mobile = $user['mobile'];  // assuming mobile is passed in the POST data
+    $mobile = $user['mobile'];
+
+    $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
+    $min_deposit = $setting['minRecharge'];
+
+    if($amount < $min_deposit){
+        echo json_encode(array('status' => 'error', 'message' => 'Minimum deposit amount is ' . $min_deposit));
+        exit();
+    }
+    
+    // assuming mobile is passed in the POST data
 
     if ($payment_mode == 'phonepe_api') {
         // Unique transaction ID
