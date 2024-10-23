@@ -222,7 +222,11 @@ include('includes/sessions.php');
                     showConfirmButton: false,
                     timer: 1500
                 }).then(function() {
+                    //null history
+
                     window.location.href = './payment';
+
+                    
                 });
             </script>
             <?php
@@ -419,6 +423,7 @@ include('includes/sessions.php');
                         }).then(function() {
                             // Redirect to payment page
                             window.location.href = './payment';
+                            window.history.pushState(null, "", "./payment");
                         });
                     } else {
                         // Show SweetAlert error message

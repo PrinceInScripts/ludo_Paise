@@ -21,7 +21,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="taxify">
-    <meta name="referrer" content="no-referrer"> 
+    <meta name="referrer" content="no-referrer">
     <meta name="keywords" content="taxify">
     <meta name="author" content="taxify">
     <link rel="manifest" href="manifest.json">
@@ -235,23 +235,22 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
     </header>
     <!-- header end -->
 
-    <?php 
-    if($setting['deposit_msg'] == ''){
-        
-    }else{
-        ?>
+    <?php
+    if ($setting['deposit_msg'] == '') {
+    } else {
+    ?>
         <div class="container mt-5">
             <!-- Withdraw Notice Alert Box -->
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Notice:</strong> <?=$setting['deposit_msg'] ?>.
+                <strong>Notice:</strong> <?= $setting['deposit_msg'] ?>.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
-        <?php
+    <?php
     }
     ?>
 
-    
+
 
     <!-- finding driver list starts -->
     <section class="driver-request section-b-space">
@@ -290,22 +289,22 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
             <h3 class="fw-semibold title-color text-center">Choose Method</h3>
             <br>
             <ul class="payment-method-list pt-0">
-                <?php 
-                
+                <?php
+
                 $sql = "SELECT * FROM payment_modes WHERE status = 1";
                 $result = mysqli_query($con, $sql);
-                while($row = mysqli_fetch_assoc($result)){
-                    ?>
-                        <li class="w-100">
-                    <div class="payment-list-box">
-                        <label class="form-check-label" for="flexRadioDefault"> <img class="img-fluid img"
-                                src="<?=$row['icon'] ?>" alt="mastercard"> <?=$row['pay_name'] ?></label>
-                        <input class="form-check-input" id="<?=$row['slug']?>" type="radio" name="flexRadioDefault" id="flexRadioDefault">
-                    </div>
-                </li>
-                    <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                    <li class="w-100">
+                        <div class="payment-list-box">
+                            <label class="form-check-label" for="flexRadioDefault"> <img class="img-fluid img"
+                                    src="<?= $row['icon'] ?>" alt="mastercard"> <?= $row['pay_name'] ?></label>
+                            <input class="form-check-input" id="<?= $row['slug'] ?>" type="radio" name="flexRadioDefault" id="flexRadioDefault">
+                        </div>
+                    </li>
+                <?php
                 }
-                
+
                 ?>
             </ul>
 
@@ -318,7 +317,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 <ul class="condition-list">
                     <li>
                         <h5>Minimum Recharge</h5>
-                        <p>Minimum Recharge is <?=$setting['minRecharge'] ?> INR</p>
+                        <p>Minimum Recharge is <?= $setting['minRecharge'] ?> INR</p>
                     </li>
                     <li>
                         <h5>Fill UTR </h5>
@@ -354,94 +353,120 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-         function setAmount(value) {
-        document.getElementById("amount").value = value;
-    }
+        function setAmount(value) {
+            console.log("Amount set to:");
 
-    function initiatePayment(){
-        var amount = document.getElementById("amount").value;
-        var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked').id;
-        if(amount == ""){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please enter amount',
-            });
-            return;
+            document.getElementById("amount").value = value;
         }
-        if(payment_mode == ""){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please select payment mode',
-            });
-            return;
-        }
-        
-        // Ajax Payment Link Generation and Redirect to Payment Gateway Page 
 
-        $.ajax({
-    url: 'gateway/payment_link', // Ensure this URL is correct and accessible
-    type: 'POST', // Use uppercase for HTTP methods (optional but recommended)
-    data: {
-        amount: amount,
-        payment_mode: payment_mode
-    },
-    dataType: 'json', // Expecting JSON response from the server
-    beforeSend: function() {
-        // Show SweetAlert2 loading modal
-        Swal.fire({
-            title: 'Processing Payment...',
-            text: 'Please wait while we process your payment.',
-            allowOutsideClick: false, // Prevent closing by clicking outside
-            didOpen: () => {
-                Swal.showLoading(); // Show the loading spinner
+        function initiatePayment() {
+            var amount = document.getElementById("amount").value;
+            var payment_mode = document.querySelector('input[name="flexRadioDefault"]:checked').id;
+          
+            <?php
+            if ($wallet < $setting['minRecharge']) {
+            ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Minimum Recharge is <?= $setting['minRecharge'] ?> INR',
+                });
+                return;
+            <?php
+            } else if ($data['kyc_status'] == 0 && $amount > 500) {
+            ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please complete KYC first to make payment more than 500 INR',
+                });
+                return;
+            <?php
             }
-        });
-    },
-    success: function(response){
-        // Close the loading modal
-        Swal.close();
+            ?>
 
-        // Check the response status
-        if(response.status === 'success'){
-            // Optionally, you can show a success message before redirecting
-            Swal.fire({
-                icon: 'success',
-                title: 'Payment Initiated',
-                text: 'Redirecting to payment page...',
-                timer: 1000, // Close after 2 seconds
-                showConfirmButton: false
-            }).then(() => {
-                // Redirect to the payment link
-                window.location.href = response.url;
+           
+            if (amount == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter amount',
+                });
+                return;
+            }
+            if (payment_mode == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please select payment mode',
+                });
+                return;
+            }
+
+            // Ajax Payment Link Generation and Redirect to Payment Gateway Page 
+
+            $.ajax({
+                url: 'gateway/payment_link', // Ensure this URL is correct and accessible
+                type: 'POST', // Use uppercase for HTTP methods (optional but recommended)
+                data: {
+                    amount: amount,
+                    payment_mode: payment_mode
+                },
+                dataType: 'json', // Expecting JSON response from the server
+                beforeSend: function() {
+                    // Show SweetAlert2 loading modal
+                    Swal.fire({
+                        title: 'Processing Payment...',
+                        text: 'Please wait while we process your payment.',
+                        allowOutsideClick: false, // Prevent closing by clicking outside
+                        didOpen: () => {
+                            Swal.showLoading(); // Show the loading spinner
+                        }
+                    });
+                },
+                success: function(response) {
+                    // Close the loading modal
+                    Swal.close();
+
+                    // Check the response status
+                    if (response.status === 'success') {
+                        // Optionally, you can show a success message before redirecting
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Initiated',
+                            text: 'Redirecting to payment page...',
+                            timer: 1000, // Close after 2 seconds
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Redirect to the payment link
+                            window.location.href = response.url;
+                        });
+                    } else {
+                        // Show error message returned from the server
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Payment Failed',
+                            text: response.message || 'An unknown error occurred.',
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Close the loading modal
+                    Swal.close();
+
+                    // Log the error for debugging (optional)
+                    console.error('AJAX Error:', status, error);
+
+                    // Show a generic error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Request Failed',
+                        text: 'There was a problem processing your payment. Please try again later.',
+                    });
+                }
             });
-        } else {
-            // Show error message returned from the server
-            Swal.fire({
-                icon: 'error',
-                title: 'Payment Failed',
-                text: response.message || 'An unknown error occurred.',
-            });
+
         }
-    },
-    error: function(xhr, status, error){
-        // Close the loading modal
-        Swal.close();
-
-        // Log the error for debugging (optional)
-        console.error('AJAX Error:', status, error);
-
-        // Show a generic error message
-        Swal.fire({
-            icon: 'error',
-            title: 'Request Failed',
-            text: 'There was a problem processing your payment. Please try again later.',
-        });
-    }
-});
-
-    }
     </script>
 </body>
 
