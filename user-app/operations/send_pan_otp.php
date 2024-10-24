@@ -10,6 +10,19 @@ if(isset($_POST['pan'])){
 $url = "https://api.quickekyc.com/api/v1/pan/pan";
 $pan = $_POST['pan'];
 // The data you want to send in the POST request
+
+// check aadhar is already exist or not 
+
+$check = "SELECT * FROM users WHERE pan_no = '$pan'";
+$result = mysqli_query($con, $check);
+$fetch = mysqli_fetch_assoc($result);
+
+if(mysqli_num_rows($result) > 0){
+    $res = array(['status' => 'error', 'message' => 'PAN already exist']);
+    echo json_encode($res);
+    exit();
+}
+
 $postData = [
     // 'key' => '',
     'key' => '7b4c50bf-21ae-49f8-850f-f74133a65546',

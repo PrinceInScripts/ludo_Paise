@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'db.php';
 include('includes/sessions.php');
 // fetch back details from db
@@ -6,6 +6,11 @@ $user_id = $_SESSION['id'];
 $sql = "SELECT * FROM bankdetails WHERE userid = '$user_id'";
 $run = mysqli_query($con, $sql);
 $fetch = mysqli_fetch_assoc($run);
+
+$checkKycStatus = "SELECT * FROM users WHERE id = '$user_id'";
+$runCheck = mysqli_query($con, $checkKycStatus);
+$fetchCheck = mysqli_fetch_assoc($runCheck);
+
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +18,7 @@ $fetch = mysqli_fetch_assoc($run);
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/bank-registration-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:14 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,7 +65,8 @@ $fetch = mysqli_fetch_assoc($run);
                     <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
                 </a>
                 <img class="img-fluid logo" src="../assets/images/logo/logo.png" alt="logo">
-                <img class="img-fluid logo-dark" src="../assets/images/logo/logo-dark.png" alt="logo"> </div>
+                <img class="img-fluid logo-dark" src="../assets/images/logo/logo-dark.png" alt="logo">
+            </div>
         </div>
     </header>
     <!-- header end -->
@@ -69,87 +76,106 @@ $fetch = mysqli_fetch_assoc($run);
         <div class="auth-content-bg">
             <div class="custom-container">
                 <form class="auth-form mt-0 pt-2">
-                    <?php 
-                    if(mysqli_num_rows($run) > 0){
-                        ?>
+                    <?php
+                    if (mysqli_num_rows($run) > 0) {
+                    ?>
                         <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="Inputname">Bank Name</label>
-                        <input type="text" class="form-control" id="Inputname" value="<?=$fetch['bank_name'] ?>"
-                            placeholder="Enter bank name">
-                    </div>
-                    <div class="form-group ">
-                        <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
-                        <input type="text" class="form-control" id="Inputholder" value="<?=$fetch['bank_holder'] ?>"
-                            placeholder="Enter holder name">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputnumner">Account No.</label>
-                        <input type="number" class="form-control text-start" id="Inputnumner" value="<?=$fetch['bank_acc'] ?>"
-                            placeholder="Enter your account no">
-                    </div>
+                            <label class="form-label mb-2" for="Inputname">Bank Name</label>
+                            <input type="text" class="form-control" id="Inputname" value="<?= $fetch['bank_name'] ?>"
+                                placeholder="Enter bank name">
+                        </div>
+                        <div class="form-group ">
+                            <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
+                            <input type="text" class="form-control" id="Inputholder" value="<?= $fetch['bank_holder'] ?>"
+                                placeholder="Enter holder name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label mb-2" for="Inputnumner">Account No.</label>
+                            <input type="number" class="form-control text-start" id="Inputnumner" value="<?= $fetch['bank_acc'] ?>"
+                                placeholder="Enter your account no">
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
-                        <input type="text" class="form-control" id="Inputbranch" value="<?=$fetch['bank_branch'] ?>"
-                            placeholder="Enter branch name">
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
+                            <input type="text" class="form-control" id="Inputbranch" value="<?= $fetch['bank_branch'] ?>"
+                                placeholder="Enter branch name">
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
-                        <input type="email" class="form-control text-start" id="Inputcode" value="<?=$fetch['bank_ifsc'] ?>"
-                            placeholder="Enter ifsc code">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputswift">UPI ID</label>
-                        <input type="email" class="form-control text-start" id="Inputswift" value="<?=$fetch['upi'] ?>"
-                            placeholder="Enter swift code">
-                    </div>
-                        <?php 
-                    }else{
+                        <div class="form-group">
+                            <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
+                            <input type="email" class="form-control text-start" id="Inputcode" value="<?= $fetch['bank_ifsc'] ?>"
+                                placeholder="Enter ifsc code">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label mb-2" for="Inputswift">UPI ID</label>
+                            <input type="email" class="form-control text-start" id="Inputswift" value="<?= $fetch['upi'] ?>"
+                                placeholder="Enter UPI">
+                        </div>
+                        <div class="fixed-btn">
+                            <div class="custom-container">
+                                <div onclick="bankUpdate()" class="btn theme-btn w-100 mt-0 auth-btn">Update</div>
+                            </div>
+                        </div>
+                        <?php
+                    } else {
+
+                        if ($fetchCheck['kyc_status'] == 0) {
                         ?>
-                        <div class="form-group mt-0">
-                        <label class="form-label mb-2" for="Inputname">Bank Name</label>
-                        <input type="text" class="form-control" id="Inputname" 
-                            placeholder="Enter bank name">
-                    </div>
-                    <div class="form-group ">
-                        <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
-                        <input type="text" class="form-control" id="Inputholder" 
-                            placeholder="Enter holder name">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputnumner">Account No.</label>
-                        <input type="number" class="form-control text-start" id="Inputnumner" 
-                            placeholder="Enter your account no">
-                    </div>
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Alert!</strong> Please complete your KYC first.
+                            </div>
+                            <!-- complete kyc button  -->
+                            <a href="profile" class="btn theme-btn w-100 mt-0 auth-btn">Complete KYC</a>
+                        <?php
 
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
-                        <input type="text" class="form-control" id="Inputbranch" 
-                            placeholder="Enter branch name">
-                    </div>
+                        } else {
 
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
-                        <input type="email" class="form-control text-start" id="Inputcode" 
-                            placeholder="Enter ifsc code">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label mb-2" for="Inputswift">UPI ID</label>
-                        <input type="email" class="form-control text-start" id="Inputswift" 
-                            placeholder="Enter UPI">
-                    </div>
-                        <?php 
+                        ?>
+                            <div class="form-group mt-0">
+                                <label class="form-label mb-2" for="Inputname">Bank Name</label>
+                                <input type="text" class="form-control" id="Inputname"
+                                    placeholder="Enter bank name">
+                            </div>
+                            <div class="form-group ">
+                                <label class="form-label mb-2" for="Inputholder">Bank Holder Name</label>
+                                <input type="text" class="form-control" id="Inputholder"
+                                    placeholder="Enter holder name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label mb-2" for="Inputnumner">Account No.</label>
+                                <input type="number" class="form-control text-start" id="Inputnumner"
+                                    placeholder="Enter your account no">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
+                                <input type="text" class="form-control" id="Inputbranch"
+                                    placeholder="Enter branch name">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label mb-2" for="Inputcode">IFSC Code</label>
+                                <input type="email" class="form-control text-start" id="Inputcode"
+                                    placeholder="Enter ifsc code">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label mb-2" for="Inputswift">UPI ID</label>
+                                <input type="email" class="form-control text-start" id="Inputswift"
+                                    placeholder="Enter UPI">
+                            </div>
+                            <div class="fixed-btn">
+                                <div class="custom-container">
+                                    <div onclick="bankUpdate()" class="btn theme-btn w-100 mt-0 auth-btn">Update</div>
+                                </div>
+                            </div>
+                    <?php
+                        }
                     }
                     ?>
-                    
+
                 </form>
 
-                <div class="fixed-btn">
-                    <div class="custom-container">
-                        <button onclick="bankUpdate()" class="btn theme-btn w-100 mt-0 auth-btn">Update</button>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -178,7 +204,7 @@ $fetch = mysqli_fetch_assoc($run);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        function bankUpdate(){
+        function bankUpdate() {
             var bank_name = document.getElementById('Inputname').value;
             var bank_holder = document.getElementById('Inputholder').value;
             var bank_acc = document.getElementById('Inputnumner').value;
@@ -187,26 +213,26 @@ $fetch = mysqli_fetch_assoc($run);
             var upi = document.getElementById('Inputswift').value;
 
             var data = {
-                bank_name : bank_name,
-                bank_holder : bank_holder,
-                bank_acc : bank_acc,
-                bank_branch : bank_branch,
-                bank_ifsc : bank_ifsc,
-                upi : upi
+                bank_name: bank_name,
+                bank_holder: bank_holder,
+                bank_acc: bank_acc,
+                bank_branch: bank_branch,
+                bank_ifsc: bank_ifsc,
+                upi: upi
             }
 
             $.ajax({
-                url : 'operations/bank-update.php',
-                method : 'post',
-                data : data,
-                success : function(response){
-                    
+                url: 'operations/bank-update.php',
+                method: 'post',
+                data: data,
+                success: function(response) {
+
                     // json parse 
                     var res = JSON.parse(response);
                     // swal.fire 
                     res = res[0];
-                    
-                    if(res.success){
+
+                    if (res.success) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
@@ -216,7 +242,7 @@ $fetch = mysqli_fetch_assoc($run);
                                 location.reload();
                             }
                         })
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
@@ -224,7 +250,7 @@ $fetch = mysqli_fetch_assoc($run);
                         })
                     }
 
-                    
+
                 }
             })
         }
@@ -233,4 +259,5 @@ $fetch = mysqli_fetch_assoc($run);
 
 
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/bank-registration-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:14 GMT -->
+
 </html>

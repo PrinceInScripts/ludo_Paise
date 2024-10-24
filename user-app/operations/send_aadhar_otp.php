@@ -10,6 +10,20 @@ if(isset($_POST['aadhar'])){
 $url = "https://api.quickekyc.com/api/v1/aadhaar-v2/generate-otp";
 $aadhar = $_POST['aadhar'];
 // The data you want to send in the POST request
+
+// check aadhar is already exist or not 
+
+$check = "SELECT * FROM users WHERE adhaar_no = '$aadhar'";
+$result = mysqli_query($con, $check);
+$fetch = mysqli_fetch_assoc($result);
+
+if(mysqli_num_rows($result) > 0){
+    $res = array(['status' => 'error', 'message' => 'Aadhar already exist']);
+    echo json_encode($res);
+    exit();
+}
+
+
 $postData = [
     'key' => '7b4c50bf-21ae-49f8-850f-f74133a65546',
     'id_number' => $aadhar,

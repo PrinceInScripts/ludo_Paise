@@ -11,6 +11,13 @@ $user_id = $_SESSION['id'];
     $ifsc = $_POST['bank_ifsc'];
     $upi = $_POST['upi'];
 
+    // check empty fields 
+    if (empty($bank_name) || empty($holder_name) || empty($account_no) || empty($branch) || empty($ifsc) || empty($upi)) {
+        $response =  array(['success' => false , 'message' => "All fields are required"]);
+        echo json_encode($response);
+        exit();
+    }
+
     $fetch = "SELECT * FROM bankdetails WHERE userid = '$user_id'";
     $result = mysqli_query($con, $fetch);
     $fetch = mysqli_fetch_assoc($result);
