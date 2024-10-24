@@ -364,12 +364,12 @@ $role_id=$_SESSION['role_id'];
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="battle_Transaction.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Battle Transaction</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="deposit.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -402,7 +402,10 @@ $role_id=$_SESSION['role_id'];
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <?php
+          if($role_id!=3){
+            ?>
+            <li class="nav-item">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
               <p>
@@ -451,6 +454,9 @@ $role_id=$_SESSION['role_id'];
              
             </ul>
           </li>
+            <?php
+          }
+          ?>
           
           
         </ul>
