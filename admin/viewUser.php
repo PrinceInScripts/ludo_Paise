@@ -369,7 +369,7 @@ if (isset($_GET['id'])) {
                                 <!-- Deposit-Specific Transactions -->
                                 <div class="tab-pane" id="timeline">
                                     <div class="card">
-                                        <table id="example1" class="table table-bordered table-striped">
+                                        <table id="example2" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -427,7 +427,7 @@ if (isset($_GET['id'])) {
                                 <!-- Withdrawal-Specific Transactions -->
                                 <div class="tab-pane" id="settings">
                                     <div class="card">
-                                        <table id="example1" class="table table-bordered table-striped">
+                                        <table id="example3" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>

@@ -1,6 +1,7 @@
 <?php
 include("db.php");
 include("top.php");
+$role_id = $_SESSION['role_id'];
 $row = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
   $id = mysqli_real_escape_string($con, $_GET['id']);
@@ -173,7 +174,10 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                   </div>
 
 
-                  <div class="container">
+                 <?php
+                 if($role_id!=3){
+                  ?>
+                   <div class="container">
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-md-12">
@@ -245,6 +249,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                     </div>
                   </div>
 
+                  <?php
+                 }
+                 ?>
 
                 <?php
                     } else {
@@ -319,7 +326,10 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                     </div>
                 </div>
 
-                <div class="container">
+                <?php
+                if($role_id!=3){
+                  ?>
+                  <div class="container">
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-md-12">
@@ -389,6 +399,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                     </div>
                   </div>
                 </div>
+                  <?php
+                }
+                ?>
               <?php
                   } else {
               ?>

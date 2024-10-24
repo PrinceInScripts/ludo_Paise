@@ -32,23 +32,29 @@ include ("top.php");
                 <table id="example1" class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Mobile</th>
+                      <th>S.No.</th>
                       <th>username</th>
-                      <th>email</th>
-                      <th>Date</th>
+                      <th>role</th>
+                      <th>Role Description</th>
+                      <th>Created At</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $sql="SELECT * FROM users WHERE role='admin'";
+                    $sql="SELECT * FROM admins";
                     $res=mysqli_query($con,$sql);
-                    while($row=mysqli_fetch_assoc($res)){ ?>
+                    $i=1;
+
+                    while($row=mysqli_fetch_assoc($res)){ 
+                          $role_sql="SELECT * FROM roles WHERE id=".$row['role_id'];
+                          $role_res=mysqli_query($con,$role_sql);
+                          $role_row=mysqli_fetch_assoc($role_res);
+                          ?>
                         <tr>
-                          <td><?php echo $row['id']?></td>
-                          <td><?php echo $row['mobile']?></td>
+                          <td><?php echo $i++?></td>
                           <td><?php echo $row['username']?></td>
-                          <td><span class="tag tag-success"><?php echo $row['email']?></span></td>
+                          <td><span class="tag tag-success"><?php echo $role_row['role_name']?></span></td>
+                          <td><?php echo $role_row['description']?></td>
                           <td><?php echo $row['created_at']?></td>
                         </tr>
                         <?php

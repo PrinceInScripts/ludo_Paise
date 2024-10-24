@@ -1,3 +1,7 @@
+
+<?php
+$role_id=$_SESSION['role_id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -242,8 +246,10 @@
               </p>
             </a>
           </li>
-          
-          <li class="nav-item">
+          <?php
+          if($role_id!=3){
+          ?>
+           <li class="nav-item">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-user-shield"></i>
               <p>
@@ -266,6 +272,12 @@
               </li>
             </ul>
           </li>
+          <?php
+
+          }
+          ?>
+         
+
           <li class="nav-item">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-users"></i>
@@ -281,12 +293,18 @@
                   <p>All User</p>
                 </a>
               </li>
+              <?php
+              if($role_id!=3){
+              ?>
               <li class="nav-item">
                 <a href="addUser.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add User</p>
                 </a>
               </li>
+              <?php
+              }
+              ?>
               <li class="nav-item">
                 <a href="kyc_status.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

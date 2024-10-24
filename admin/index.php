@@ -2,6 +2,8 @@
 include("db.php");
 include("top.php");
 
+$role_id=$_SESSION['role_id'];
+
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -742,9 +744,9 @@ include("top.php");
             </div>
             <div class="card-body">
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
-                  <tr>
+                  <>
                     <th>ID</th>
                     <th>Mobile No.</th>
                     <th>Order ID</th>
@@ -753,8 +755,13 @@ include("top.php");
                     <th>Remark</th>
                     <th>UTR</th>
                     <th>Time</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
+                   <?php if($role_id==1 || $role_id==2){
+                   ?>
                     <th>Action</th>
+                  <?php
+                   }
+                   ?> 
                   </tr>
                 </thead>
                 <tbody>
@@ -776,7 +783,7 @@ include("top.php");
                       <td><?php echo $row['remark']; ?></td>
                       <td><?php echo $row['utr']; ?></td>
                       <td><?php echo $row['created_at']; ?></td>
-                      <td> <?php
+                      <!-- <td> <?php
                             if ($row['status'] == 2) {
                               echo "<span style='color: red;'>Failed</span>";
                             } elseif ($row['status'] == 1) {
@@ -784,7 +791,12 @@ include("top.php");
                             } else if ($row['status'] == 0) {
                               echo "<span style='color: orange;'>Pending</span>";
                             }
-                            ?></td>
+                            ?></td> -->
+
+                      
+                      <?php
+                      if($role_id==1 || $role_id==2){
+                      ?>
                       <?php
                       if ($row['status'] == 0) {
                       ?>
@@ -797,6 +809,9 @@ include("top.php");
                       } else {
                       ?>
                         <td></td>
+                      <?php
+                      }
+                      ?>
                       <?php
                       }
                       ?>
@@ -828,7 +843,7 @@ include("top.php");
 
             <div class="card-body">
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example3" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -839,8 +854,14 @@ include("top.php");
                     <th>Payment Way</th>
                     <th>Remark</th>
                     <th>Created At</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
+                   
+                    <?php if($role_id==1 || $role_id==2){
+                   ?>
                     <th>Action</th>
+                  <?php
+                   }
+                   ?> 
                   </tr>
                 </thead>
                 <tbody>
@@ -873,7 +894,7 @@ include("top.php");
                       </td>
                       <td><?php echo $row['remark']; ?></td>
                       <td><?php echo $row['created_at']; ?></td>
-                      <td> <?php
+                      <!-- <td> <?php
                             if ($row['status'] == 2) {
                               echo "<span style='color: red;'>Failed</span>";
                             } elseif ($row['status'] == 1) {
@@ -881,11 +902,30 @@ include("top.php");
                             } else if ($row['status'] == 0) {
                               echo "<span style='color: orange;'>Pending</span>";
                             }
-                            ?></td>
+                            ?></td> -->
+
+                    <?php
+                    if($role_id==1 || $role_id==2){
+                      ?>
+                      <?php
+                      if ($row['status'] == 0) {
+                      ?>
                       <td>
                         <button class="btn btn-success" onclick="withdraw_approve('<?php echo $row['txnid'] ?>','confirm')">Approve</button>
                         <button class="btn btn-warning" onclick="withdraw_approve('<?php echo $row['txnid'] ?>','decline')">Refund</button>
                       </td>
+
+                      <?php
+                      } else {
+                      ?>
+                        <td></td>
+                      <?php
+                      }
+                      ?>
+                      <?php
+                    }
+                    ?>
+                     
                     </tr>
                   <?php
                   }

@@ -1,79 +1,122 @@
 <?php
-include ("db.php");
-include ("top.php");
+include("db.php");
+include("top.php");
 
-
+if(isset($_POST['submit'])){
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $role = $_POST['role'];
+  $retype_password = $_POST['retype-password'];
+  if($password == $retype_password){
+    $encrpted_password = md5($password);
+    $sql = "INSERT INTO admins (username, password,plain_password, role_id) VALUES ('$username', '$encrpted_password','$password', '$role')";
+    if(mysqli_query($con, $sql)){
+      echo "<script>
+      document.addEventListener('DOMContentLoaded', function() {
+          Swal.fire({
+              title: 'Success',
+              text: 'Admin added successfully',
+              icon: 'success',
+              confirmButtonText: 'OK'
+          }).then(() => {
+              window.location.href = 'index.php'; // Redirect to index.php after success
+          });
+      });
+      </script>";
+    } else {
+      echo "<script>
+      document.addEventListener('DOMContentLoaded', function() {
+          Swal.fire({
+              title: 'Error',
+              text: 'Error adding admin',
+              icon: 'error',
+              confirmButtonText: 'OK'
+          });
+      });
+      </script>";
+    }
+  } else {
+    echo "<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Error',
+            text: 'Passwords do not match',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    });
+    </script>";
+  }
+}
 ?>
+<div class="hold-transition register-page">
+  <div class="register-box">
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">All Admin</h1>
-          </div>
-          <div class="col-sm-6">
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <!-- <h3 class="card-title">Responsive Hover Table</h3> -->
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">Register a new membership</p>
 
-                
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table id="example1" class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Mobile</th>
-                      <th>username</th>
-                      <th>email</th>
-                      <th>Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                
-                    <?php
-                    $sql="SELECT * FROM users WHERE role!='admin'";
-                    $res=mysqli_query($con,$sql);
-                    while($row=mysqli_fetch_assoc($res)){ ?>
-                        <tr>
-                          <td><?php echo $row['id']?></td>
-                          <td><?php echo $row['mobile']?></td>
-                          <td><?php echo $row['username']?></td>
-                          <td><span class="tag tag-success"><?php echo $row['email']?></span></td>
-                          <td><?php echo $row['created_at']?></td>
-                          <td> 
-                            <!-- <a href="#" class="text-primary" style="margin-left: 10px;">
-                                    Promote to Admin
-                                    </a> -->
+        <form method="post">
 
-                                  <a href="manageAdmin.php?id=<?php echo $row['id']?>">  <button type="add-admin" class="btn btn-primary">Promote to Admin</button></a>
-                           </td>
-                        </tr>
-                        <?php
-                        }
-                    ?>
-                  </tbody>
-                </table>
+          <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Username">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-        </div>
-  
+          <div class="form-group">
+              <?php
+              $sql = "SELECT * FROM roles";
+              $result = mysqli_query($con, $sql);
+              $count = mysqli_num_rows($result);
+              if ($count > 0) {
+                echo "<label>Role</label>";
+                echo "<select class='custom-select' name='role'>";
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo "<option value='" . $row['id'] . "'>" . $row['role_name'] . "</option>";
+                }
+                echo "</select>";
+              }
+              ?>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group  mb-3">
+            <input type="password" name="retype-password" class="form-control" placeholder="Retype password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" name="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+
+
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
   </div>
+</div>
 
 <?php
-include ("footer.php");
+include("footer.php");
 ?>
