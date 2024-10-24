@@ -55,13 +55,20 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+    <style>
+        body{
+            background-image: url('https://miro.medium.com/v2/resize:fit:1400/0*-wnrsY_L5GVikL61.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="./index2.html"><b>Ludo</b>Paisa</a>
-        </div>
+        
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
