@@ -221,7 +221,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                                   </tr>
                                 <?php
-                                } elseif($row['status'] == 'cancel'){
+                                } elseif ($row['status'] == 'cancel') {
                                 ?>
                                   <tr>
 
@@ -249,128 +249,128 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                 <?php
                     } else {
                 ?>
-
-                <?php
-                    }
-                ?>
-
-
                 </div>
+              <?php
+                    }
+              ?>
 
-                <div class="tab-pane" id="acceptor">
+
+              </div>
+
+              <div class="tab-pane" id="acceptor">
+                <?php
+                $id = $row['accepted_by'];
+                $sql = "SELECT * FROM users WHERE id='$id'";
+                $res = mysqli_query($con, $sql);
+                $acceptor = mysqli_fetch_assoc($res);
+
+                // Fetch profile picture data based on the 'profile_pic' column
+                $img_src = $acceptor['profile_pic'];
+                $img_src_sql = "SELECT * FROM profile_pic WHERE id = '$img_src'";
+                $img_src_run = mysqli_query($con, $img_src_sql);
+
+                $img_src_data = mysqli_fetch_assoc($img_src_run);
+
+
+                ?>
+                <div class="post">
+                  <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>" alt="user image">
+                    <span class="username">
+                      <a href="#"><?php echo $acceptor['username'] ?></a>
+                    </span>
+                    <span class="description"><?php echo $acceptor['email'] . '-' . $acceptor['created_at'] ?>
+                      <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                          <b>Mobile No.</b> <a class="float-right"><?php echo $acceptor['mobile'] ?></a>
+                        </li>
+                        <li class="list-group-item">
+                          <b>ID</b> <a class="float-right"><?php echo $acceptor['id'] ?></a>
+                        </li>
+                        <li class="list-group-item">
+                          <b>Deposit Wallet</b> <a class="float-right"><?php echo $acceptor['deposit_wallet'] ?></a>
+                        </li>
+                        <li class="list-group-item">
+                          <b>Withdraw Wallet</b> <a class="float-right"><?php echo $acceptor['withdraw_wallet'] ?></a>
+                        </li>
+                        <li class="list-group-item">
+                          <a href="viewUser.php?id=<?php echo $acceptor['id'] ?>" class="btn btn-success">View</a>
+                        </li>
+
+                      </ul>
+
+                  </div>
+
+
                   <?php
-                  $id = $row['accepted_by'];
-                  $sql = "SELECT * FROM users WHERE id='$id'";
-                  $res = mysqli_query($con, $sql);
-                  $acceptor = mysqli_fetch_assoc($res);
-
-                  // Fetch profile picture data based on the 'profile_pic' column
-                  $img_src = $acceptor['profile_pic'];
-                  $img_src_sql = "SELECT * FROM profile_pic WHERE id = '$img_src'";
-                  $img_src_run = mysqli_query($con, $img_src_sql);
-
-                  $img_src_data = mysqli_fetch_assoc($img_src_run);
-
+                  if ($row['acceptor_ss'] != '') {
 
                   ?>
-                  <div class="post">
-                    <div class="user-block">
-                      <img class="img-circle img-bordered-sm" src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>" alt="user image">
-                      <span class="username">
-                        <a href="#"><?php echo $acceptor['username'] ?></a>
-                      </span>
-                      <span class="description"><?php echo $acceptor['email'] . '-' . $acceptor['created_at'] ?>
-                        <ul class="list-group list-group-unbordered mb-3">
-                          <li class="list-group-item">
-                            <b>Mobile No.</b> <a class="float-right"><?php echo $acceptor['mobile'] ?></a>
-                          </li>
-                          <li class="list-group-item">
-                            <b>ID</b> <a class="float-right"><?php echo $acceptor['id'] ?></a>
-                          </li>
-                          <li class="list-group-item">
-                            <b>Deposit Wallet</b> <a class="float-right"><?php echo $acceptor['deposit_wallet'] ?></a>
-                          </li>
-                          <li class="list-group-item">
-                            <b>Withdraw Wallet</b> <a class="float-right"><?php echo $acceptor['withdraw_wallet'] ?></a>
-                          </li>
-                          <li class="list-group-item">
-                            <a href="viewUser.php?id=<?php echo $acceptor['id'] ?>" class="btn btn-success">View</a>
-                          </li>
-
-                        </ul>
-
-                    </div>
-
-
-                    <?php
-                    if ($row['acceptor_ss'] != '') {
-
-                    ?>
-                      <!-- Post -->
-                      <div class="post">
-                        <h3>Acceptor Screenshot</h3>
-                        <div class="row mb-3">
-                          <div class="col-sm-6">
-                            <button class="btn btn-secondary" onclick="viewJssA()">View Join Screenshot</button>
-                            <button class="btn btn-secondary" onclick="viewssA()">View Screenshot</button>
-                          </div>
-
+                    <!-- Post -->
+                    <div class="post">
+                      <h3>Acceptor Screenshot</h3>
+                      <div class="row mb-3">
+                        <div class="col-sm-6">
+                          <button class="btn btn-secondary" onclick="viewJssA()">View Join Screenshot</button>
+                          <button class="btn btn-secondary" onclick="viewssA()">View Screenshot</button>
                         </div>
-                      </div>
-                  </div>
-                  <div class="container">
-                    <div class="container-fluid">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="card card-primary card-outline">
-                            <div class="card-header">
-                              <h3 class="card-title">
-                                <i class="fas fa-edit"></i>
-                                Take Action
-                              </h3>
-                            </div>
-                            <div class="card-body pad table-responsive">
-                              <table class="table table-bordered text-center">
 
-
-                                <tr>
-
-                                  <td>
-                                    <button type="button" onclick="winA('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
-                                  </td>
-                                  <td>
-                                    <button type="button" onclick="addPenalty('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
-                                  </td>
-
-                                </tr>
-                              </table>
-                            </div>
-                            <!-- /.card -->
-                          </div>
-                        </div>
-                        <!-- /.col -->
                       </div>
                     </div>
-                  </div>
-                <?php
-                    } else {
-                ?>
+                </div>
+                <div class="container">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card card-primary card-outline">
+                          <div class="card-header">
+                            <h3 class="card-title">
+                              <i class="fas fa-edit"></i>
+                              Take Action
+                            </h3>
+                          </div>
+                          <div class="card-body pad table-responsive">
+                            <table class="table table-bordered text-center">
 
-                <?php
-                    }
-                ?>
-                <!-- /.tab-content -->
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->
+
+                              <tr>
+
+                                <td>
+                                  <button type="button" onclick="winA('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
+                                </td>
+                                <td>
+                                  <button type="button" onclick="addPenalty('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
+                                </td>
+
+                              </tr>
+                            </table>
+                          </div>
+                          <!-- /.card -->
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                  </div>
+                </div>
+              <?php
+                  } else {
+              ?>
+
+              <?php
+                  }
+              ?>
+              <!-- /.tab-content -->
+              </div><!-- /.card-body -->
             </div>
-            <!-- /.col -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
 
 
 
 
-            <!-- /.row -->
-          </div><!-- /.container-fluid -->
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
 </div>
@@ -390,53 +390,54 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
   // swal.fire with html to show mobile screenshot 
   function viewssC() {
     <?php
-    if($row['creator_ss'] == 'cancel'){
+    if ($row['creator_ss'] == 'cancel') {
     ?>
-    Swal.fire({
-      title: 'Creator Screenshot',
-      html: '<p class="btn btn-danger">Challenge Cancelled</p>',
-      showCloseButton: true,
-      showConfirmButton: false,
-    })
+      Swal.fire({
+        title: 'Creator Screenshot',
+        html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
     <?php
-    }  else{
+    } else {
     ?>
-    Swal.fire({
-      title: 'Creator Screenshot',
-      html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_ss'] ?>" class="img-fluid" alt="Photo">',
-      showCloseButton: true,
-      showConfirmButton: false,
-    })
+      Swal.fire({
+        title: 'Creator Screenshot',
+        html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_ss'] ?>" class="img-fluid" alt="Photo">',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
     <?php
     }
     ?>
 
-   
+
   }
+
   function viewJssC() {
     <?php
-    if($row['creator_join_ss'] == 'cancel'){
+    if ($row['creator_join_ss'] == 'cancel') {
     ?>
-    Swal.fire({
-      title: 'Creator Screenshot',
-      html: '<p class="btn btn-danger">Challenge Cancelled</p>',
-      showCloseButton: true,
-      showConfirmButton: false,
-    })
+      Swal.fire({
+        title: 'Creator Screenshot',
+        html: '<p class="btn btn-danger">Challenge Cancelled</p>',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
     <?php
-    }  else{
+    } else {
     ?>
-    Swal.fire({
-      title: 'Creator Screenshot',
-      html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_join_ss'] ?>" class="img-fluid" alt="Photo">',
-      showCloseButton: true,
-      showConfirmButton: false,
-    })
+      Swal.fire({
+        title: 'Creator Screenshot',
+        html: '<img src="../assets/games/<?php echo $row['id'] ?>/<?php echo $row['creator_join_ss'] ?>" class="img-fluid" alt="Photo">',
+        showCloseButton: true,
+        showConfirmButton: false,
+      })
     <?php
     }
     ?>
 
-   
+
   }
 
   function viewssA() {
@@ -463,6 +464,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     ?>
 
   }
+
   function viewJssA() {
     <?php
     if ($row['acceptor_join_ss'] == 'cancel') {
