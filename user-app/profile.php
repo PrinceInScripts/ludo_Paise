@@ -147,7 +147,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             <label class="form-label" for="Inputemail1">Pan No</label>
                             <input readonly type="email" class="form-control" id="Inputemail1" minlength="10" maxlength="10" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Please enter a valid PAN number (e.g. ABCDE1234F)" required placeholder="Enter your Pan" value="<?php echo $pan; ?>">
                         </div>
-                        <button  class="btn btn-success w-100">Verified </button>
+                        <button  class="btn theme-btn w-100">Verified <img src="https://cdn-icons-png.flaticon.com/128/5962/5962703.png" width="18" alt=""> </button>
                     <?php
                     } else {
                     ?>
@@ -167,7 +167,6 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                         </div>
 
                         <button id="sendOtpBtn" onclick="sendPanOtp()" type="menu" class="btn btn-warning w-100">Verify</button>
-                        <button id="verifyPanOtpButton" style="display: none;" onclick="verifyPanOtp()" type="menu" class="btn theme-btn w-100">Submit OTP</button>
                         
                     <?php
                     }
@@ -291,16 +290,16 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 console.log(response);
                 var res = JSON.parse(response);
                 if(res[0].status == 'success'){
-                    document.getElementById('otp-box').style.display = 'block';
-                    document.getElementById('sendOtpBtn').style.display = 'none';
-                    document.getElementById('verifyOtpButton').style.display = 'block';
 
                    swal.fire({
                         title: 'Success',
                         text: res[0].message,
                         icon: 'success',
                         confirmButtonText: 'Ok'
-                    });
+                    }).then(() => {
+                        window.location.reload();
+                    })
+
                 }else{
                     swal.fire({
                         title: 'Error',

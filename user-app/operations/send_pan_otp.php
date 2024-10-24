@@ -4,17 +4,19 @@ require_once '../db.php';
 
 $user_id = $_SESSION['id'];
 
-if(isset($_POST['aadhar'])){
+if(isset($_POST['pan'])){
     
 // API URL
-$url = "https://api.quickekyc.com/api/v1/aadhaar-v2/generate-otp";
-$aadhar = $_POST['aadhar'];
+$url = "https://api.quickekyc.com/api/v1/pan/pan";
+$pan = $_POST['pan'];
 // The data you want to send in the POST request
 $postData = [
-    'key' => '',
-    // 'key' => '7b4c50bf-21ae-49f8-850f-f74133a65546',
-    'id_number' => $aadhar,
+    // 'key' => '',
+    'key' => '7b4c50bf-21ae-49f8-850f-f74133a65546',
+    'id_number' => $pan,
 ];
+
+
 
 // Initialize cURL
 $ch = curl_init();
@@ -35,8 +37,12 @@ if (curl_errno($ch)) {
     // Decode and display the response
     $responseData = json_decode($response, true);
     if ($responseData['status'] == 'success') {
-        $_SESSION['aadhar_request_id'] = $responseData['request_id'];
-        $query = "UPDATE users SET adhaar_no = '$aadhar' WHERE id = '$user_id'";
+        $full_name = $responseData['data']['full_name'];
+        $category = $responseData['data']['category'];
+
+        $query = "UPDATE users SET pan_no = '$pan', pan_status = 1 WHERE id = '$user_id'";
+        $query2 = "INSERT INTO pan_data (userid, pan_no, full_name, category) VALUES ('$user_id', '$pan', '$full_name', '$category')";
+        $run = mysqli_query($con, $query2);
         $result = mysqli_query($con, $query);
 
         if($result){
