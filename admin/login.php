@@ -63,6 +63,21 @@ if (isset($_POST['submit'])) {
             background-attachment: fixed;
             background-position: center;
         }
+
+        .login-page, .register-page {
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e9ecef;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    margin: 0 15%;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: left;
+}
+
     </style>
 </head>
 
