@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: row;
-    margin: 0 15%;
+    margin: 0 20%;
     height: 100vh;
     -ms-flex-pack: center;
     justify-content: left;
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
 
                         <!-- /.col -->
-                        <div class="col-4">
+                        <div class="col-12">
                             <button type="submit" name="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
                         <!-- /.col -->
