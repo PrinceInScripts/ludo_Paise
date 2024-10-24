@@ -128,7 +128,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                             <input type="text" class="form-control" id="aadhar-otp" name="aadhar-otp" minlength="16" maxlength="16" onkeyup="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter OTP">
                         </div>
 
-                        <button id="sendOtpBtn" onclick="sendAadharOtp()" type="menu" class="btn theme-btn w-100">Verify</button>
+                        <button id="sendOtpBtn" onclick="sendAadharOtp()" type="menu" class="btn btn-warning w-100">Verify</button>
                         <button id="verifyOtpButton" style="display: none;" onclick="verifyOtp()" type="menu" class="btn theme-btn w-100">Submit OTP</button>
                         
                     <?php
