@@ -318,6 +318,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                       </div>
                     </div>
                 </div>
+
                 <div class="container">
                   <div class="container-fluid">
                     <div class="row">
@@ -331,18 +332,54 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                           </div>
                           <div class="card-body pad table-responsive">
                             <table class="table table-bordered text-center">
+                                <?php
+                                 if($row['status'] == 'conflict'){
+                                ?>
+                                 <tr>
 
+                                  <td>
+                                    <button type="button" onclick="winA('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
+                                  </td>
+                                  <td>
+                                    <button type="button" onclick="addPenalty('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
+                                  </td>
 
-                              <tr>
+                                  </tr>
+                                <?php
+                                 } else if($row['status'] == 'complete'){
+                                ?>
+                                  <tr>
 
-                                <td>
-                                  <button type="button" onclick="winA('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
-                                </td>
-                                <td>
-                                  <button type="button" onclick="addPenalty('<?= $acceptor['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
-                                </td>
+                                  <td>
+                                    <button type="button" onclick="comingsoon()" class="btn btn-block btn-warning btn-lg">Revert Battle</button>
+                                  </td>
 
-                              </tr>
+                                  </tr>
+
+                                <?php
+
+                                  } else if($row['status'] == 'pending'){
+                                ?>
+                                  <tr>
+
+                                  <td>
+                                    <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Waiting</button>
+                                  </td>
+
+                                  </tr>
+                                <?php
+                                  } else if($row['status'] == 'cancel'){
+                                ?>
+                                  <tr>
+
+                                  <td>
+                                    <button type="button" onclick="comingsoon()" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
+                                  </td>
+
+                                  </tr>
+                                <?php
+                                  }
+                                ?>
                             </table>
                           </div>
                           <!-- /.card -->
@@ -355,7 +392,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               <?php
                   } else {
               ?>
-
+                 </div>
               <?php
                   }
               ?>
