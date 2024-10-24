@@ -43,7 +43,13 @@ include("top.php");
                                             <th>Type</th>
                                             <th>Created At</th>
                                             <th>Remark</th>
-                                            <th>Action</th>
+                                            <?php
+                                        if($role_id!=3){
+                                        ?>
+                                        <th>Action</th>
+                                        <?php
+                                        }
+                                        ?>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,10 +69,17 @@ include("top.php");
                                                 <td><?php echo $row['type']; ?></td>
                                                 <td><?php echo $row['created_at']; ?></td>
                                                 <td><?php echo $row['remark']; ?></td>
-                                                <td>
+                                                <?php
+                                        if($role_id!=3){
+                                        ?>
+                                        <td>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=1" class="btn btn-success">Approve</a>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=2" class="btn btn-danger">Reject</a>
                                                 </td>
+                                        <?php
+                                        }
+                                        ?>
+                                               
                                             </tr>
                                         <?php
                                         }
