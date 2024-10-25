@@ -112,6 +112,11 @@
       "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
 
+    $("#example4").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+    })
+
     
   });
 </script>
