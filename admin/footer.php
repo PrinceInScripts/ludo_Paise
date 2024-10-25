@@ -75,7 +75,7 @@
 <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
 <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
+<!-- <script src="../../dist/js/demo.js"></script> -->
 
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -115,5 +115,13 @@
     
   });
 </script>
+
+<script>
+        // Reload the page every 5 seconds (5000 milliseconds)
+        setInterval(function() {
+            location.reload();
+        }, 10000); // 5000 milliseconds = 5 seconds
+    </script>
+    
 </body>
 </html>
