@@ -338,7 +338,18 @@ $user = mysqli_fetch_assoc($user);
                         <div class="referral-link mb-4">
                             <h4>Your Referral Link:</h4>
                             <div class="input-group">
-                                <input type="text" id="referralLink" value="<?=$_SERVER['HTTP_HOST'] ?>/referral?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
+                                <?php
+                                // Get protocol
+                                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+                                // Get the domain
+                                $domain = $_SERVER['HTTP_HOST'];
+
+                                // Full URL
+                                $currentUrl = $protocol . $domain;
+
+                                ?>
+                                <input type="text" id="referralLink" value="<?=$currentUrl ?>/referral?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
                                 <button class="btn btn-primary" id="copyLinkButton">Copy Link</button>
                             </div>
                         </div>
