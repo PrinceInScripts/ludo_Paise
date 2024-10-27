@@ -247,6 +247,10 @@ $user = mysqli_fetch_assoc($user);
             color: #01AA85;
         }
 
+        .input-group .btn{
+            z-index: 0;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             .tabs {
@@ -356,12 +360,20 @@ $user = mysqli_fetch_assoc($user);
 
                         <!-- Social Share Buttons -->
                         <div class="social-share mb-4">
-                            <h4>Share on:</h4>
+                            <h4>Share on:</h4> <br>
                             <div class="btn-group col-10">
-                                <button class="btn btn-outline-success" onclick="shareOn('whatsapp')">WhatsApp</button>
-                                <button class="btn btn-outline-primary" onclick="shareOn('facebook')">Facebook</button>
-                                <button class="btn btn-outline-info" onclick="shareOn('twitter')">Twitter</button>
-                                <button class="btn btn-outline-danger" onclick="shareOn('telegram')">Telegram</button>
+                                <button class="btn btn-outline-success" onclick="shareOn('whatsapp')">
+                                    <img src="https://img.icons8.com/color/48/000000/whatsapp.png" style="width: 30px; height: 30px;" alt="whatsapp">
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="shareOn('facebook')">
+                                    <img src="https://img.icons8.com/color/48/000000/facebook-new.png" style="width: 30px; height: 30px;" alt="facebook">
+                                </button>
+                                <button class="btn btn-outline-info" onclick="shareOn('twitter')">
+                                    <img src="https://img.icons8.com/color/48/000000/twitter--v1.png" style="width: 30px; height: 30px;" alt="twitter">
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="shareOn('telegram')">
+                                    <img src="https://img.icons8.com/color/48/000000/telegram-app.png" style="width: 30px; height: 30px;" alt="telegram">
+                                </button>
                             </div>
                         </div>
 
@@ -791,28 +803,37 @@ $user = mysqli_fetch_assoc($user);
 
         // Function to share on social media
         function shareOn(platform) {
-            const referralLink = document.getElementById('referralLink').value;
-            let shareUrl = '';
+    const referralLink = document.getElementById('referralLink').value;
+    
+    if (!referralLink) {
+        alert("Referral link is empty!");
+        return;
+    }
 
-            switch (platform) {
-                case 'whatsapp':
-                    shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(referralLink)}`;
-                    break;
-                case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`;
-                    break;
-                case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(referralLink)}`;
-                    break;
-                case 'telegram':
-                    shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}`;
-                    break;
-                default:
-                    return;
-            }
+    const message = `Join Ludopaisa Today 😎😎\n\n5% direct commission\nInstant Deposit\nInstant Withdrawal\n\nJoin Now by clicking the link below 👉 ${referralLink}`;
+    let shareUrl = '';
 
-            window.open(shareUrl, '_blank'); // Open the share URL in a new tab
-        }
+    switch (platform) {
+        case 'whatsapp':
+            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+            break;
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${encodeURIComponent(message)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+            break;
+        case 'telegram':
+            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
+            break;
+        default:
+            return;
+    }
+
+    // Open the share URL in a popup window
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+}
+
     </script>
 </body>
 
