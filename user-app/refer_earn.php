@@ -349,7 +349,7 @@ $user = mysqli_fetch_assoc($user);
                                 $currentUrl = $protocol . $domain;
 
                                 ?>
-                                <input type="text" id="referralLink" value="<?=$currentUrl ?>/referral?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
+                                <input type="text" id="referralLink" value="<?=$currentUrl ?>/user-app/login?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
                                 <button class="btn btn-primary" id="copyLinkButton">Copy Link</button>
                             </div>
                         </div>
