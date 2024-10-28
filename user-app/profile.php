@@ -4,6 +4,7 @@ include('includes/sessions.php');
 
 $user_id = $_SESSION['id'];
 $username = "";
+$fname = "";
 $email = "";
 $mobile = "";
 $profile = "";
@@ -14,6 +15,7 @@ $res = mysqli_query($con, $sql);
 if (mysqli_num_rows($res) > 0) {
     $row = mysqli_fetch_assoc($res);
     $username = $row['username'];
+    $fname = $row['fname'];
     $email = $row['email'];
     $aadhar = $row['adhaar_no'];
     $pan = $row['pan_no'];
@@ -180,7 +182,11 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 <form action="operations/update_profile.php" class="auth-form" method="post">
                     <div class="form-group mt-0">
                         <label class="form-label mb-2" for="Inputname">User Name</label>
-                        <input type="text" class="form-control" id="Inputname" name="username" placeholder="Enter your name" value="<?php echo $username; ?>">
+                        <input type="text" class="form-control" id="Inputname" name="username" placeholder="Enter username" value="<?php echo $username; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mb-2" for="Inputname">Full Name</label>
+                        <input type="text" class="form-control" id="Inputname" name="fname" placeholder="Enter your name" value="<?php echo $fname; ?>">
                     </div>
 
                     <div class="form-group">

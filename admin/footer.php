@@ -121,12 +121,7 @@
   });
 </script>
 
-<script>
-        // Reload the page every 5 seconds (5000 milliseconds)
-        setInterval(function() {
-            location.reload();
-        }, 10000); // 5000 milliseconds = 5 seconds
-    </script>
+
     
 </body>
 </html>

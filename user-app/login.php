@@ -8,6 +8,19 @@ if(isset($_SESSION['id'])){
     header('location:home.php');
 }
 
+if(isset($_GET['code'])){
+    $code = $_GET['code'];
+    $query = "SELECT * FROM users WHERE referrer_id = '$code'";
+    $result = mysqli_query($con,$query);
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['referrer_id'] = $row['id'];
+        $isReferrer = true;
+    }else{
+        $isReferrer = false;
+    }
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -57,6 +70,11 @@ if(isset($_SESSION['id'])){
     
             <!-- sweetalert  -->
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <style>
+                .auth-content-bg .auth-btn{
+                    margin-top: 0;
+                }
+            </style>
 </head>
 
 <body>
@@ -90,7 +108,16 @@ if(isset($_POST['submit'])){
         $username=generateUsername();
         $profile=rand(1, 22);
         $selfcode = generateCode();
-        $query = "INSERT INTO users (mobile,otp,username,profile_pic,referrer_id) VALUES ('$mobile','$otp','$username','$profile','$selfcode')";
+        if(isset($_SESSION['referrer_id'])){
+            $refid = $_SESSION['referrer_id'];
+            $query = "SELECT * FROM users WHERE id = '$refid'";
+            $result = mysqli_query($con,$query);
+            $row = mysqli_fetch_assoc($result);
+            $refCode = $row['referrer_id'];
+        }else{
+            $refCode = null;
+        }
+        $query = "INSERT INTO users (mobile,otp,username,profile_pic,referrer_id,level_1) VALUES ('$mobile','$otp','$username','$profile','$selfcode','$refCode')";
         $result = mysqli_query($con,$query);
     }
     $mobileNew = "91".$mobile;
@@ -190,6 +217,26 @@ if(isset($_POST['submit'])){
                         </div>
                     </div>
                 </div>
+                <br>
+
+                <?php 
+                if(isset($isReferrer) && $isReferrer == true){
+                    ?>
+
+                    <!-- show msg here for refer code applied  -->
+
+                    <div class="alert alert-success" role="alert">
+                        Refer code applied successfully
+                    </div>
+                    <?php 
+                }elseif(isset($isReferrer) && $isReferrer == false){
+                    ?>
+                    <div class="alert alert-danger" role="alert">
+                        Invalid refer code
+                    </div>
+                    <?php 
+                }
+                ?>
 
                 <input type="submit" name="submit" value="Get OTP" class="btn theme-btn w-100 auth-btn">
            

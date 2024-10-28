@@ -7,6 +7,9 @@ $userid = $_SESSION['id'];
 $user = mysqli_query($con, "SELECT * FROM users WHERE id = '$userid'");
 $user = mysqli_fetch_assoc($user);
 
+$fetchReferrals = mysqli_query($con, "SELECT * FROM users WHERE level_1 = '$user[referrer_id]'");
+$referralCount = mysqli_num_rows($fetchReferrals);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -208,6 +211,18 @@ $user = mysqli_fetch_assoc($user);
             margin-bottom: 5px;
         }
 
+        .avatar img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
         h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
@@ -247,7 +262,7 @@ $user = mysqli_fetch_assoc($user);
             color: #01AA85;
         }
 
-        .input-group .btn{
+        .input-group .btn {
             z-index: 0;
         }
 
@@ -353,7 +368,7 @@ $user = mysqli_fetch_assoc($user);
                                 $currentUrl = $protocol . $domain;
 
                                 ?>
-                                <input type="text" id="referralLink" value="<?=$currentUrl ?>/user-app/login?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
+                                <input type="text" id="referralLink" value="<?= $currentUrl ?>/user-app/login?code=<?= $user['referrer_id'] ?>" class="form-control" readonly>
                                 <button class="btn btn-primary" id="copyLinkButton">Copy Link</button>
                             </div>
                         </div>
@@ -456,15 +471,33 @@ $user = mysqli_fetch_assoc($user);
 
                         <div class="top-leaderboard">
                             <div class="rank">
-                                <div class="avatar theme-btn">180</div>
+                                <div class="avatar theme-btn">
+                                    <?php 
+                                    if($referralCount == 0){
+                                        echo "0";   
+                                    }else{
+                                        echo $referralCount;
+                                    }
+
+                                    ?>
+                                </div>
                                 <p>Total Referals</p>
                             </div>
                             <div class="rank winner">
-                                <div class="avatar theme-btn">80</div>
+                                <div class="avatar theme-btn">
+                                <?php 
+                                    if($referralCount == 0){
+                                        echo "0";   
+                                    }else{
+                                        echo $referralCount;
+                                    }
+                                    
+                                    ?>
+                                </div>
                                 <p>Active Referals</p>
                             </div>
                             <div class="rank">
-                                <div class="avatar theme-btn">3534</div>
+                                <div class="avatar theme-btn">200</div>
                                 <p>Total Earned</p>
                             </div>
                         </div>
@@ -480,30 +513,31 @@ $user = mysqli_fetch_assoc($user);
                                 <p>Mobile Number</p>
                                 <p>Amount</p>
                             </div>
-                            <div class="leaderboard-item">
-                                <div class="avatar" style="background-color: #6A0DAD;">KK</div>
-                                <p>Kritika Kamra</p>
-                                <p>+9194674746</p>
-                                <p class="points">₹200</p>
-                            </div>
-                            <div class="leaderboard-item">
-                                <div class="avatar" style="background-color: #FFD700;">VD</div>
-                                <p>Vaibhav Dua</p>
-                                <p>+9194674746</p>
-                                <p class="points">₹180</p>
-                            </div>
-                            <div class="leaderboard-item">
-                                <div class="avatar" style="background-color: #FF1493;">HS</div>
-                                <p>Harpreet Singh</p>
-                                <p>+9194674746</p>
-                                <p class="points">₹170</p>
-                            </div>
-                            <div class="leaderboard-item">
-                                <div class="avatar" style="background-color: #708090;">SS</div>
-                                <p>Sudhanshu Shukla</p>
-                                <p>+9194674746</p>
-                                <p class="points">₹120</p>
-                            </div>
+                            <?php
+                            
+                            while ($referral = mysqli_fetch_assoc($fetchReferrals)) {
+                            ?>
+                                <div class="leaderboard-item">
+                                    <div class="avatar" ><img src="../assets/images/profile/p<?=$referral['profile_pic']?>.png" alt=""> </div>
+                                    <p>
+                                        <?php 
+                                        if($referral['fname'] == '' ){
+                                            echo "No Name";
+                                        }else{
+                                            echo $referral['fname'];
+                                        }
+                                        ?>
+                                    </p>
+                                    <p>
+                                        <?php 
+                                        echo "+91 ".substr($referral['mobile'], 0, 2) . '*****' . substr($referral['mobile'], -2);
+                                        ?>
+                                    </p>
+                                    <p class="points">₹200</p>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -803,37 +837,36 @@ $user = mysqli_fetch_assoc($user);
 
         // Function to share on social media
         function shareOn(platform) {
-    const referralLink = document.getElementById('referralLink').value;
-    
-    if (!referralLink) {
-        alert("Referral link is empty!");
-        return;
-    }
+            const referralLink = document.getElementById('referralLink').value;
 
-    const message = `Join Ludopaisa Today 😎😎\n\n5% direct commission\nInstant Deposit\nInstant Withdrawal\n\nJoin Now by clicking the link below 👉 ${referralLink}`;
-    let shareUrl = '';
+            if (!referralLink) {
+                alert("Referral link is empty!");
+                return;
+            }
 
-    switch (platform) {
-        case 'whatsapp':
-            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
-            break;
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${encodeURIComponent(message)}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-            break;
-        case 'telegram':
-            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
-            break;
-        default:
-            return;
-    }
+            const message = `Join Ludopaisa Today 😎😎\n\n5% direct commission\nInstant Deposit\nInstant Withdrawal\n\nJoin Now by clicking the link below 👉 ${referralLink}`;
+            let shareUrl = '';
 
-    // Open the share URL in a popup window
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-}
+            switch (platform) {
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${encodeURIComponent(message)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
+                    break;
+                default:
+                    return;
+            }
 
+            // Open the share URL in a popup window
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
     </script>
 </body>
 
