@@ -55,7 +55,8 @@ if (isset($_POST['otp'])) {
             $house = $responseData['data']['address']['house'];
             $zip = $responseData['data']['zip'];
             // $profile_image = $responseData['data']['profile_image'];
-            $mobile_hash = $responseData['data']['mobile_hash'];
+            $mobile_hash = null;
+            // $mobile_hash = $responseData['data']['mobile_hash'];
             $share_code = $responseData['data']['share_code'];
             // $reference_id = $responseData['data']['reference_id'];
             $request_id = $responseData['request_id'];
