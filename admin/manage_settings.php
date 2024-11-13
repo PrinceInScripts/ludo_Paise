@@ -97,6 +97,19 @@ if (isset($_POST['withdraw_status'])) {
         echo "Error updating Withdraw Status: " . mysqli_error($con);
     }
 }
+if (isset($_POST['maintain_status'])) {
+    $maintain_status = mysqli_real_escape_string($con, $_POST['maintain_status']); // Sanitize input
+    $sql = "UPDATE settings SET maintain = '$maintain_status' WHERE id = 1";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        echo "Withdraw Status updated successfully.";
+        header("Location: limits.php?status=true"); // Redirect back to the page
+        exit();
+    } else {
+        echo "Error updating Withdraw Status: " . mysqli_error($con);
+    }
+}
 
 if (isset($_POST['withdraw_count'])) {
     $withdraw_status = mysqli_real_escape_string($con, $_POST['withdrawCount']); // Sanitize input

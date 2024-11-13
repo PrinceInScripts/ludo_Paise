@@ -54,6 +54,47 @@ function sendOTP($number, $otp) {
     }
 }
 
+function sendOTP2($number, $otp) {
+
+    $phone = $number; // Concatenate country code with phone number
+    $message = $otp;
+    
+    $data = json_encode([
+        "contact" => [
+            [
+                "number" => $phone,
+                "message" => $message
+            ]
+        ]
+    ]);
+    
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, "https://codedrops.in/api/whatsapp/send");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Api-key: 1",
+        "Content-Type: application/json",
+    ]);
+    
+    $response = curl_exec($ch);
+    $err = curl_error($ch);
+    
+    curl_close($ch);
+    
+    if ($err) {
+        // echo "cURL Error #:" . $err;
+        return array('status' => false);
+    } else {
+        return array('status' => true, 'response' => json_decode($response, true));
+    }
+    }
+
 function generateCode(){
     // alpha numeric 10 digit code
     $code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);

@@ -316,7 +316,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
 
     <div class="card">
         <div class="card-header p-2">
-            <ul class="nav nav-pills d-flex flex-row justify-content-between">
+            <ul class="nav nav-pills d-flex flex-row">
                 <li class="nav-item">
                     <a class="nav-link active" href="#invite" data-toggle="tab">Invite Now</a>
                 </li>
@@ -326,9 +326,9 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#referral" data-toggle="tab">Leatherboard</a>
                 </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#faqs" data-toggle="tab">FAQs</a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="card-body">
@@ -541,7 +541,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="faqs">
+                <!-- <div class="tab-pane" id="faqs">
                     <section class="content">
                         <div class="row">
                             <div class="col-12" id="accordion">
@@ -682,7 +682,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                             </div>
                         </div>
                     </section>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ if (mysqli_num_rows($res) > 0) {
     $recharge_status = $row['recharge_status'];
     $withdraw_status = $row['withdraw_status'];
     $withdrawCount = $row['withdraw_count'];
+    $maintain_status = $row['maintain'];
 }
 
 ?>
@@ -119,6 +120,18 @@ if (mysqli_num_rows($res) > 0) {
                     <input type="checkbox" id="withdraw_status" name="withdraw_status" value="on"
                         <?php echo ($withdraw_status == 'on') ? 'checked' : ''; ?>
                         data-toggle="toggle" onchange="document.getElementById('withdrawForm').submit();">
+                </div>
+            </div>
+        </form>
+        
+        <form action="manage_settings.php" method="post" id="maintainForm">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4" for="maintain_status">Maintainance Mode</label>
+                <div class="col-sm-8 d-flex align-items-center">
+                    <input type="hidden" name="maintain_status" value="off">
+                    <input type="checkbox" id="maintain_status" name="maintain_status" value="on"
+                        <?php echo ($maintain_status == 'on') ? 'checked' : ''; ?>
+                        data-toggle="toggle" onchange="document.getElementById('maintainForm').submit();">
                 </div>
             </div>
         </form>
