@@ -65,170 +65,68 @@ if (isset($_GET['id'])) {
                 <!-- Left Column: User Profile Information -->
                 <div class="col-md-3">
                     <?php
-                    if($user['kyc_status'] == 1){
-                       ?>
-                       <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>"
-                                    alt="User profile picture">
-                            </div>
-
-                            <h3 class="profile-username text-center"><?php echo $personal_data['full_name'] ?></h3>
-                            <p class="text-muted text-center"><?php echo $user['username'] ?></p>
-
-
-                            <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Mobile</b> <a class="float-right"><?php echo $user['mobile'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>D.O.B</b> <a class="float-right"><?php echo $personal_data['dob'] ?></a>
-                                </li>
-                                <?php
-                                if ($personal_data['gender'] == 'M') {
-                                ?>
-                                    <li class="list-group-item">
-                                        <b>Gender</b> <a class="float-right">Male</a>
-                                    </li>
-                                <?php
-                                } else {
-                                ?>
-                                    <li class="list-group-item">
-                                        <b>Gender</b> <a class="float-right">Female</a>
-                                    </li>
-                                <?php
-
-                                }
-                                ?>
-
-
-                                <?php
-                                if ($user['email']) {
-                                ?>
-                                    <li class="list-group-item">
-                                        <b>Email</b> <a class="float-right"><?php echo $user['email'] ?></a>
-                                    </li>
-                                <?php
-                                }
-                                ?>
-                                <li class="list-group-item">
-                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
-                                </li>
-                                <?php
-                                if ($user['adhaar_no'] == '') {
-                                ?>
-                                    <li class="list-group-item">
-                                        <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
-                                    </li>
-                                <?php
-                                } else {
-                                ?>
-                                    <li class="list-group-item">
-                                        <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
-                                    </li>
-                                <?php
-                                }
-                                ?>
-                                <li class="list-group-item">
-                                    <b>Account Create</b> <a class="float-right"><?php echo $user['created_at'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Address</b> <a class="float-right"><?php echo $personal_data['state'] . "," . $personal_data['country'] . "(" . $personal_data['zip'] . ")" ?></a>
-                                </li>
-                                <?php
-                                if ($bank_data != '') {
-                                    if ($bank_data['bank_status']) {
-                                ?>
-                                        <li class="list-group-item">
-                                            <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
-                                        </li>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <li class="list-group-item">
-                                            <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
-                                        </li>
-                                <?php
-                                    }
-                                }
-                                ?>
-                            </ul>
-
-
-                        </div>
-
-                    </div>
-                       <?php
-                    
-                    } else{
-                        ?>
+                    if ($user['kyc_status'] == 1) {
+                    ?>
                         <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>"
-                                    alt="User profile picture">
-                            </div>
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>"
+                                        alt="User profile picture">
+                                </div>
 
-                           
-                            <p class="text-muted text-center"><?php echo $user['username'] ?></p>
+                                <h3 class="profile-username text-center"><?php echo $personal_data['full_name'] ?></h3>
+                                <p class="text-muted text-center"><?php echo $user['username'] ?></p>
 
 
-                            <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Mobile</b> <a class="float-right"><?php echo $user['mobile'] ?></a>
-                                </li>
-                                <?php
-                                if ($user['email']) {
-                                ?>
+                                <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b>Email</b> <a class="float-right"><?php echo $user['email'] ?></a>
+                                        <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
                                     </li>
-                                <?php
-                                }
-                                ?>
-                                <li class="list-group-item">
-                                    <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
-                                </li>
-                                <?php
-                                if ($user['adhaar_no'] == '') {
-                                ?>
                                     <li class="list-group-item">
-                                        <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
+                                        <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
                                     </li>
-                                <?php
-                                } else {
-                                ?>
                                     <li class="list-group-item">
-                                        <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                        <b>Mobile</b> <a class="float-right"><?php echo $user['mobile'] ?></a>
                                     </li>
-                                <?php
-                                }
-                                ?>
-                                <li class="list-group-item">
-                                    <b>Account Create</b> <a class="float-right"><?php echo $user['created_at'] ?></a>
-                                </li>
-                               
-                                <?php
-                                if ($bank_data != '') {
-                                    if ($bank_data['bank_status']) {
-                                ?>
+                                    <li class="list-group-item">
+                                        <b>D.O.B</b> <a class="float-right"><?php echo $personal_data['dob'] ?></a>
+                                    </li>
+                                    <?php
+                                    if ($personal_data['gender'] == 'M') {
+                                    ?>
                                         <li class="list-group-item">
-                                            <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
+                                            <b>Gender</b> <a class="float-right">Male</a>
+                                        </li>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Gender</b> <a class="float-right">Female</a>
+                                        </li>
+                                    <?php
+
+                                    }
+                                    ?>
+
+
+                                    <?php
+                                    if ($user['email']) {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Email</b> <a class="float-right"><?php echo $user['email'] ?></a>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
+                                    <li class="list-group-item">
+                                        <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                    </li>
+                                    <?php
+                                    if ($user['adhaar_no'] == '') {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
                                         </li>
                                     <?php
                                     } else {
@@ -236,17 +134,119 @@ if (isset($_GET['id'])) {
                                         <li class="list-group-item">
                                             <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
                                         </li>
-                                <?php
+                                    <?php
                                     }
-                                }
-                                ?>
-                            </ul>
+                                    ?>
+                                    <li class="list-group-item">
+                                        <b>Account Create</b> <a class="float-right"><?php echo $user['created_at'] ?></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Address</b> <a class="float-right"><?php echo $personal_data['state'] . "," . $personal_data['country'] . "(" . $personal_data['zip'] . ")" ?></a>
+                                    </li>
+                                    <?php
+                                    if ($bank_data != '') {
+                                        if ($bank_data['bank_status']) {
+                                    ?>
+                                            <li class="list-group-item">
+                                                <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
+                                            </li>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <li class="list-group-item">
+                                                <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                            </li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
 
+
+                            </div>
 
                         </div>
+                    <?php
 
-                    </div>
-                        <?php
+                    } else {
+                    ?>
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="../assets/images/profile/<?php echo $img_src_data['profile'] ?>"
+                                        alt="User profile picture">
+                                </div>
+
+
+                                <p class="text-muted text-center"><?php echo $user['username'] ?></p>
+
+
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>ID</b> <a class="float-right"><?php echo $user['id'] ?></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Mobile</b> <a class="float-right"><?php echo $user['mobile'] ?></a>
+                                    </li>
+                                    <?php
+                                    if ($user['email']) {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Email</b> <a class="float-right"><?php echo $user['email'] ?></a>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
+                                    <li class="list-group-item">
+                                        <b>Wallet</b> <a class="float-right"><?php echo $user['deposit_wallet'] + $user['withdraw_wallet'] ?></a>
+                                    </li>
+                                    <?php
+                                    if ($user['adhaar_no'] == '') {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Adhaar No.</b> <a class="float-right">No Aadhar</a>
+                                        </li>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <li class="list-group-item">
+                                            <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
+                                    <li class="list-group-item">
+                                        <b>Account Create</b> <a class="float-right"><?php echo $user['created_at'] ?></a>
+                                    </li>
+
+                                    <?php
+                                    if ($bank_data != '') {
+                                        if ($bank_data['bank_status']) {
+                                    ?>
+                                            <li class="list-group-item">
+                                                <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
+                                            </li>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <li class="list-group-item">
+                                                <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
+                                            </li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+
+
+                            </div>
+
+                        </div>
+                    <?php
 
                     }
                     ?>
@@ -262,11 +262,24 @@ if (isset($_GET['id'])) {
                             <form action="update_wallet.php" method="post">
                                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" name="bonus" placeholder="Bonus Amount" required>
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-success" name="action" value="bonus">Apply Bonus</button>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">₹</span>
                                     </div>
+                                    <input type="number" class="form-control" name="bonus_amount" placeholder="Bonus Amount" required>
                                 </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Remark</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="bonus_remark" placeholder="Bonus Remark">
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-success" name="action" value="bonus">Apply Bonus</button>
+                                </div>
+
+
                             </form>
                         </div>
                     </div>
@@ -280,7 +293,21 @@ if (isset($_GET['id'])) {
                             <form action="update_wallet.php" method="post">
                                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" name="penalty" placeholder="Penalty Amount" required>
+
+                                    <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">₹</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="penalty_amount" placeholder="Penalty Amount" required>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Remark</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="penalty_remark" placeholder="Penalty Remark">
+                                </div>
+
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-danger" name="action" value="penalty">Apply Penalty</button>
                                     </div>
@@ -613,7 +640,7 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Bonus History -->
                                 <div class="tab-pane" id="bonus">
                                     <div class="card">
@@ -631,31 +658,30 @@ if (isset($_GET['id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                  if (isset($_GET['id'])) {
+                                                if (isset($_GET['id'])) {
                                                     $id = mysqli_real_escape_string($con, $_GET['id']);
 
                                                     $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                                        $userResult = mysqli_query($con, $userQuery);
-                                                        $user = mysqli_fetch_assoc($userResult);
-            
+                                                    $userResult = mysqli_query($con, $userQuery);
+                                                    $user = mysqli_fetch_assoc($userResult);
+
                                                     // Fetch user status from the 'users' table
                                                     $bonus_query = "SELECT * FROM bonus WHERE userid='$id'";
                                                     $bonus_result = mysqli_query($con, $bonus_query);
-            
+
                                                     while ($row = mysqli_fetch_assoc($bonus_result)) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?php echo $row['id']; ?></td>
-                                                        <td><?php echo $user['mobile']; ?></td>
-                                                        <td><?php echo $row['userid']; ?></td>
-                                                        <td><?php echo $row['amount']; ?></td>
-                                                        <td><?php echo $row['created_by']; ?></td>
-                                                        <td><?php echo $row['created_at']; ?></td>
-                                                        <td><?php echo $row['remark']; ?></td>
-                                                    </tr>
-                                                        <?php
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $row['id']; ?></td>
+                                                            <td><?php echo $user['mobile']; ?></td>
+                                                            <td><?php echo $row['userid']; ?></td>
+                                                            <td><?php echo $row['amount']; ?></td>
+                                                            <td><?php echo $row['created_by']; ?></td>
+                                                            <td><?php echo $row['created_at']; ?></td>
+                                                            <td><?php echo $row['remark']; ?></td>
+                                                        </tr>
+                                                <?php
                                                     }
-                                                        
                                                 }
                                                 ?>
                                             </tbody>
@@ -680,28 +706,27 @@ if (isset($_GET['id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                  if (isset($_GET['id'])) {
+                                                if (isset($_GET['id'])) {
                                                     $id = mysqli_real_escape_string($con, $_GET['id']);
 
-                                                   
-            
+
+
                                                     $penalty_query = "SELECT * FROM penalties WHERE user_id='$id'";
                                                     $penalty_result = mysqli_query($con, $penalty_query);
-            
+
                                                     while ($row = mysqli_fetch_assoc($penalty_result)) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?php echo $row['id']; ?></td>
-                                                        <td><?php echo $row['user_id']; ?></td>
-                                                        <td><?php echo $row['amount']; ?></td>
-                                                        <td><?php echo $row['admin_id']; ?></td>
-                                                        <td><?php echo $row['battle_id']; ?></td>
-                                                        <td><?php echo $row['remark']; ?></td>
-                                                        <td><?php echo $row['created_at']; ?></td>
-                                                    </tr>
-                                                        <?php
+                                                ?>
+                                                        <tr>
+                                                            <td><?php echo $row['id']; ?></td>
+                                                            <td><?php echo $row['user_id']; ?></td>
+                                                            <td><?php echo $row['amount']; ?></td>
+                                                            <td><?php echo $row['admin_id']; ?></td>
+                                                            <td><?php echo $row['battle_id']; ?></td>
+                                                            <td><?php echo $row['remark']; ?></td>
+                                                            <td><?php echo $row['created_at']; ?></td>
+                                                        </tr>
+                                                <?php
                                                     }
-                                                        
                                                 }
                                                 ?>
                                             </tbody>
