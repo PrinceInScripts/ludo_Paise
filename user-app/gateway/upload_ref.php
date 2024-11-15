@@ -18,17 +18,17 @@ if (isset($_POST['txn_id'])) {
     }
 
     // Check if the file is an image
-    $allowed = array('image/jpeg', 'image/png', 'image/gif');
+    $allowed = array('image/jpg','image/jpeg', 'image/png', 'image/gif');
     if (!in_array($ss['type'], $allowed)) {
         // Show error message
-        echo 'error';
+        echo 'file type not allowed';
         return;
     }
 
     // Check if the file size is less than 2MB
     if ($ss['size'] > 2 * 1024 * 1024) {
         // Show error message
-        echo 'error';
+        echo 'file must be less than 2MB';
         return;
     }
 
@@ -78,7 +78,7 @@ if (isset($_POST['txn_id'])) {
             }
         } else {
             // Show error message
-            echo 'error';
+            echo 'file not uploaded';
         }
     }
     
