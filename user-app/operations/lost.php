@@ -1,17 +1,17 @@
-<?php 
+<?php
 require_once '../db.php';
 $user_id = $_SESSION['id'];
 
-if(isset($_POST['battle_id'])){
-    
+if (isset($_POST['battle_id'])) {
+
     $battle_id = $_POST['battle_id'];
 
-    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND is_complete = 0 AND created_by = '$user_id' OR accepted_by = '$user_id'";
+    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND is_complete = 0 AND (created_by = '$user_id' OR accepted_by = '$user_id')";
     $result = mysqli_query($con, $fetch);
     $fetch = mysqli_fetch_assoc($result);
 
     if (mysqli_num_rows($result) > 0) {
-        if($fetch['created_by'] == $user_id){
+        if ($fetch['created_by'] == $user_id) {
             // fetch games table
             $getGames = "SELECT * FROM games WHERE id = '$battle_id'";
             $getGamesResult = mysqli_query($con, $getGames);
@@ -33,24 +33,21 @@ if(isset($_POST['battle_id'])){
             $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
             $updateBalanceResult = mysqli_query($con, $updateBalance);
 
-            if($updateBalanceResult){
+            if ($updateBalanceResult) {
                 // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 
                 $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$opponent', '$battle_id', '$amount', '$prize', 'won', 'Game Won')";
                 $insertRecord2 = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$user_id', '$battle_id', '$amount', '$amount', 'lost', 'Game Lost')";
                 $insertRecordResult = mysqli_query($con, $insertRecord);
                 $insertRecordResult2 = mysqli_query($con, $insertRecord2);
-
-                
             }
 
             $result = mysqli_query($con, $sql);
-        if ($result) {
-            echo json_encode([['error' => false , 'message' => "Lost by creator."]]);
+            if ($result) {
+                echo json_encode([['error' => false, 'message' => "Lost by creator."]]);
+            } else {
+                echo json_encode([['error' => true, 'message' => "An error occured."]]);
+            }
         } else {
-            echo json_encode([['error' => true , 'message' => "An error occured."]]);
-        }
-
-        }else{
             // fetch games table
             $getGames = "SELECT * FROM games WHERE id = '$battle_id'";
             $getGamesResult = mysqli_query($con, $getGames);
@@ -66,35 +63,28 @@ if(isset($_POST['battle_id'])){
             $acceptor_ss = 'lost';
 
             $sql = "UPDATE games SET status = '$status', is_complete = '$isComplete', acceptor_ss = '$acceptor_ss', status_reason = '$reason', winner = '$winner', remark = '$remark' WHERE id = '$battle_id' AND accepted_by = '$user_id'";
-            
+
             $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
             $updateBalanceResult = mysqli_query($con, $updateBalance);
 
-            if($updateBalanceResult){
+            if ($updateBalanceResult) {
                 // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 
                 $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$opponent', '$battle_id', '$amount', '$prize', 'won', 'Game Won')";
                 $insertRecord2 = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$user_id', '$battle_id', '$amount', '$amount', 'lost', 'Game Lost')";
                 $insertRecordResult = mysqli_query($con, $insertRecord);
-                $insertRecordResult2 = mysqli_query($con, $insertRecord2); 
-
-                
+                $insertRecordResult2 = mysqli_query($con, $insertRecord2);
             }
 
             $result = mysqli_query($con, $sql);
-        if ($result) {
-            echo json_encode([['error' => false , 'message' => "Lost by acceptor."]]);
-        } else {
-            echo json_encode([['error' => true , 'message' => "An error occured."]]);
+            if ($result) {
+                echo json_encode([['error' => false, 'message' => "Lost by acceptor."]]);
+            } else {
+                echo json_encode([['error' => true, 'message' => "An error occured."]]);
+            }
         }
-        
-        }
-
-        
     } else {
-        echo json_encode([['error' => true , 'message' => "Battle not found or unauthorized access."]]);
+        echo json_encode([['error' => true, 'message' => "Battle not found or unauthorized access."]]);
     }
 } else {
-    echo json_encode([['error' => true , 'message' => "Missing battle ID or user ID."]]);
+    echo json_encode([['error' => true, 'message' => "Missing battle ID or user ID."]]);
 }
-
-?>

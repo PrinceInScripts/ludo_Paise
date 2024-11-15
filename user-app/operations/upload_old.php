@@ -9,7 +9,7 @@ $user_id = $_SESSION['id'];
 if (isset($_FILES['file']) && isset($_POST['battle_id'])) {
     $battle_id = $_POST['battle_id'];
 
-    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND created_by = '$user_id' OR accepted_by = '$user_id'";
+    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND (created_by = '$user_id' OR accepted_by = '$user_id')";
     $result = mysqli_query($con, $fetch);
     $fetch = mysqli_fetch_assoc($result);
 
