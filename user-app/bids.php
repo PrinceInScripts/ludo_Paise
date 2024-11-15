@@ -105,10 +105,16 @@ $user_id = $_SESSION['id'];
                                             - ₹<?= $row['ProfitAmount'] ?>
                                         </h4>
                                     <?php
-                                    } elseif ($row['status'] == 'won' || $row['status'] == 'lost') {
+                                    } elseif ($row['status'] == 'won') {
                                     ?>
                                         <h4 class="fw-semibold navbar-expand success-color">
                                             + ₹<?= $row['ProfitAmount'] ?>
+                                        </h4>
+                                    <?php
+                                    }elseif($row['status'] == 'lost'){
+                                        ?>
+                                        <h4 class="fw-semibold navbar-expand success-color">
+                                            - ₹<?= $row['ProfitAmount'] ?>
                                         </h4>
                                     <?php
                                     }
