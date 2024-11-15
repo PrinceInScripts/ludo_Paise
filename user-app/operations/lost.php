@@ -43,6 +43,13 @@ if(isset($_POST['battle_id'])){
                 
             }
 
+            $result = mysqli_query($con, $sql);
+        if ($result) {
+            echo json_encode([['error' => false , 'message' => "Lost by creator."]]);
+        } else {
+            echo json_encode([['error' => true , 'message' => "An error occured."]]);
+        }
+
         }else{
             // fetch games table
             $getGames = "SELECT * FROM games WHERE id = '$battle_id'";
@@ -72,15 +79,17 @@ if(isset($_POST['battle_id'])){
 
                 
             }
-        
-        }
 
-        $result = mysqli_query($con, $sql);
+            $result = mysqli_query($con, $sql);
         if ($result) {
-            echo json_encode([['error' => false , 'message' => "You have lost the game."]]);
+            echo json_encode([['error' => false , 'message' => "Lost by acceptor."]]);
         } else {
             echo json_encode([['error' => true , 'message' => "An error occured."]]);
         }
+        
+        }
+
+        
     } else {
         echo json_encode([['error' => true , 'message' => "Battle not found or unauthorized access."]]);
     }
