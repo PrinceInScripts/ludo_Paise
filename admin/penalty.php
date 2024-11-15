@@ -26,26 +26,27 @@ include ("top.php");
                         <th>User ID</th>
                         <th>Amount</th>
                         <th>Game ID</th>
-                        <th>Admin ID</th>
+                        <th>Given By</th>
                         <th>Remarks</th>
                         <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT * FROM penalties";
+                $sql = "SELECT * FROM paymenthistory WHERE type='penalty'";
                 $res = mysqli_query($con, $sql);
                 $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
-                   $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['user_id']."'"));
+                   $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
+                   $admin=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['upi']."'"));
                     ?>
 
                     <tr>
                         <td><?php echo $i++; ?></td>
                         <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
-                        <td><?php echo $row['battle_id']; ?></td>
-                        <td><?php echo $row['admin_id']; ?></td>
+                        <td><?php echo $row['utr']; ?></td>
+                        <td><?php echo $admin['mobile']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         

@@ -2,6 +2,12 @@
 
 include('db.php');
 
+function generatePenaltyTransactionId() {
+    $prefix = "ply_"; // Prefix for the transaction ID
+    $randomPart = bin2hex(random_bytes(6)); // Generate 12 random hexadecimal characters
+    return $prefix . $randomPart;
+}
+
 if(isset($_POST['mobile']) && isset($_POST['amount']) && isset($_POST['id'])){
     $mobile = $_POST['mobile'];
     $amount = $_POST['amount'];
@@ -23,10 +29,11 @@ if(isset($_POST['mobile']) && isset($_POST['amount']) && isset($_POST['id'])){
             $withdraw_wallet -= $amount;
         }
 
+       $order_id = generatePenaltyTransactionId();
+       $penalty_sql = "INSERT INTO paymenthistory (userid,order_id, amount,type, upi, remark,status,utr) VALUES ('$user_id','$order_id', '$amount','penalty', '$adminid', '$remark','2','$id')";
 
 
-        $sql = "INSERT INTO penalties (user_id, amount, admin_id, battle_id, remark) VALUES ('$user_id', '$amount',0, '$id','$remark')";
-        $result = mysqli_query($con, $sql);
+        $result = mysqli_query($con, $penalty_sql);
         if($result){
             echo json_encode(array('status' => 'success'));
         } else {

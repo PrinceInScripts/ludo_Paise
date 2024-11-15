@@ -25,23 +25,26 @@ include ("top.php");
                         <th>ID</th>
                         <th>User ID</th>
                         <th>Amount</th>
+                        <th>Given By</th>
                         <th>Created At</th>
                         <th>Remark</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT * FROM bonus";
+                $sql = "SELECT * FROM paymenthistory WHERE type='bonus'";
                 $res = mysqli_query($con, $sql);
                 $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
                     $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
+                    $admin=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['upi']."'"));
                     ?>
 
                     <tr>
                         <td><?php echo $i++; ?></td>
                         <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
+                        <td><?php echo $admin['mobile']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         

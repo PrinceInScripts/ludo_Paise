@@ -1,5 +1,19 @@
 <?php 
 include ('db.php');
+
+function generateBonusTransactionId() {
+    $prefix = "bsn_"; // Prefix for the transaction ID
+    $randomPart = bin2hex(random_bytes(6)); // Generate 12 random hexadecimal characters
+    return $prefix . $randomPart;
+}
+function generatePenaltyTransactionId() {
+    $prefix = "ply_"; // Prefix for the transaction ID
+    $randomPart = bin2hex(random_bytes(6)); // Generate 12 random hexadecimal characters
+    return $prefix . $randomPart;
+}
+
+
+
 // admin role_id 
 $adminid = $_SESSION['role_id'];
 if (isset($_POST['action'])) {
@@ -20,9 +34,10 @@ if (isset($_POST['action'])) {
         if (empty($remark)) {
             $remark = 'Bonus added by admin';
         }
+        $order_id = generateBonusTransactionId();
 
         // add bonus table 
-        $bonus_sql = "INSERT INTO bonus (userid, amount, created_by, remark) VALUES ('$id', '$bonus', '$adminid', '$remark')";
+        $bonus_sql = "INSERT INTO paymenthistory (userid,order_id, amount,type, upi, remark,status) VALUES ('$id','$order_id', '$bonus','bonus', '$adminid', '$remark','1')";
         $ch = mysqli_query($con, $bonus_sql);
         header("Location:viewUser.php?id=$id");
         exit;
@@ -40,9 +55,10 @@ if (isset($_POST['action'])) {
         if (empty($remark)) {
             $remark = 'Penalty added by admin';
         }
+        $order_id = generatePenaltyTransactionId();
 
         // add penalty table
-        $penalty_sql = "INSERT INTO penalties (user_id, amount, admin_id, remark) VALUES ('$id', '$penalty', '$adminid', '$remark')";
+        $penalty_sql = "INSERT INTO paymenthistory (userid,order_id, amount,type, upi, remark,status) VALUES ('$id','$order_id', '$penalty','penalty', '$adminid', '$remark','2')";
         $ch = mysqli_query($con, $penalty_sql);
 
         header("Location:viewUser.php?id=$id");
