@@ -430,7 +430,7 @@ include('includes/sessions.php');
                         Swal.fire({
                             icon: 'error',
                             title: 'Error in Uploading',
-                            text: 'Error in uploading payment proof. Please try again!',
+                            text: response,
                             showConfirmButton: false,
                             timer: 1500
                         });
