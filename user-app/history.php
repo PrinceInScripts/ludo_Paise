@@ -1,4 +1,4 @@
-<?php 
+<?php
 include './db.php';
 include('includes/sessions.php');
 $userid = $_SESSION['id'];
@@ -96,7 +96,15 @@ $userid = $_SESSION['id'];
             <div class="tab-content ride-content" id="TabContent">
 
                 <?php
-                $query = "SELECT * FROM paymenthistory WHERE userid = '$userid' ORDER BY id DESC";
+                $query = "SELECT id, userid, amount, created_at, 'Payment' AS type
+FROM paymenthistory
+WHERE userid = '$userid'
+UNION ALL
+SELECT id, userid, bonus_amount AS amount, created_at, 'Bonus' AS type
+FROM bonus
+WHERE userid = '$userid'
+ORDER BY created_at DESC;
+";
                 $run = mysqli_query($con, $query);
 
                 if (mysqli_num_rows($run) > 0) {
@@ -118,13 +126,13 @@ $userid = $_SESSION['id'];
                                                 <div class="my-ride-content flex-column">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <a href="#">
-                                                            <h6 class="title-color fw-medium">Recharge ID : <?=$row['order_id'] ?></h6>
+                                                            <h6 class="title-color fw-medium">Recharge ID : <?= $row['order_id'] ?></h6>
                                                         </a>
                                                         <span class="status secondary-color fw-normal">Unpaid</span>
                                                     </div>
                                                     <div class="d-flex align-items-center justify-content-between  mt-2">
-                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?=$row['amount'] ?></h6>
-                                                        <h6 class="fw-normal content-color"><?=$row['created_at'] ?></h6>
+                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?= $row['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color"><?= $row['created_at'] ?></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,9 +142,13 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi'] ?></h5>
+                                                            <h5 class="fw-normal title-color"><?= $row['upi'] ?></h5>
                                                         </div>
-                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
+                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if ($row['utr'] == null) {
+                                                                                                            echo "NULL";
+                                                                                                        } else {
+                                                                                                            echo $row['utr'];
+                                                                                                        } ?></h6>
                                                     </div>
                                                     <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
                                                         alt="p5">
@@ -172,13 +184,13 @@ $userid = $_SESSION['id'];
                                                 <div class="my-ride-content flex-column">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <a href="#">
-                                                            <h6 class="title-color fw-medium">Recharge ID : <?=$row['order_id']?></h6>
+                                                            <h6 class="title-color fw-medium">Recharge ID : <?= $row['order_id'] ?></h6>
                                                         </a>
                                                         <span class="status success-color fw-normal">Success</span>
                                                     </div>
                                                     <div class="d-flex align-items-center justify-content-between  mt-2">
-                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?=$row['amount']?></h6>
-                                                        <h6 class="fw-normal content-color"><?=$row['created_at']?></h6>
+                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?= $row['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color"><?= $row['created_at'] ?></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,9 +200,13 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi']?></h5>
+                                                            <h5 class="fw-normal title-color"><?= $row['upi'] ?></h5>
                                                         </div>
-                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
+                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if ($row['utr'] == null) {
+                                                                                                            echo "NULL";
+                                                                                                        } else {
+                                                                                                            echo $row['utr'];
+                                                                                                        } ?></h6>
                                                     </div>
                                                     <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
                                                         alt="p5">
@@ -226,13 +242,13 @@ $userid = $_SESSION['id'];
                                                 <div class="my-ride-content flex-column">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <a href="#">
-                                                            <h6 class="title-color fw-medium">Recharge ID : <?=$row['order_id']?></h6>
+                                                            <h6 class="title-color fw-medium">Recharge ID : <?= $row['order_id'] ?></h6>
                                                         </a>
                                                         <span class="status error-color fw-normal">Failed</span>
                                                     </div>
                                                     <div class="d-flex align-items-center justify-content-between  mt-2">
-                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?=$row['amount']?></h6>
-                                                        <h6 class="fw-normal content-color">15<?=$row['created_at']?></h6>
+                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?= $row['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color">15<?= $row['created_at'] ?></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,9 +258,13 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi']?></h5>
+                                                            <h5 class="fw-normal title-color"><?= $row['upi'] ?></h5>
                                                         </div>
-                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
+                                                        <h6 class="fw-normal content-color mt-2">UTR : <?php if ($row['utr'] == null) {
+                                                                                                            echo "NULL";
+                                                                                                        } else {
+                                                                                                            echo $row['utr'];
+                                                                                                        } ?></h6>
                                                     </div>
                                                     <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
                                                         alt="p5">
@@ -283,226 +303,225 @@ $userid = $_SESSION['id'];
                 ?>
 
 
-<?php
+                <?php
                 $query2 = "SELECT * FROM withdrawrecord WHERE userid = '$userid' ORDER BY id DESC";
                 $run2 = mysqli_query($con, $query2);
 
                 if (mysqli_num_rows($run2) > 0) {
-                    ?>
+                ?>
                     <div class="tab-pane fade" id="pending-tab">
-                    <ul class="my-ride-list">
-                        <?php 
-                        while ($row2 = mysqli_fetch_assoc($run2)) {
-                            if($row2['status'] == 0){
-                                ?>
-                                <li>
-                            <div class="my-ride-box">
-                                <div class="my-ride-head">
-                                    <a href="pending-ride-details" class="my-ride-img">
-                                        <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
-                                            alt="receipt">
-                                    </a>
+                        <ul class="my-ride-list">
+                            <?php
+                            while ($row2 = mysqli_fetch_assoc($run2)) {
+                                if ($row2['status'] == 0) {
+                            ?>
+                                    <li>
+                                        <div class="my-ride-box">
+                                            <div class="my-ride-head">
+                                                <a href="pending-ride-details" class="my-ride-img">
+                                                    <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
+                                                        alt="receipt">
+                                                </a>
 
-                                    <div class="my-ride-content flex-column">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
-                                            </a>
-                                            <span class="status secondary-color fw-normal">Pending</span>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between  mt-2">
-                                            <h6 class="fw-mediun success-color">₹ <?=$row2['amount'] ?></h6>
-                                            <h6 class="fw-normal content-color"><?=$row2['created_at'] ?></h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="my-ride-details">
-                                    <div class="ride-info">
-                                        <div class="ride-info-content">
-                                            <div class="d-flex align-content-center gap-2 lh-base">
-                                                <h5 class="fw-normal title-color">Mode</h5>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">
-                                                    <?php 
-                                                        if($row2['type'] == 'upi'){
-                                                            echo 'UPI';
-                                                        }else{
-                                                            echo 'Bank';
-                                                        }
-                                                        
-                                                        ?>
-                                                    </span>
+                                                <div class="my-ride-content flex-column">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="pending-ride-details">
+                                                            <h6 class="title-color fw-medium">WITHDRAW ID : <?= $row2['txnid'] ?></h6>
+                                                        </a>
+                                                        <span class="status secondary-color fw-normal">Pending</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-between  mt-2">
+                                                        <h6 class="fw-mediun success-color">₹ <?= $row2['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color"><?= $row2['created_at'] ?></h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>
+
+                                            <div class="my-ride-details">
+                                                <div class="ride-info">
+                                                    <div class="ride-info-content">
+                                                        <div class="d-flex align-content-center gap-2 lh-base">
+                                                            <h5 class="fw-normal title-color">Mode</h5>
+                                                            <div class="d-flex align-items-center gap-1">
+                                                                <span class="count content-color fw-normal">
+                                                                    <?php
+                                                                    if ($row2['type'] == 'upi') {
+                                                                        echo 'UPI';
+                                                                    } else {
+                                                                        echo 'Bank';
+                                                                    }
+
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="fw-normal content-color mt-1"><?= $row2['remark'] ?></h6>
+                                                    </div>
+                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5">
+                                                </div>
+                                                <ul class="ride-location-listing mt-3">
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
+                                                            alt="location">
+                                                        <h5 class="fw-light title-color">Withdraw Initiated...</h5>
+                                                    </li>
+
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
+                                                        <h5 class="fw-light title-color border-0">Status : Pending
+                                                        </h5>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
                                         </div>
-                                        <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                            alt="p5">
-                                    </div>
-                                    <ul class="ride-location-listing mt-3">
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">Withdraw Initiated...</h5>
-                                        </li>
-
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">Status : Pending
-                                            </h5>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </li>
-                                <?php 
-                            }elseif($row2['status'] == 1){
+                                    </li>
+                                <?php
+                                } elseif ($row2['status'] == 1) {
                                 ?>
-                                <li>
-                            <div class="my-ride-box">
-                                <div class="my-ride-head">
-                                    <a href="pending-ride-details" class="my-ride-img">
-                                        <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
-                                            alt="receipt">
-                                    </a>
+                                    <li>
+                                        <div class="my-ride-box">
+                                            <div class="my-ride-head">
+                                                <a href="pending-ride-details" class="my-ride-img">
+                                                    <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
+                                                        alt="receipt">
+                                                </a>
 
-                                    <div class="my-ride-content flex-column">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
-                                            </a>
-                                            <span class="status success-color fw-normal">Success</span>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between  mt-2">
-                                            <h6 class="fw-mediun success-color">₹ <?=$row2['amount'] ?></h6>
-                                            <h6 class="fw-normal content-color"><?=$row2['created_at'] ?></h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="my-ride-details">
-                                    <div class="ride-info">
-                                        <div class="ride-info-content">
-                                            <div class="d-flex align-content-center gap-2 lh-base">
-                                                <h5 class="fw-normal title-color">Mode : </h5>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">
-                                                    <?php 
-                                                        if($row2['type'] == 'upi'){
-                                                            echo 'UPI';
-                                                        }else{
-                                                            echo 'Bank';
-                                                        }
-                                                        
-                                                        ?>
-                                                    </span>
+                                                <div class="my-ride-content flex-column">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="pending-ride-details">
+                                                            <h6 class="title-color fw-medium">WITHDRAW ID : <?= $row2['txnid'] ?></h6>
+                                                        </a>
+                                                        <span class="status success-color fw-normal">Success</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-between  mt-2">
+                                                        <h6 class="fw-mediun success-color">₹ <?= $row2['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color"><?= $row2['created_at'] ?></h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>
+
+                                            <div class="my-ride-details">
+                                                <div class="ride-info">
+                                                    <div class="ride-info-content">
+                                                        <div class="d-flex align-content-center gap-2 lh-base">
+                                                            <h5 class="fw-normal title-color">Mode : </h5>
+                                                            <div class="d-flex align-items-center gap-1">
+                                                                <span class="count content-color fw-normal">
+                                                                    <?php
+                                                                    if ($row2['type'] == 'upi') {
+                                                                        echo 'UPI';
+                                                                    } else {
+                                                                        echo 'Bank';
+                                                                    }
+
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="fw-normal content-color mt-1"><?= $row2['remark'] ?></h6>
+                                                    </div>
+                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5">
+                                                </div>
+                                                <ul class="ride-location-listing mt-3">
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
+                                                            alt="location">
+                                                        <h5 class="fw-light title-color">Withdraw Initiated....</h5>
+                                                    </li>
+
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
+                                                        <h5 class="fw-light title-color border-0">Withdraw Success
+                                                        </h5>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
                                         </div>
-                                        <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                            alt="p5">
-                                    </div>
-                                    <ul class="ride-location-listing mt-3">
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">Withdraw Initiated....</h5>
-                                        </li>
-
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">Withdraw Success
-                                            </h5>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </li>
-                                <?php 
-                            }elseif($row2['status'] == 2){
+                                    </li>
+                                <?php
+                                } elseif ($row2['status'] == 2) {
                                 ?>
-                                <li>
-                            <div class="my-ride-box">
-                                <div class="my-ride-head">
-                                    <a href="pending-ride-details" class="my-ride-img">
-                                        <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
-                                            alt="receipt">
-                                    </a>
+                                    <li>
+                                        <div class="my-ride-box">
+                                            <div class="my-ride-head">
+                                                <a href="pending-ride-details" class="my-ride-img">
+                                                    <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
+                                                        alt="receipt">
+                                                </a>
 
-                                    <div class="my-ride-content flex-column">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <a href="pending-ride-details">
-                                                <h6 class="title-color fw-medium">WITHDRAW ID : <?=$row2['txnid'] ?></h6>
-                                            </a>
-                                            <span class="status error-color fw-normal">Cancelled</span>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between  mt-2">
-                                            <h6 class="fw-mediun success-color">₹ <?=$row2['amount'] ?></h6>
-                                            <h6 class="fw-normal content-color"><?=$row2['created_at'] ?></h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="my-ride-details">
-                                    <div class="ride-info">
-                                        <div class="ride-info-content">
-                                            <div class="d-flex align-content-center gap-2 lh-base">
-                                                <h5 class="fw-normal title-color">Mode : </h5>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <span class="count content-color fw-normal">
-                                                        <?php 
-                                                        if($row2['type'] == 'upi'){
-                                                            echo 'UPI';
-                                                        }else{
-                                                            echo 'Bank';
-                                                        }
-
-                                                        ?>
-                                                    </span>
+                                                <div class="my-ride-content flex-column">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="pending-ride-details">
+                                                            <h6 class="title-color fw-medium">WITHDRAW ID : <?= $row2['txnid'] ?></h6>
+                                                        </a>
+                                                        <span class="status error-color fw-normal">Cancelled</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-between  mt-2">
+                                                        <h6 class="fw-mediun success-color">₹ <?= $row2['amount'] ?></h6>
+                                                        <h6 class="fw-normal content-color"><?= $row2['created_at'] ?></h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <h6 class="fw-normal content-color mt-1"><?=$row2['remark'] ?></h6>
+
+                                            <div class="my-ride-details">
+                                                <div class="ride-info">
+                                                    <div class="ride-info-content">
+                                                        <div class="d-flex align-content-center gap-2 lh-base">
+                                                            <h5 class="fw-normal title-color">Mode : </h5>
+                                                            <div class="d-flex align-items-center gap-1">
+                                                                <span class="count content-color fw-normal">
+                                                                    <?php
+                                                                    if ($row2['type'] == 'upi') {
+                                                                        echo 'UPI';
+                                                                    } else {
+                                                                        echo 'Bank';
+                                                                    }
+
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="fw-normal content-color mt-1"><?= $row2['remark'] ?></h6>
+                                                    </div>
+                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5">
+                                                </div>
+                                                <ul class="ride-location-listing mt-3">
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
+                                                            alt="location">
+                                                        <h5 class="fw-light title-color">Withdraw Initiated....</h5>
+                                                    </li>
+
+                                                    <li class="location-box">
+                                                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
+                                                        <h5 class="fw-light title-color border-0">Withdraw Cancelled
+                                                        </h5>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
                                         </div>
-                                        <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                            alt="p5">
-                                    </div>
-                                    <ul class="ride-location-listing mt-3">
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">Withdraw Initiated....</h5>
-                                        </li>
-
-                                        <li class="location-box">
-                                            <img class="icon" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">Withdraw Cancelled
-                                            </h5>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </li>
-                                <?php 
+                                    </li>
+                            <?php
+                                }
                             }
-                        }
-                        ?>
-                        
-                        
-                        
-                    </ul>
-                </div>
-                    <?php 
-                }else{
+                            ?>
 
+
+
+                        </ul>
+                    </div>
+                <?php
+                } else {
                 }
                 ?>
 
-                
+
 
 
 
