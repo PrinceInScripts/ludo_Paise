@@ -1,6 +1,7 @@
 <?php 
 include ('db.php');
-include ('db.php');
+// admin role_id 
+$adminid = $_SESSION['role_id'];
 if (isset($_POST['action'])) {
     $id = mysqli_real_escape_string($con, $_POST['id']);
     $user_sql = "SELECT * FROM users WHERE id='$id'";
@@ -13,6 +14,10 @@ if (isset($_POST['action'])) {
         $wallet = $user['deposit_wallet'] + $bonus;
         $sql = "UPDATE users SET deposit_wallet='$wallet' WHERE id='$id'";
         mysqli_query($con, $sql);
+
+        // add bonus table 
+        $bonus_sql = "INSERT INTO bonus (userid, amount, created_by, remark) VALUES ('$id', '$bonus', '$adminid', 'Bonus added by admin')";
+        $ch = mysqli_query($con, $bonus_sql);
         header("Location:viewUser.php?id=$id");
         exit;
     }
