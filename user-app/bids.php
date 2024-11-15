@@ -113,7 +113,7 @@ $user_id = $_SESSION['id'];
                                     <?php
                                     }elseif($row['status'] == 'lost'){
                                         ?>
-                                        <h4 class="fw-semibold navbar-expand success-color">
+                                        <h4 class="fw-semibold navbar-expand error-color">
                                             - ₹<?= $row['ProfitAmount'] ?>
                                         </h4>
                                     <?php
