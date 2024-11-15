@@ -1,93 +1,79 @@
-<?php 
+<?php
 include('../db.php');
+session_start();
 
-// handle the file upload here and save the file to the server and update the reference no in the database 
-
-// Check if the form is submitted
-if (isset($_POST['txn_id'])) {
-    // Get the uploaded screenshot file
-    $ss = $_FILES['ss'];
-
-    $txn_id = $_POST['txn_id'];
-
-    // Check if screenshot is empty
-    if ($ss['error'] == 4) {
-        // Show error message
-        echo 'error';
-        return;
-    }
-
-    // Check if the file is an image
-    $allowed = array('image/jpg','image/jpeg', 'image/png', 'image/gif');
-    if (!in_array($ss['type'], $allowed)) {
-        // Show error message
-        echo 'file type not allowed';
-        return;
-    }
-
-    // Check if the file size is less than 2MB
-    if ($ss['size'] > 2 * 1024 * 1024) {
-        // Show error message
-        echo 'file must be less than 2MB';
-        return;
-    }
-
-    // Generate a unique filename and create new folder for payment screenshot as txn_id in assets/payment/screenshot
-    if (!file_exists('../../assets/payment/screenshot/' . $txn_id)) {
-        mkdir('../../assets/payment/screenshot/' . $txn_id, 0777, true);
-    }
-    $filename = uniqid('ss_') . '.' . pathinfo($ss['name'], PATHINFO_EXTENSION);
-
-    // Move the uploaded file to the uploads directory
-
-    $txn_sql="SELECT * FROM paymenthistory WHERE order_id = '$txn_id'";
-    $txn_result = mysqli_query($con, $txn_sql);
-    $txn = mysqli_fetch_assoc($txn_result);
-    if($txn['type']=='usdt'){
-        if (move_uploaded_file($ss['tmp_name'], '../../assets/payment/screenshot/' . $txn_id . '/' . $filename)) {
-            // Update the reference number in the database
-            $user_id = $_SESSION['id'];
-            $txnRecord = "update paymenthistory set remark = 'Payment Requested', payment_ss = '$filename' where order_id = '$txn_id'";
-            $result = mysqli_query($con, $txnRecord);
-    
-            if ($result) {
-                // Show success message
-                echo 'success';
-            } else {
-                // Show error message
-                echo 'error';
-            }
-        } else {
-            // Show error message
-            echo 'error';
-        }
-    } else{
-        if (move_uploaded_file($ss['tmp_name'], '../../assets/payment/screenshot/' . $txn_id . '/' . $filename)) {
-            // Update the reference number in the database
-            $ref_no = $_POST['utr'];
-            $user_id = $_SESSION['id'];
-            $txnRecord = "update paymenthistory set remark = 'Payment Requested', utr = '$ref_no', payment_ss = '$filename' where order_id = '$txn_id'";
-            $result = mysqli_query($con, $txnRecord);
-    
-            if ($result) {
-                // Show success message
-                echo 'success';
-            } else {
-                // Show error message
-                echo 'error';
-            }
-        } else {
-            // Show error message
-            echo 'file not uploaded';
-        }
-    }
-    
-   
-}else{
-    // Show error message
-    echo 'error in submit';
+if (!isset($_SESSION['id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+    exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['txn_id'])) {
+    $txn_id = $_POST['txn_id'];
+    $ss = $_FILES['ss'];
 
+    // Check if file is uploaded
+    if ($ss['error'] == 4) {
+        echo json_encode(['status' => 'error', 'message' => 'No file uploaded']);
+        exit;
+    }
 
+    // Validate file type
+    $allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+    if (!in_array($ss['type'], $allowedTypes)) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid file type']);
+        exit;
+    }
+
+    // Validate file size
+    if ($ss['size'] > 2 * 1024 * 1024) {
+        echo json_encode(['status' => 'error', 'message' => 'File size exceeds 2MB']);
+        exit;
+    }
+
+    // Generate unique filename and ensure directory exists
+    $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/payment/screenshot/' . $txn_id . '/';
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $filename = uniqid('ss_') . '.' . strtolower(pathinfo($ss['name'], PATHINFO_EXTENSION));
+
+    // Move uploaded file
+    if (!move_uploaded_file($ss['tmp_name'], $uploadDir . $filename)) {
+        error_log("Failed to move file: " . json_encode(error_get_last()));
+        echo json_encode(['status' => 'error', 'message' => 'Failed to upload file']);
+        exit;
+    }
+
+    // Handle database updates
+    $txn_sql = "SELECT * FROM paymenthistory WHERE order_id = ?";
+    $stmt = $con->prepare($txn_sql);
+    $stmt->bind_param("s", $txn_id);
+    $stmt->execute();
+    $txn = $stmt->get_result()->fetch_assoc();
+
+    if ($txn) {
+        $remark = 'Payment Requested';
+        if ($txn['type'] === 'usdt') {
+            $query = "UPDATE paymenthistory SET remark = ?, payment_ss = ? WHERE order_id = ?";
+            $stmt = $con->prepare($query);
+            $stmt->bind_param("sss", $remark, $filename, $txn_id);
+        } else {
+            $ref_no = $_POST['utr'];
+            $query = "UPDATE paymenthistory SET remark = ?, utr = ?, payment_ss = ? WHERE order_id = ?";
+            $stmt = $con->prepare($query);
+            $stmt->bind_param("ssss", $remark, $ref_no, $filename, $txn_id);
+        }
+
+        if ($stmt->execute()) {
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update database']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Transaction not found']);
+    }
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+}
 ?>
