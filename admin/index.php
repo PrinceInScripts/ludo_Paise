@@ -2,7 +2,7 @@
 include("db.php");
 include("top.php");
 
-$role_id=$_SESSION['role_id'];
+
 
 ?>
 

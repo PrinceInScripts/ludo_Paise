@@ -9,6 +9,7 @@ $data = mysqli_fetch_assoc($run);
 $name = $data['username'];
 $email = $data['email'];
 $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
+$user_role = $data['role'];
 
 $img_src_sql = "SELECT * FROM profile_pic WHERE id = '$data[profile_pic]'";
 $img_src_run = mysqli_query($con, $img_src_sql);
@@ -117,6 +118,27 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
             <div class="profile-list mt-4">
                 <h5 class="fw-normal content-color mb-3">General</h5>
                 <ul class="setting-listing">
+
+                <?php 
+                if($user_role == 'admin'){
+                    ?>
+                    <li class="w-100">
+                        <a href="../admin/index.php" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax icon" data-icon="user-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Admin Panel</h5>
+                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                            </div>
+                        </a>
+                    </li>
+                    <?php
+                }
+                ?>
+
+
+
                     <li class="w-100">
                         <a href="profile" class="setting-box">
                             <div class="setting-icon">

@@ -10,12 +10,12 @@ $result = mysqli_query($con, $sql);
 if ($result && mysqli_num_rows($result) > 0) {
     // Prepare insert statement for 'users' table
     
-    $insert_stmt = $con->prepare("INSERT INTO users (fname, email, profile_pic, mobile, deposit_wallet, referrer_id, level_1) VALUES (?,?, ?, ?, ?, ?, ?)");
+    $insert_stmt = $con->prepare("INSERT INTO users (fname, email, profile_pic, mobile, deposit_wallet, referrer_id, level_1, referral_earning) VALUES (?,?, ?, ?, ?, ?, ?, ?)");
 
     // Check if prepare was successful
     if ($insert_stmt) {
         // Bind parameters for insertion
-        $insert_stmt->bind_param("ssssdss", $name, $email, $profile, $mobile, $deposit_wallet, $referrer, $level_1);
+        $insert_stmt->bind_param("ssssdssd", $name, $email, $profile, $mobile, $deposit_wallet, $referrer, $level_1, $referral_earning);
 
         // Loop through each row of fetched data
         while ($row = mysqli_fetch_assoc($result)) {
@@ -27,6 +27,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             $deposit_wallet = $row['Wallet_balance'];
             $referrer = $row['referral_code'];
             $level_1 = $row['referral'];
+            $referral_earning = $row['referral_earning'];
 
             // Execute the prepared statement
             if ($insert_stmt->execute()) {

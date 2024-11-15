@@ -1,5 +1,9 @@
 <?php
-$role_id = $_SESSION['role_id'];
+if(!isset($_SESSION['role_id'])){
+  header("Location: login");
+}else{
+  $role_id=$_SESSION['role_id'];
+}
 date_default_timezone_set('Asia/Kolkata');
 ?>
 <!DOCTYPE html>

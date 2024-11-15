@@ -9,6 +9,7 @@ $user = mysqli_fetch_assoc($user);
 
 $fetchReferrals = mysqli_query($con, "SELECT * FROM users WHERE level_1 = '$user[referrer_id]'");
 $referralCount = mysqli_num_rows($fetchReferrals);
+$referralEarnings = $user['referral_earning'];
 
 ?>
 <!DOCTYPE html>
@@ -200,9 +201,9 @@ $referralCount = mysqli_num_rows($fetchReferrals);
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 94px;
+            height: 36px;
+            border-radius: 11px;
             color: white;
             display: flex;
             justify-content: center;
@@ -211,7 +212,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
             margin-bottom: 5px;
         }
 
-        .avatar img{
+        .avatar img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -346,7 +347,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                     </div>
                     <div class="faq-item">
                         <h5>What rewards do I get?</h5>
-                        <p>You earn INR 25 when your friend signs up and shops, plus 20% of their earnings.</p>
+                        <p>You earn 2% when your friend wins a battle and 1% when they even loss the battle.</p>
                     </div>
                     <div class="invite-now">
                         <h2>Invite Now</h2>
@@ -392,7 +393,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                             </div>
                         </div>
 
-                        <div class="referral-tiers mb-4">
+                        <!-- <div class="referral-tiers mb-4">
                             <div class="tier" id="tier1">
                                 <h4>Tier 1</h4>
                                 <p>Earn 10% on every referral's first purchase!</p>
@@ -413,7 +414,7 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                                 <h4>Tier 5</h4>
                                 <p>Earn 30% on every referral's first purchase after 50 successful invites!</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -472,10 +473,10 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                         <div class="top-leaderboard">
                             <div class="rank">
                                 <div class="avatar theme-btn">
-                                    <?php 
-                                    if($referralCount == 0){
-                                        echo "0";   
-                                    }else{
+                                    <?php
+                                    if ($referralCount == 0) {
+                                        echo "0";
+                                    } else {
                                         echo $referralCount;
                                     }
 
@@ -485,19 +486,27 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                             </div>
                             <div class="rank winner">
                                 <div class="avatar theme-btn">
-                                <?php 
-                                    if($referralCount == 0){
-                                        echo "0";   
-                                    }else{
+                                    <?php
+                                    if ($referralCount == 0) {
+                                        echo "0";
+                                    } else {
                                         echo $referralCount;
                                     }
-                                    
+
                                     ?>
                                 </div>
                                 <p>Active Referals</p>
                             </div>
                             <div class="rank">
-                                <div class="avatar theme-btn">200</div>
+                                <div class="avatar theme-btn">
+                                    <?php
+                                    if ($referralEarnings < 1) {
+                                        echo "0";
+                                    } else {
+                                        echo $referralEarnings;
+                                    }
+                                    ?>
+                                </div>
                                 <p>Total Earned</p>
                             </div>
                         </div>
@@ -511,29 +520,29 @@ $referralCount = mysqli_num_rows($fetchReferrals);
                                 <p>Profile</p>
                                 <p>Player Name</p>
                                 <p>Mobile Number</p>
-                                <p>Amount</p>
+                                <!-- <p>Amount</p> -->
                             </div>
                             <?php
-                            
+
                             while ($referral = mysqli_fetch_assoc($fetchReferrals)) {
                             ?>
                                 <div class="leaderboard-item">
-                                    <div class="avatar" ><img src="../assets/images/profile/p<?=$referral['profile_pic']?>.png" alt=""> </div>
+                                    <div class="avatar"><img src="../assets/images/profile/p<?= $referral['profile_pic'] ?>.png" alt=""> </div>
                                     <p>
-                                        <?php 
-                                        if($referral['fname'] == '' ){
+                                        <?php
+                                        if ($referral['fname'] == '') {
                                             echo "No Name";
-                                        }else{
-                                            echo $referral['fname'];
+                                        } else {
+                                            echo substr($referral['fname'], 0, 2) . '*****' . substr($referral['fname'], -2)."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ";
                                         }
                                         ?>
                                     </p>
                                     <p>
-                                        <?php 
-                                        echo "+91 ".substr($referral['mobile'], 0, 2) . '*****' . substr($referral['mobile'], -2);
+                                        <?php
+                                        echo "+91 " . substr($referral['mobile'], 0, 2) . '*****' . substr($referral['mobile'], -2);
                                         ?>
                                     </p>
-                                    <p class="points">₹200</p>
+                                    <!-- <p class="points">₹200</p> -->
                                 </div>
                             <?php
                             }
