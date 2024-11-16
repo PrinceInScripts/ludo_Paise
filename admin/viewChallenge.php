@@ -405,13 +405,14 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               <?php
                   } else {
               ?>
-                                    <button type="button" onclick="comingsoon()" class="btn btn-block btn-warning btn-lg">Cancel Battle</button>
+                                   
 
               </div>
             <?php
                   }
             ?>
             <!-- /.tab-content -->
+            <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
             </div><!-- /.card-body -->
           </div>
           <!-- /.card -->
