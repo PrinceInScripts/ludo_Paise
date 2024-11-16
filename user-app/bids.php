@@ -200,6 +200,10 @@ $user_id = $_SESSION['id'];
                                     ?>
                                         <a href="#0" class="btn btn-danger w-100 m-0">You Lost</a>
                                     <?php
+                                    }elseif($row['status'] == 'game_refund'){
+                                    ?>
+                                        <a href="#0" class="btn btn-success w-100 m-0">Refunded</a>
+                                    <?php
                                     }
                                     ?>
                                     <a href="room?battle=<?=$gid ?>" class="btn theme-btn w-100 m-0">View Room</a>
