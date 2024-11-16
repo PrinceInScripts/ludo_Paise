@@ -31,6 +31,9 @@ if(isset($_GET['battle_id'])){
         $updatedcreatorBalance = $creatorBalance - $joining_fee;
         $updateCreatorBalance = "UPDATE users SET deposit_wallet = '$updatedcreatorBalance' WHERE id = '$created_by'";
         $updateCreatorBalanceResult = mysqli_query($con, $updateCreatorBalance);
+        //insert that amount in amount table for taking all amount insert data in amount table
+        $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$joining_fee', '$created_by','debited')";
+        mysqli_query($con, $sql1);
 
         // update game_record 
         $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark, deposit_balance , withdraw_balance) 
@@ -42,6 +45,9 @@ if(isset($_GET['battle_id'])){
         $updateCreatorBalance
             = "UPDATE users SET deposit_wallet = 0, withdraw_wallet = withdraw_wallet - '$updatedjoining_fee' WHERE id = '$created_by'";
         $updateCreatorBalanceResult = mysqli_query($con, $updateCreatorBalance);
+        //insert that amount in amount table for taking all amount insert data in amount table
+        $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$joining_fee', '$created_by','debited')";
+        mysqli_query($con, $sql1);
 
         // update game_record
         $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark, deposit_balance , withdraw_balance)

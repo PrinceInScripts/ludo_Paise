@@ -45,7 +45,7 @@ if (isset($_GET['amount']) && is_numeric($_GET['amount']) && $_GET['amount'] > 0
         mysqli_stmt_execute($stmt);
 
                 //insert that amount in amount table for taking all amount insert data in amount table
-          $sql1 = "INSERT INTO amount (amount, user_id) VALUES ($bonus, $userid)";
+          $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ($bonus, $userid,'credited')";
           mysqli_query($con, $sql1);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {

@@ -38,7 +38,6 @@ include ("top.php");
                 $i=1;
                 while ($row = mysqli_fetch_assoc($res)) {
                    $user=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['userid']."'"));
-                   $admin=mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM users WHERE id='".$row['upi']."'"));
                     ?>
 
                     <tr>
@@ -46,7 +45,7 @@ include ("top.php");
                         <td><?php echo $user['mobile']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
                         <td><?php echo $row['utr']; ?></td>
-                        <td><?php echo $admin['mobile']; ?></td>
+                        <td><?php echo $row['upi']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         

@@ -41,12 +41,12 @@ if(isset($_POST['battle_id'])){
                 $updateBalanceCreator = "UPDATE users SET deposit_wallet = deposit_wallet + '$amount' WHERE id = '".$getGamesRow['created_by']."'";
                 mysqli_query($con, $updateBalanceCreator);
                  //insert that amount in amount table for taking all amount insert data
-                 $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$amount', '".$getGamesRow['created_by']."')";
+                 $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '".$getGamesRow['created_by']."','credited')";
                  mysqli_query($con, $sql1);
                 $updateBalanceAcceptor = "UPDATE users SET deposit_wallet = deposit_wallet + '$amount' WHERE id = '".$getGamesRow['accepted_by']."'";
                 mysqli_query($con, $updateBalanceAcceptor);
                 //insert that amount in amount table for taking all amount insert data
-                $sql2 = "INSERT INTO amount (amount, user_id) VALUES ('$amount', '".$getGamesRow['accepted_by']."')";
+                $sql2 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '".$getGamesRow['accepted_by']."','credited')";
                 mysqli_query($con, $sql2);
                 
 
@@ -79,8 +79,14 @@ if(isset($_POST['battle_id'])){
                 // update balance of opponent
                 $updateBalanceCreator = "UPDATE users SET deposit_wallet = deposit_wallet + '$amount' WHERE id = '".$getGamesRow['created_by']."'";
                 mysqli_query($con, $updateBalanceCreator);
+                //insert that amount in amount table for taking all amount insert data
+                $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '".$getGamesRow['created_by']."','credited')";
+                mysqli_query($con, $sql1);
                 $updateBalanceAcceptor = "UPDATE users SET deposit_wallet = deposit_wallet + '$amount' WHERE id = '".$getGamesRow['accepted_by']."'";
                 mysqli_query($con, $updateBalanceAcceptor);
+                //insert that amount in amount table for taking all amount insert data
+                $sql2 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '".$getGamesRow['accepted_by']."','credited')";
+                mysqli_query($con, $sql2);
             } else{
                 $status = 'pending';
                 $isComplete = 0;
