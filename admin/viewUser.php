@@ -226,11 +226,22 @@ if (isset($_GET['id'])) {
                                     <?php
                                     if ($bank_data != '') {
                                         if ($bank_data['bank_status']) {
-                                    ?>
+
+                                            if($bank_data['bank_status'] == 0){
+                                                ?>
+                                                <li class="list-group-item">
+                                                    <b>Bank Status</b> <a class="float-right"> <button class="btn btn-danger">Not Verified</button></a>
+                                                </li>
+                                            <?php
+                                            }else{
+                                                ?>
                                             <li class="list-group-item">
                                                 <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
                                             </li>
                                         <?php
+                                            }
+
+                                    
                                         } else {
                                         ?>
                                             <li class="list-group-item">
