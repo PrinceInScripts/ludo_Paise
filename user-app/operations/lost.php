@@ -41,6 +41,45 @@ if (isset($_POST['battle_id'])) {
                 $insertRecordResult2 = mysqli_query($con, $insertRecord2);
             }
 
+            // 2% for winner referral and 1% for loser referral 
+            $winnerReferral = $amount * 0.02;
+            $loserReferral = $amount * 0.01;
+
+            // fetch referral code of winner 
+            $fetchWinnerReferral = "SELECT level_1 FROM users WHERE id = '$opponent'";
+            $fetchWinnerReferralResult = mysqli_query($con, $fetchWinnerReferral);
+            $fetchWinnerReferralRow = mysqli_fetch_assoc($fetchWinnerReferralResult);
+            $winnerReferralCode = $fetchWinnerReferralRow['level_1'];
+
+            // fetch referral code of loser
+            $fetchLoserReferral = "SELECT level_1 FROM users WHERE id = '$user_id'";
+            $fetchLoserReferralResult = mysqli_query($con, $fetchLoserReferral);
+            $fetchLoserReferralRow = mysqli_fetch_assoc($fetchLoserReferralResult);
+            $loserReferralCode = $fetchLoserReferralRow['level_1'];
+
+            // check if winner has referral code 
+
+            if ($winnerReferralCode != null) {
+                $updateWinnerReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE id = '$winnerReferralCode'";
+                $updateWinnerReferralResult = mysqli_query($con, $updateWinnerReferral);
+
+                // insert into referral_data table 
+                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$winnerReferralCode', '$battle_id', '$winnerReferral', '$user_id', '2% Referral Bonus')";
+                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
+
+            }
+
+            if ($loserReferralCode != null) {
+                $updateLoserReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE id = '$loserReferralCode'";
+                $updateLoserReferralResult = mysqli_query($con, $updateLoserReferral);
+
+                // insert into referral_data table
+                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralCode', '$battle_id', '$loserReferral', '$user_id', '1% Referral Bonus')";
+                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
+            }
+
+
+
             $result = mysqli_query($con, $sql);
             if ($result) {
                 echo json_encode([['error' => false, 'message' => "Lost by creator."]]);
