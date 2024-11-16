@@ -784,7 +784,7 @@ echo "<script>
 <div class="l-wrapper">
         <div class="c-header">
             <img class="c-logo" src="../assets/images/logo/logo-1.png" draggable="false" />
-            <a href="home" class="c-button c-button--primary">Go Back</a>
+            <a onclick="history.back()" class="c-button c-button--primary">Go Back</a>
         </div>
         <div class="l-grid">
             <div class="l-grid__item l-grid__item--sticky">
@@ -848,7 +848,6 @@ echo "<script>
                                 <div class="c-media">
                                     <img class="c-avatar c-media__img" src="../assets/images/profile/${member.img}" />
                                     <div class="c-media__content">
-                                        <div class="c-media__title">${member.name}</div>
                                         <a class="c-media__link u-text--small" href="#" target="_blank">@${member.handle.slice(0, 2) + "*".repeat(member.handle.length - 4) + member.handle.slice(-2)}</a>
                                     </div>
                                 </div>
