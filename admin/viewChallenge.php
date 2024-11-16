@@ -343,7 +343,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                           <div class="card-body pad table-responsive">
                             <table class="table table-bordered text-center">
                                 <?php
-                                 if($row['status'] == 'conflict' || $row['status'] == 'pending'){
+                                 if($row['status'] == 'conflict' || $row['status'] == 'running' || $row['status'] == 'pending'){
                                 ?>
                                  <tr>
 
