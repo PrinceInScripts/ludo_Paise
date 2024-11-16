@@ -69,6 +69,10 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             $newWallet = $wallet - $amount;
             $sql = "UPDATE users SET withdraw_wallet = '$newWallet' WHERE id = '$user_id'";
             $result = mysqli_query($con, $sql);
+
+            //insert that amount in amount table for taking all amount insert data in amount table
+            $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '$user_id','debited')";
+            $insertAmount = mysqli_query($con, $sql1);
            
 
             $txn_id = uniqid('txn_');
@@ -99,9 +103,9 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             $newWallet = $wallet - $amount;
             $sql = "UPDATE users SET withdraw_wallet = '$newWallet' WHERE id = '$user_id'";
             $result = mysqli_query($con, $sql);
-            //insert that amount in amount table for taking all amount insert data
-            // $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$amount', '$user_id')";
-            // $insertAmount = mysqli_query($con, $sql1);
+            //insert that amount in amount table for taking all amount insert data in amount table
+            $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$amount', '$user_id','debited')";
+            $insertAmount = mysqli_query($con, $sql1);
             
             $txn_id = uniqid('txn_');
             // {"is_upi":false,"is_bank":false,"upi":null,"bank" : {"ac":5463573,"ifsc":null}} 

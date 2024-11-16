@@ -707,7 +707,7 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>User ID</th>
+                                                    <th>User</th>
                                                     <th>Amount</th>
                                                     <th>Admin ID</th>
                                                     <th>Battle ID</th>
@@ -722,17 +722,19 @@ if (isset($_GET['id'])) {
 
 
 
-                                                    $penalty_query = "SELECT * FROM penalties WHERE user_id='$id'";
+                                                    $penalty_query = "SELECT * FROM paymenthistory WHERE type='penalty' AND userid='$id'";
                                                     $penalty_result = mysqli_query($con, $penalty_query);
 
                                                     while ($row = mysqli_fetch_assoc($penalty_result)) {
+                                                        $user = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM users WHERE id='" . $row['userid'] . "'"));
+
                                                 ?>
                                                         <tr>
                                                             <td><?php echo $row['id']; ?></td>
-                                                            <td><?php echo $row['user_id']; ?></td>
+                                                            <td><?php echo $user['mobile']; ?></td>
                                                             <td><?php echo $row['amount']; ?></td>
-                                                            <td><?php echo $row['admin_id']; ?></td>
-                                                            <td><?php echo $row['battle_id']; ?></td>
+                                                            <td><?php echo $row['upi']; ?></td>
+                                                            <td><?php echo $row['utr']; ?></td>
                                                             <td><?php echo $row['remark']; ?></td>
                                                             <td><?php echo $row['created_at']; ?></td>
                                                         </tr>
