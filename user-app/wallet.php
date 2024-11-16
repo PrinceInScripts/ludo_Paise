@@ -212,8 +212,9 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     </div>
     <!-- bottom navbar end -->
 
-    <!-- jquery cdn  -->
-    <script src="../assets/js/jquery-3.6.0.min.js"></script>
+    <!-- jquery online cdn  -->
+
+
 
     <!-- sidebar starts -->
     <?php include_once('includes/sidebar.php') ?>
@@ -233,6 +234,8 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
     <!-- script js -->
     <script src="../assets/js/script.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- sweetalert js -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
