@@ -601,7 +601,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: 'operations/cancelBattle.php',
+          url: 'operations/cancelbattle.php',
           type: 'POST',
           data: {
             id: id
