@@ -138,8 +138,8 @@ $userid = $_SESSION['id'];
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>
-                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                                        alt="p5">
+                                                    <!-- <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5"> -->
                                                 </div>
 
                                                 <ul class="ride-location-listing mt-3">
@@ -192,8 +192,8 @@ $userid = $_SESSION['id'];
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>
-                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                                        alt="p5">
+                                                    <!-- <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5"> -->
                                                 </div>
 
                                                 <ul class="ride-location-listing mt-3">
@@ -246,8 +246,8 @@ $userid = $_SESSION['id'];
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>
-                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                                        alt="p5">
+                                                    <!-- <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5"> -->
                                                 </div>
 
                                                 <ul class="ride-location-listing mt-3">
@@ -299,8 +299,8 @@ $userid = $_SESSION['id'];
                                                             <h5 class="fw-normal title-color"><?=$row['remark']?></h5>
                                                         </div>
                                                     </div>
-                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                                        alt="p5">
+                                                    <!-- <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -338,8 +338,8 @@ $userid = $_SESSION['id'];
                                                             <h5 class="fw-normal title-color"><?=$row['remark']?></h5>
                                                         </div>
                                                     </div>
-                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
-                                                        alt="p5">
+                                                    <!-- <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5"> -->
                                                 </div>
 
                                               
