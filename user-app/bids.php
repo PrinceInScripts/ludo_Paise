@@ -123,6 +123,7 @@ $user_id = $_SESSION['id'];
                                             - ₹<?= $row['amount'] ?>
                                         </h4>
                                     <?php
+                                    }
                                     ?>
 
                                     <!-- <h4 class="fw-semibold navbar-expand secondary-color">
