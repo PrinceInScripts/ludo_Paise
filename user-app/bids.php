@@ -119,8 +119,8 @@ $user_id = $_SESSION['id'];
                                     <?php
                                     }elseif($row['status'] == 'game_refund'){
                                         ?>
-                                        <h4 class="fw-semibold navbar-expand error-color">
-                                            - ₹<?= $row['amount'] ?>
+                                        <h4 class="fw-semibold navbar-expand success-color">
+                                            + ₹<?= $row['amount'] ?>
                                         </h4>
                                     <?php
                                     }
