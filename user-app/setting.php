@@ -194,7 +194,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                     </li>
 
                     <li class="w-100">
-                        <a href="chatting" class="setting-box">
+                        <a href="#0" class="setting-box">
                             <div class="setting-icon">
                                 <i class="iconsax icon" data-icon="message-dots-notif"> </i>
                             </div>

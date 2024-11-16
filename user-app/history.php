@@ -67,9 +67,9 @@ $userid = $_SESSION['id'];
                 </div>
 
                 <div class="d-flex align-items-center gap-sm-3 gap-2">
-                    <a href="chatting">
+                    <!-- <a href="chatting">
                         <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                    </a>
+                    </a> -->
                     <a href="notification">
                         <i class="iconsax icon-btn" data-icon="bell-2"> </i>
                     </a>
