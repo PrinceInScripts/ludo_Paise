@@ -414,7 +414,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             <!-- /.tab-content -->
           
             </div><!-- /.card-body -->
-            <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
+            <button type="button" onclick="cancelBattle('<?= $id ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
           </div>
           <!-- /.card -->
         </div>
@@ -577,6 +577,50 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               Swal.fire(
                 'Error!',
                 'Error winning challenge.',
+                'error'
+              ).then(() => {
+                location.reload();
+              })
+            }
+
+          }
+        });
+      }
+    })
+  }
+
+  function cancelBattle(id){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to cancel this battle",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Cancel it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: 'operations/cancelBattle.php',
+          type: 'POST',
+          data: {
+            id: id
+          },
+          success: function(data) {
+            response = JSON.parse(data);
+
+            if (response.status == 'success') {
+              Swal.fire(
+                'Success!',
+                'Battle cancelled successfully.',
+                'success'
+              ).then(() => {
+                location.reload();
+              })
+            } else {
+              Swal.fire(
+                'Error!',
+                'Error cancelling battle.',
                 'error'
               ).then(() => {
                 location.reload();
