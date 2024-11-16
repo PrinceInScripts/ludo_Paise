@@ -88,7 +88,8 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 if ($name == '') {
                     echo "No Name";
                 } else {
-                    echo $name .' <img src="https://cdn-icons-png.flaticon.com/512/7641/7641727.png" alt="Verified" srcset="" title="Verified" width="20">';
+                    echo $name;
+                    // echo $name .' <img src="https://cdn-icons-png.flaticon.com/512/7641/7641727.png" alt="Verified" srcset="" title="Verified" width="20">';
                 }
 
                 ?>

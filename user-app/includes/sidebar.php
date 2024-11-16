@@ -30,7 +30,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
                 <img class="img-fluid profile-pic" src="../assets/images/profile/<?php echo $img_src_data['profile']?>" alt="p8">
                 <div>
                     <h3><?php echo $data['username']?>
-                    <img src="https://cdn-icons-png.flaticon.com/512/7641/7641727.png" alt="Verified" srcset="" title="Verified" width="20">
+                    <!-- <img src="https://cdn-icons-png.flaticon.com/512/7641/7641727.png" alt="Verified" srcset="" title="Verified" width="20"> -->
                 </h3>
                     <span>Edit Account</span>
                 </div>
