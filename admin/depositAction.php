@@ -17,6 +17,9 @@ if (isset($_GET['id'])) {
         $userw = $deposit['amount'];
         $update_user_query = "UPDATE users SET deposit_wallet= deposit_wallet + '$userw' WHERE id='$user_id'";
         $update_user_result = mysqli_query($con, $update_user_query);
+        //insert that amount in amount table for taking all amount insert data
+        $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$userw', '$user_id')";
+        $insertAmount = mysqli_query($con, $sql1);
 
         $update_result = mysqli_query($con, $update_query);
         if ($update_result) {

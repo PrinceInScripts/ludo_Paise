@@ -26,6 +26,9 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
         // update user withdraw_wallet 
         $sql = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winAmount' WHERE id = '$user_id'";
         $result = mysqli_query($con, $sql);
+        // insert that amount in amount table for taking all amount insert data
+        $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$winAmount', '$user_id')";
+        $insertAmount = mysqli_query($con, $sql1);
 
         // update game_record
         $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark, deposit_balance , withdraw_balance)
@@ -47,6 +50,9 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
         // update user withdraw_wallet 
         $sql = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winAmount' WHERE id = '$user_id'";
         $result = mysqli_query($con, $sql);
+        // insert that amount in amount table for taking all amount insert data
+        $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$winAmount', '$user_id')";
+        $insertAmount = mysqli_query($con, $sql1);
 
         // update game_record
         $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark, deposit_balance , withdraw_balance)

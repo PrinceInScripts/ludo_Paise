@@ -29,6 +29,9 @@ if (isset($_POST['action'])) {
         $wallet = $user['deposit_wallet'] + $bonus;
         $sql = "UPDATE users SET deposit_wallet='$wallet' WHERE id='$id'";
         mysqli_query($con, $sql);
+        //insert that amount in amount table for taking all amount insert data
+        $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$bonus', '$id')";
+        $insertAmount = mysqli_query($con, $sql1);
 
         //check remark if it's empty then add default remark message
         if (empty($remark)) {
@@ -50,6 +53,10 @@ if (isset($_POST['action'])) {
         $wallet = $user['deposit_wallet'] - $penalty;
         $sql = "UPDATE users SET deposit_wallet='$wallet' WHERE id='$id'";
         mysqli_query($con, $sql);
+        //insert that amount in amount table for taking all amount insert data
+        $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$penalty', '$id')";
+        $insertAmount = mysqli_query($con, $sql1);
+        
 
         //check remark if it's empty then add default remark message
         if (empty($remark)) {

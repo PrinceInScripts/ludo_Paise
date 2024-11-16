@@ -32,6 +32,9 @@ if (isset($_POST['battle_id'])) {
             // update balance of opponent
             $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
             $updateBalanceResult = mysqli_query($con, $updateBalance);
+            //insert that amount in amount table for taking all amount insert data
+            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$prize', '$opponent')";
+            $insertAmount = mysqli_query($con, $sql1);
 
             if ($updateBalanceResult) {
                 // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 
@@ -62,6 +65,10 @@ if (isset($_POST['battle_id'])) {
             if ($winnerReferralCode != null) {
                 $updateWinnerReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE id = '$winnerReferralCode'";
                 $updateWinnerReferralResult = mysqli_query($con, $updateWinnerReferral);
+                //insert that amount in amount table for taking all amount insert data
+                $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$winnerReferral', '$winnerReferralCode')";
+                $insertAmount = mysqli_query($con, $sql1);
+
 
                 // insert into referral_data table 
                 $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$winnerReferralCode', '$battle_id', '$winnerReferral', '$user_id', '2% Referral Bonus')";
@@ -72,6 +79,10 @@ if (isset($_POST['battle_id'])) {
             if ($loserReferralCode != null) {
                 $updateLoserReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE id = '$loserReferralCode'";
                 $updateLoserReferralResult = mysqli_query($con, $updateLoserReferral);
+                //insert that amount in amount table for taking all amount insert data
+                $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralCode')";
+                $insertAmount = mysqli_query($con, $sql1);
+
 
                 // insert into referral_data table
                 $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralCode', '$battle_id', '$loserReferral', '$user_id', '1% Referral Bonus')";
@@ -105,6 +116,10 @@ if (isset($_POST['battle_id'])) {
 
             $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
             $updateBalanceResult = mysqli_query($con, $updateBalance);
+            //insert that amount in amount table for taking all amount insert data
+            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$prize', '$opponent')";
+            $insertAmount = mysqli_query($con, $sql1);
+            
 
             if ($updateBalanceResult) {
                 // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 

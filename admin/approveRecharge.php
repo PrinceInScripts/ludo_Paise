@@ -17,6 +17,11 @@ if (isset($_POST['order_id']) && isset($_POST['r_type'])) {
             $userid = $fetch['userid'];
             $sql = "UPDATE users SET deposit_wallet = deposit_wallet + '$amount' WHERE id = '$userid'";
             $result = mysqli_query($con, $sql);
+
+            // insert amount in amount table for taking all amount insert data
+            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$amount', '$userid')";
+            $insertAmount = mysqli_query($con, $sql1);
+            
             if ($result) {
                 echo json_encode(array('status' => 'success','type' => 'credit'));
             } else {

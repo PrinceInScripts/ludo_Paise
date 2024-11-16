@@ -30,6 +30,9 @@
             $update_user_query = "UPDATE users SET withdraw_wallet= withdraw_wallet + '$userw' WHERE id='$user_id'";
             $update_user_result = mysqli_query($con, $update_user_query);
             $update_result = mysqli_query($con, $update_query);
+            // insert that amount in amount table for taking all amount insert data
+            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$userw', '$user_id')";
+            $insertAmount = mysqli_query($con, $sql1);
             if ($update_result) {
                 echo "<script>alert('Status Updated Successfully!')</script>";
                 echo "<script>window.location='withdraw.php'</script>";

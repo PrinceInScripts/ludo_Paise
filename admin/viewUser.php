@@ -227,23 +227,21 @@ if (isset($_GET['id'])) {
                                     if ($bank_data != '') {
                                         if ($bank_data['bank_status']) {
 
-                                            if($bank_data['bank_status'] == 0){
-                                                ?>
+                                            if ($bank_data['bank_status'] == 0) {
+                                    ?>
                                                 <li class="list-group-item">
                                                     <b>Bank Status</b> <a class="float-right"> <button class="btn btn-danger">Not Verified</button></a>
                                                 </li>
                                             <?php
-                                            }else{
-                                                ?>
-                                            <li class="list-group-item">
-                                                <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
-                                            </li>
-                                        <?php
+                                            } else {
+                                            ?>
+                                                <li class="list-group-item">
+                                                    <b>Bank Status</b> <a class="float-right"> <button class="btn btn-success">Verified</button></a>
+                                                </li>
+                                            <?php
                                             }
-
-                                    
                                         } else {
-                                        ?>
+                                            ?>
                                             <li class="list-group-item">
                                                 <b>Adhaar No.</b> <a class="float-right"><?php echo $user['adhaar_no'] ?></a>
                                             </li>
@@ -306,18 +304,18 @@ if (isset($_GET['id'])) {
                                 <div class="input-group mb-3">
 
                                     <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">₹</span>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">₹</span>
+                                        </div>
+                                        <input type="number" class="form-control" name="penalty_amount" placeholder="Penalty Amount" required>
                                     </div>
-                                    <input type="number" class="form-control" name="penalty_amount" placeholder="Penalty Amount" required>
-                                </div>
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Remark</span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Remark</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="penalty_remark" placeholder="Penalty Remark">
                                     </div>
-                                    <input type="text" class="form-control" name="penalty_remark" placeholder="Penalty Remark">
-                                </div>
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-danger" name="action" value="penalty">Apply Penalty</button>
@@ -651,7 +649,6 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Bonus History -->
                                 <div class="tab-pane" id="bonus">
                                     <div class="card">
@@ -659,10 +656,9 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mobile No.</th>
                                                     <th>User ID</th>
                                                     <th>Amount</th>
-                                                    <th>Admin ID</th>
+                                                    <th>Given By</th>
                                                     <th>Created At</th>
                                                     <th>Remark</th>
                                                 </tr>
@@ -672,22 +668,24 @@ if (isset($_GET['id'])) {
                                                 if (isset($_GET['id'])) {
                                                     $id = mysqli_real_escape_string($con, $_GET['id']);
 
-                                                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                                    $userResult = mysqli_query($con, $userQuery);
-                                                    $user = mysqli_fetch_assoc($userResult);
+                                                    // $userQuery = "SELECT mobile FROM users WHERE id='$id'";
+                                                    // $userResult = mysqli_query($con, $userQuery);
+                                                    // $user = mysqli_fetch_assoc($userResult);
 
                                                     // Fetch user status from the 'users' table
-                                                    $bonus_query = "SELECT * FROM bonus WHERE userid='$id'";
+                                                    $bonus_query = "SELECT * FROM paymenthistory WHERE type = 'bonus' AND userid='$id'";
                                                     $bonus_result = mysqli_query($con, $bonus_query);
 
+
+
                                                     while ($row = mysqli_fetch_assoc($bonus_result)) {
+                                                        $user = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM users WHERE id='" . $row['userid'] . "'"));
                                                 ?>
                                                         <tr>
                                                             <td><?php echo $row['id']; ?></td>
                                                             <td><?php echo $user['mobile']; ?></td>
-                                                            <td><?php echo $row['userid']; ?></td>
                                                             <td><?php echo $row['amount']; ?></td>
-                                                            <td><?php echo $row['created_by']; ?></td>
+                                                            <td><?php echo $row['upi']; ?></td>
                                                             <td><?php echo $row['created_at']; ?></td>
                                                             <td><?php echo $row['remark']; ?></td>
                                                         </tr>
@@ -700,6 +698,8 @@ if (isset($_GET['id'])) {
 
                                     </div>
                                 </div>
+
+
                                 <!-- Penalty History -->
                                 <div class="tab-pane" id="penalty">
                                     <div class="card">

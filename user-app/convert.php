@@ -44,6 +44,10 @@ if (isset($_GET['amount']) && is_numeric($_GET['amount']) && $_GET['amount'] > 0
         mysqli_stmt_bind_param($stmt, 'ddi', $total, $amount, $userid);
         mysqli_stmt_execute($stmt);
 
+                //insert that amount in amount table for taking all amount insert data in amount table
+          $sql1 = "INSERT INTO amount (amount, user_id) VALUES ($bonus, $userid)";
+          mysqli_query($con, $sql1);
+
         if (mysqli_stmt_affected_rows($stmt) > 0) {
             // Commit the transaction
             mysqli_commit($con);
