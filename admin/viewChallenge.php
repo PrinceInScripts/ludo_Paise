@@ -10,6 +10,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
   $res = mysqli_query($con, $sql);
   if (mysqli_num_rows($res) > 0) {
     $row = mysqli_fetch_assoc($res);
+    $is_complete = $row['is_complete'];
   }
 }
 
@@ -221,7 +222,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     <tr>
 
                                       <td>
-                                        <button type="button" onclick="comingsoon()" class="btn btn-block btn-secondary btn-lg">Waiting</button>
+                                        <button type="button" class="btn btn-block btn-secondary btn-lg">Waiting</button>
                                       </td>
 
                                     </tr>
@@ -231,7 +232,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                     <tr>
 
                                       <td>
-                                        <button type="button" onclick="comingsoon()" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
+                                        <button type="button" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
                                       </td>
 
                                     </tr>
@@ -415,7 +416,14 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             <!-- /.tab-content -->
           
             </div><!-- /.card-body -->
+            <?php 
+            if($is_complete == 0){
+              ?>
             <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
+
+              <?php 
+            }
+            ?>
           </div>
           <!-- /.card -->
         </div>

@@ -28,7 +28,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 
     // Update game status to cancelled
     $sql = "UPDATE games SET status = 'cancel', creator_ss = 'cancel', acceptor_ss = 'cancel', 
-            status_reason = 'cancelled by admin', remark = 'cancelled by admin' WHERE id = '$id'";
+            status_reason = 'cancelled by admin', remark = 'cancelled by admin', is_complete = 1 WHERE id = '$id'";
     if (!mysqli_query($con, $sql)) {
         error_log("Failed to update game status: " . mysqli_error($con)); // Log error
     }
