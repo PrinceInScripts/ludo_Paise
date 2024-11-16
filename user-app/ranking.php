@@ -848,12 +848,7 @@ echo "<script>
                                 <div class="c-media">
                                     <img class="c-avatar c-media__img" src="../assets/images/profile/${member.img}" />
                                     <div class="c-media__content">
-<<<<<<< HEAD
                                         <a class="c-media__link u-text--small" href="#" target="_blank">@${member.handle.slice(0, 2) + "*".repeat(member.handle.length - 4) + member.handle.slice(-2)}</a>
-=======
-                                        <div class="c-media__title">${member.name}</div>
-                                        <a class="c-media__link u-text--small" href="#0" target="_blank">@${member.handle.slice(0, 2) + "*".repeat(member.handle.length - 4) + member.handle.slice(-2)}</a>
->>>>>>> 3b39dd9a2cc95c6a1925c47a9f3514850164e150
                                     </div>
                                 </div>
                                 <div class="u-text--right c-kudos">
