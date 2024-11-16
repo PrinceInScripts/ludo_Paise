@@ -123,8 +123,8 @@ if(isset($_POST['submit'])){
     $mobileNew = "91".$mobile;
     
 
-    $otpStatus = array('status' => true);
-    // $otpStatus = sendOTP($mobile, $otp);
+    // $otpStatus = array('status' => true);
+    $otpStatus = sendOTP($mobile, $otp);
 
     // Check if 'status' exists in the response
     if (isset($otpStatus['status']) && $otpStatus['status'] == false) {
