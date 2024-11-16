@@ -14,9 +14,9 @@ $userid = $_SESSION['id'];
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="taxify">
-    <meta name="keywords" content="taxify">
-    <meta name="author" content="taxify">
+    <meta name="description" content="ludopaisa">
+    <meta name="keywords" content="ludopaisa">
+    <meta name="author" content="ludopaisa">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
     <title>Ludopaisa </title>
@@ -25,7 +25,7 @@ $userid = $_SESSION['id'];
     <meta name="title-color" content="#01AA85">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="taxify">
+    <meta name="apple-mobile-web-app-title" content="ludopaisa">
     <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
 
     <meta name="msapplication-TileColor" content="#FFFFFF">
