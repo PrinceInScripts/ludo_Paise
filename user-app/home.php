@@ -73,9 +73,9 @@ $userid = $_SESSION['id'];
                 </div>
 
                 <div class="d-flex align-items-center gap-sm-3 gap-2">
-                    <a href="chatting">
+                    <!-- <a href="chatting">
                         <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                    </a>
+                    </a> -->
                     <a href="notification">
                         <i class="iconsax icon-btn" data-icon="bell-2"> </i>
                     </a>
@@ -312,6 +312,5 @@ function selectRadio(id) {
 </body>
 
 
-<!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/home by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:00 GMT -->
 
 </html>
