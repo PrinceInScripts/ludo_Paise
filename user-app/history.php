@@ -105,7 +105,7 @@ $userid = $_SESSION['id'];
                         <ul class="my-ride-list">
                             <?php
                             while ($row = mysqli_fetch_assoc($run)) {
-                                if ($row['status'] == 0) {
+                                if ($row['status'] == 0 && $row['type'] == 'deposit') {
                             ?>
                                     <li class="mt-2 box-shadow">
                                         <div class="my-ride-box">
@@ -159,7 +159,7 @@ $userid = $_SESSION['id'];
                                         </div>
                                     </li>
                                 <?php
-                                } elseif ($row['status'] == 1) {
+                                } elseif ($row['status'] == 1 && $row['type'] == 'deposit') {
                                 ?>
                                     <li class="mt-2 box-shadow">
                                         <div class="my-ride-box">
@@ -213,7 +213,7 @@ $userid = $_SESSION['id'];
                                         </div>
                                     </li>
                                 <?php
-                                } elseif ($row['status'] == 2) {
+                                } elseif ($row['status'] == 2 && $row['type'] == 'deposit') {
                                 ?>
                                     <li class="mt-2 box-shadow">
                                         <div class="my-ride-box">
@@ -267,6 +267,86 @@ $userid = $_SESSION['id'];
                                         </div>
                                     </li>
                             <?php
+                                }else if($row['type'] == 'bonus'){
+                                    ?>
+                                   <li class="mt-2 box-shadow">
+                                        <div class="my-ride-box">
+                                            <div class="my-ride-head">
+                                                <a href="#" class="my-ride-img">
+                                                    <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
+                                                        alt="receipt">
+                                                </a>
+
+                                                <div class="my-ride-content flex-column">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="#">
+                                                            <h6 class="title-color fw-medium">Bonus ID : <?=$row['order_id']?></h6>
+                                                        </a>
+                                                        <span class="status success-color fw-normal">Credited</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-between  mt-2">
+                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?=$row['amount']?></h6>
+                                                        <h6 class="fw-normal content-color">15<?=$row['created_at']?></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="my-ride-details">
+                                                <div class="ride-info">
+                                                    <div class="ride-info-content text-center">
+                                                        <div class="d-flex align-content-center text-center gap-2 lh-base">
+                                                            <span class="count content-color fw-normal">Reamrk : </span>
+                                                            <h5 class="fw-normal title-color"><?=$row['remark']?></h5>
+                                                        </div>
+                                                    </div>
+                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php
+                                }else if($row['type'] == 'penalty'){
+                                    ?>
+                                     <li class="mt-2 box-shadow">
+                                        <div class="my-ride-box">
+                                            <div class="my-ride-head">
+                                                <a href="#" class="my-ride-img">
+                                                    <img class="img-fluid my-ride-icon" src="https://cdn-icons-png.flaticon.com/512/10432/10432837.png"
+                                                        alt="receipt">
+                                                </a>
+
+                                                <div class="my-ride-content flex-column">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="#">
+                                                            <h6 class="title-color fw-medium">Penalty ID : <?=$row['order_id']?></h6>
+                                                        </a>
+                                                        <span class="status error-color fw-normal">Debited</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-between  mt-2">
+                                                        <h6 class="success-color" style="font-size: 12px;">₹ <?=$row['amount']?></h6>
+                                                        <h6 class="fw-normal content-color">15<?=$row['created_at']?></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="my-ride-details">
+                                                <div class="ride-info">
+                                                    <div class="ride-info-content">
+                                                        <div class="d-flex align-content-center gap-2 lh-base">
+                                                            <span class="count content-color fw-normal">remark: </span>
+                                                            <h5 class="fw-normal title-color"><?=$row['remark']?></h5>
+                                                        </div>
+                                                    </div>
+                                                    <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/2267/2267901.png"
+                                                        alt="p5">
+                                                </div>
+
+                                              
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php
                                 }
                             }
                             ?>
