@@ -5,6 +5,7 @@ $role_id = $_SESSION['role_id'];
 $row = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
   $id = mysqli_real_escape_string($con, $_GET['id']);
+  $battleid = $id;
   $sql = "SELECT * FROM games WHERE id='$id'";
   $res = mysqli_query($con, $sql);
   if (mysqli_num_rows($res) > 0) {
@@ -414,7 +415,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             <!-- /.tab-content -->
           
             </div><!-- /.card-body -->
-            <button type="button" onclick="cancelBattle('<?= $id ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
+            <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
           </div>
           <!-- /.card -->
         </div>
