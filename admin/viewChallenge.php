@@ -1,6 +1,7 @@
 <?php
 include("db.php");
 include("top.php");
+
 $role_id = $_SESSION['role_id'];
 $row = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
@@ -17,7 +18,14 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
 ?>
 
-
+<style>
+  .post {
+    border-bottom: none;
+    color: #666;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+</style>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
