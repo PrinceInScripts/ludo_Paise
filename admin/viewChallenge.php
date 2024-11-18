@@ -194,7 +194,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                                 <table class="table table-bordered text-center">
 
                                   <?php
-                                  if ($row['status'] == 'conflict' || $row['status'] == 'pending') {
+                                  if ($row['status'] == 'conflict' || $row['status'] == 'pending' || $row['status'] == 'running') {
                                   ?>
                                     <tr>
 
