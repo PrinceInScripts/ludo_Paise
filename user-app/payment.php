@@ -371,7 +371,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
           
           
          
-            if (kyc == 0 && amount > 500) {
+            if (kyc == 0 && amount > 50000) {
            
                 Swal.fire({
                     icon: 'error',
