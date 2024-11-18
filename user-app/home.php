@@ -156,7 +156,12 @@ $userid = $_SESSION['id'];
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_array($result)) {
                     ?>
-                        <a href="#<?=$row['slug'] ?>" style="opacity:<?=$row['opacity'] ?>" data-bs-toggle="offcanvas" class="gameCard-container" href='newbattle.php?id=<?php echo $row['id'] ?>'>
+                        
+                        <a style="opacity:<?=$row['opacity'] ?>" class="gameCard-container" href='<?php if($row['status'] == 1){
+                            echo "newbattle.php?id=".$row['id'];
+                        }else{
+                            echo "#";
+                        } ?>'>
                             <span class="py-1 blink text-primary d-block text-right">◉ LIVE</span>
                             <picture class="gameCard-image">
                                 <img width="100%" src="../assets/images/games/<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
