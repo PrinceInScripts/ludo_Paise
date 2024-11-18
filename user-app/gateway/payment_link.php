@@ -33,8 +33,8 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         $txn_id = uniqid('txn_');
 
         // API URLs
-        $callback_url = 'http://ludopaisa.in/user-app/webhook/payment_callback.php?txn_id=' . $txn_id;
-        $redirect_url = 'http://ludopaisa.in/user-app/history';
+        $callback_url = 'http://ludopaisa.com/user-app/webhook/payment_callback.php?txn_id=' . $txn_id;
+        $redirect_url = 'http://ludopaisa.com/user-app/history';
 
         // Prepare request data
         $url = 'https://phonepe.dkkart.com/ludopaisa/api.php';
