@@ -337,7 +337,7 @@ if (isset($_GET['id'])) {
                                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Deposit</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Withdraw</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#bank" data-toggle="tab">Bank Card</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#game_activity" data-toggle="tab">Games Activity</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#game_activity" data-toggle="tab">Games Record</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#action" data-toggle="tab">Take Action</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#bonus" data-toggle="tab">Bonus History</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#penalty" data-toggle="tab">Penalty History</a></li>
@@ -366,17 +366,12 @@ if (isset($_GET['id'])) {
                                                 <?php
                                                 $sql = "SELECT * FROM paymenthistory WHERE userid='$id'";
                                                 $res = mysqli_query($con, $sql);
-
+                                                $i=1;
                                                 while ($row = mysqli_fetch_assoc($res)) {
-                                                    $id = $row['userid'];
-
-                                                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                                    $userResult = mysqli_query($con, $userQuery);
-                                                    $user = mysqli_fetch_assoc($userResult);
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $i++; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
@@ -386,11 +381,11 @@ if (isset($_GET['id'])) {
                                                         <td><?php echo $row['created_at']; ?></td>
                                                         <td> <?php
                                                                 if ($row['status'] == 2) {
-                                                                    echo "<span style='color: orange;'>Pending</span>";
+                                                                    echo "<button class='btn btn-primary'>Pending</button>";
                                                                 } elseif ($row['status'] == 1) {
-                                                                    echo "<span style='color: green;'>Success</span>";
+                                                                    echo "<button class='btn btn-success'>Success</button>";
                                                                 } else {
-                                                                    echo "<span style='color: red;'>Failed</span>";
+                                                                    echo "<button class='btn btn-danger'>Failed</button>";
                                                                 }
                                                                 ?></td>
                                                     </tr>
@@ -423,17 +418,13 @@ if (isset($_GET['id'])) {
                                                 <?php
                                                 $sql = "SELECT * FROM paymenthistory where type='deposit' AND userid='$id'";
                                                 $res = mysqli_query($con, $sql);
-
+                                                $i=1;
                                                 while ($row = mysqli_fetch_assoc($res)) {
-                                                    $id = $row['userid'];
-
-                                                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                                    $userResult = mysqli_query($con, $userQuery);
-                                                    $user = mysqli_fetch_assoc($userResult);
+                                                   
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $i++; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
@@ -442,14 +433,14 @@ if (isset($_GET['id'])) {
                                                         <td><?php echo $row['utr']; ?></td>
                                                         <td><?php echo $row['created_at']; ?></td>
                                                         <td> <?php
-                                                                if ($row['status'] == 2) {
-                                                                    echo "<span style='color: orange;'>Pending</span>";
-                                                                } elseif ($row['status'] == 1) {
-                                                                    echo "<span style='color: green;'>Success</span>";
-                                                                } else {
-                                                                    echo "<span style='color: red;'>Failed</span>";
-                                                                }
-                                                                ?></td>
+                                                               if ($row['status'] == 2) {
+                                                                echo "<button class='btn btn-primary'>Pending</button>";
+                                                            } elseif ($row['status'] == 1) {
+                                                                echo "<button class='btn btn-success'>Success</button>";
+                                                            } else {
+                                                                echo "<button class='btn btn-danger'>Failed</button>";
+                                                            }
+                                                            ?></td>
                                                     </tr>
                                                 <?php
                                                 }
@@ -471,7 +462,6 @@ if (isset($_GET['id'])) {
                                                     <th>Amount</th>
                                                     <th>Type</th>
                                                     <th>UPI</th>
-                                                    <!-- <th>Remark</th> -->
                                                     <th>UTR</th>
                                                     <th>Time</th>
                                                     <th>Status</th>
@@ -481,31 +471,25 @@ if (isset($_GET['id'])) {
                                                 <?php
                                                 $sql = "SELECT * FROM paymenthistory where type='withdraw' AND userid='$id'";
                                                 $res = mysqli_query($con, $sql);
-
+                                                $i=1;
                                                 while ($row = mysqli_fetch_assoc($res)) {
-                                                    $id = $row['userid'];
-
-                                                    $userQuery = "SELECT mobile FROM users WHERE id='$id'";
-                                                    $userResult = mysqli_query($con, $userQuery);
-                                                    $user = mysqli_fetch_assoc($userResult);
                                                 ?>
 
                                                     <tr>
-                                                        <td><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $i++; ?></td>
                                                         <td><?php echo $row['order_id']; ?></td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
                                                         <td><?php echo $row['upi']; ?></td>
-                                                        <!-- <td><?php echo $row['remark']; ?></td> -->
                                                         <td><?php echo $row['utr']; ?></td>
                                                         <td><?php echo $row['created_at']; ?></td>
                                                         <td> <?php
                                                                 if ($row['status'] == 2) {
-                                                                    echo "<span style='color: orange;'>Pending</span>";
+                                                                    echo "<button class='btn btn-primary'>Pending</button>";
                                                                 } elseif ($row['status'] == 1) {
-                                                                    echo "<span style='color: green;'>Success</span>";
+                                                                    echo "<button class='btn btn-success'>Success</button>";
                                                                 } else {
-                                                                    echo "<span style='color: red;'>Failed</span>";
+                                                                    echo "<button class='btn btn-danger'>Failed</button>";
                                                                 }
                                                                 ?></td>
                                                     </tr>
@@ -555,44 +539,57 @@ if (isset($_GET['id'])) {
 
                                 <!-- Game Activity -->
                                 <div class="tab-pane" id="game_activity">
-                                    <?php
-                                    if (isset($_GET['id'])) {
-                                        $id = mysqli_real_escape_string($con, $_GET['id']);
+                                <div class="card">
+                                        <table id="example2" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>User ID</th>
+                                                    <th>Game ID</th>
+                                                    <th>Amount</th>
+                                                    <th>Profit Amount</th>
+                                                    <th>Remark</th>
+                                                    <th>Created At</th>
+                                                    <th>Status</th>
 
-                                        // Total Matches Played
-                                        $total_matches_query = "SELECT COUNT(*) as total_matches FROM games WHERE created_by='$id' OR accepted_by='$id'";
-                                        $total_matches_result = mysqli_query($con, $total_matches_query);
-                                        $total_matches = mysqli_fetch_assoc($total_matches_result)['total_matches'];
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sql = "SELECT * FROM game_record where user_id='$id'";
+                                                $res = mysqli_query($con, $sql);
+                                                $i=1;
 
-                                        // Accepted Matches
-                                        $accepted_matches_query = "SELECT COUNT(*) as accepted_matches FROM games WHERE accepted_by = '$id'";
-                                        $accepted_matches_result = mysqli_query($con, $accepted_matches_query);
-                                        $accepted_matches = mysqli_fetch_assoc($accepted_matches_result)['accepted_matches'];
+                                                while ($row = mysqli_fetch_assoc($res)) {
+                                                    
+                                                ?>
 
-                                        // Wins
-                                        $wins_query = "SELECT COUNT(*) as wins FROM games WHERE winner = '$id'";
-                                        $wins_result = mysqli_query($con, $wins_query);
-                                        $wins = mysqli_fetch_assoc($wins_result)['wins'];
+                                                    <tr>
+                                                        <td><?php echo $i++; ?></td>
+                                                        <td><?php echo $row['user_id']; ?></td>
+                                                        <td><?php echo $row['game_id']; ?></td>
+                                                        <td><?php echo $row['amount']; ?></td>
+                                                        <td><?php echo $row['ProfitAmount']; ?></td>
+                                                        <td><?php echo $row['remark']; ?></td>
+                                                        <td><?php echo $row['created_at']; ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($row['status'] == 'won') {
+                                                                echo "<button class='btn btn-success'>Won</button>";
+                                                            } elseif ($row['status'] == 'lost') {
+                                                                echo "<button class='btn btn-danger'>Lose</button>";
+                                                            } else {
+                                                                echo "<button class='btn btn-primary'>Join</button>";
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
 
-                                        // Calculate Win Percentage
-                                        $win_percentage = 0;
-                                        if (!empty($total_matches) && $total_matches > 0) {
-                                            $win_percentage = ($wins / $total_matches) * 100;
-                                        } else {
-                                            $win_percentage = 0;
-                                        }
-                                    }
-                                    ?>
-                                    <div class="card mt-4">
-                                        <div class="card-header bg-primary text-white">
-                                            <h4 class="card-title mb-0">Game Activity</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text"><strong>Total Matches Played:</strong> <?php echo $total_matches ?? "NA"; ?></p>
-                                            <p class="card-text"><strong>Matches Accepted:</strong> <?php echo $accepted_matches ?? "NA"; ?></p>
-                                            <p class="card-text"><strong>Matches Won:</strong> <?php echo $wins ?? "NA"; ?></p>
-                                            <p class="card-text"><strong>Win Percentage:</strong> <?php echo round($win_percentage, 2) . '%'; ?></p>
-                                        </div>
                                     </div>
                                 </div>
 
