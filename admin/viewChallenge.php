@@ -173,8 +173,12 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                         </div>
                       </div>
-                  </div>
+<?php 
+                    }
+?> 
 
+                  </div>
+                </div>
 
                   <?php
                       if ($role_id != 3) {
@@ -255,14 +259,6 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                       }
                   ?>
 
-                <?php
-                    } else {
-                ?>
-                </div>
-              <?php
-                    }
-              ?>
-
 
               </div>
 
@@ -326,6 +322,10 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                       </div>
                     </div>
+                    <?php 
+                  }
+                    ?>
+                </div>
                 </div>
 
                 <?php
@@ -404,15 +404,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                 <?php
                     }
                 ?>
-              <?php
-                  } else {
-              ?>
-                                   
-
-              </div>
-            <?php
-                  }
-            ?>
+             
             <!-- /.tab-content -->
           
             </div><!-- /.card-body -->
