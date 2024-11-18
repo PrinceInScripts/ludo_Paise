@@ -112,6 +112,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                 <li class="nav-item"><a class="nav-link" href="#acceptor" data-toggle="tab">Acceptor</a></li>
               </ul>
             </div><!-- /.card-header -->
+
+
             <div class="card-body">
               <div class="tab-content">
                 <div class="active tab-pane" id="activity">
@@ -173,9 +175,10 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                         </div>
                       </div>
-<?php 
 
-?> 
+                      <?php 
+                    }
+                      ?>
 
                   </div>
 
@@ -259,13 +262,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                       }
                   ?>
 
-                <?php
-                    } else {
-                ?>
-                </div>
-              <?php
-                    }
-              ?>
+              
 
 
               </div>
@@ -330,6 +327,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                       </div>
                     </div>
+                    <?php 
+                  }
+                    ?>
                 </div>
 
                 <?php
@@ -408,24 +408,16 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                 <?php
                     }
                 ?>
-              <?php
-                  } else {
-              ?>
-                                   
-
-              </div>
-            <?php
-                  }
-            ?>
+             
             <!-- /.tab-content -->
-          
-            </div><!-- /.card-body -->
-            <?php 
-            if($is_complete == 0){
-              ?>
-            <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
 
-              <?php 
+            </div><!-- /.card-body -->
+            <?php
+            if ($is_complete == 0) {
+            ?>
+              <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
+
+            <?php
             }
             ?>
           </div>
@@ -434,7 +426,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         <!-- /.col -->
 
 
-
+       
 
         <!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -602,7 +594,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     })
   }
 
-  function cancelBattle(id){
+  function cancelBattle(id) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this battle",
