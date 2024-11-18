@@ -5,9 +5,15 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
     $mobile = $_POST['mobile'];
     $battle_id = $_POST['id'];
     // fetch games data 
-    $fetch = "SELECT * FROM games WHERE id = '$battle_id'";
+    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND status != 'complete' AND is_complete = 0";
     $result = mysqli_query($con, $fetch);
     $fetch = mysqli_fetch_assoc($result);
+
+    if(!$fetch){
+        echo json_encode(array('status' => 'error', 'message' => 'Game not found'));
+        exit();
+    }
+
     $created_by = $fetch['created_by'];
     $winAmount = $fetch['winAmount'];
     $amount = $fetch['amount'];
