@@ -175,93 +175,91 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
                       </div>
                   </div>
 
-
-                  <?php
-                      if ($role_id != 3) {
-                  ?>
-                    <div class="container">
-                      <div class="container-fluid">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="card card-primary card-outline">
-                              <div class="card-header">
-                                <h3 class="card-title">
-                                  <i class="fas fa-edit"></i>
-                                  Take Action
-                                </h3>
-                              </div>
-                              <div class="card-body pad table-responsive">
-                                <table class="table table-bordered text-center">
-
-                                  <?php
-                                  if ($row['status'] == 'conflict' || $row['status'] == 'pending' || $row['status'] == 'running') {
-                                  ?>
-                                    <tr>
-
-                                      <td>
-                                        <button type="button" onclick="winA('<?= $creator['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
-                                      </td>
-                                      <td>
-                                        <button type="button" onclick="addPenalty('<?= $creator['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
-                                      </td>
-
-                                    </tr>
-                                  <?php
-                                  } elseif ($row['status'] == 'complete') {
-                                  ?>
-                                    <tr>
-
-                                      <td>
-                                        <button type="button" onclick="comingsoon()" class="btn btn-block btn-warning btn-lg">Revert Battle</button>
-                                      </td>
-
-                                    </tr>
-                                  <?php
-                                  } elseif ($row['status'] == 'pending') {
-                                  ?>
-                                    <tr>
-
-                                      <td>
-                                        <button type="button" class="btn btn-block btn-secondary btn-lg">Waiting</button>
-                                      </td>
-
-                                    </tr>
-                                  <?php
-                                  } elseif ($row['status'] == 'cancel') {
-                                  ?>
-                                    <tr>
-
-                                      <td>
-                                        <button type="button" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
-                                      </td>
-
-                                    </tr>
-                                  <?php
-                                  }
-                                  ?>
-
-
-                                </table>
-                              </div>
-                              <!-- /.card -->
+                <?php
+                    }
+                ?>
+                <?php
+                if ($role_id != 3) {
+                ?>
+                  <div class="container">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card card-primary card-outline">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="fas fa-edit"></i>
+                                Take Action
+                              </h3>
                             </div>
+                            <div class="card-body pad table-responsive">
+                              <table class="table table-bordered text-center">
+
+                                <?php
+                                if ($row['status'] == 'conflict' || $row['status'] == 'pending' || $row['status'] == 'running') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="winA('<?= $creator['mobile'] ?>')" class="btn btn-block btn-success btn-lg">Win</button>
+                                    </td>
+                                    <td>
+                                      <button type="button" onclick="addPenalty('<?= $creator['mobile'] ?>')" class="btn btn-block btn-danger btn-lg">Add Penalty</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                } elseif ($row['status'] == 'complete') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" onclick="comingsoon()" class="btn btn-block btn-warning btn-lg">Revert Battle</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                } elseif ($row['status'] == 'pending') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" class="btn btn-block btn-secondary btn-lg">Waiting</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                } elseif ($row['status'] == 'cancel') {
+                                ?>
+                                  <tr>
+
+                                    <td>
+                                      <button type="button" class="btn btn-block btn-danger btn-lg">Challenge Cancelled</button>
+                                    </td>
+
+                                  </tr>
+                                <?php
+                                }
+                                ?>
+
+
+                              </table>
+                            </div>
+                            <!-- /.card -->
                           </div>
-                          <!-- /.col -->
                         </div>
+                        <!-- /.col -->
                       </div>
                     </div>
-
-                  <?php
-                      }
-                  ?>
+                  </div>
 
                 <?php
-                    } else {
+                }
                 ?>
+
+
                 </div>
-              <?php
-                    }
-              ?>
+
 
 
               </div>
@@ -407,21 +405,21 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
               <?php
                   } else {
               ?>
-                                   
+
 
               </div>
             <?php
                   }
             ?>
             <!-- /.tab-content -->
-          
-            </div><!-- /.card-body -->
-            <?php 
-            if($is_complete == 0){
-              ?>
-            <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
 
-              <?php 
+            </div><!-- /.card-body -->
+            <?php
+            if ($is_complete == 0) {
+            ?>
+              <button type="button" onclick="cancelBattle('<?= $battleid ?>')" class="btn btn-block btn-secondary btn-lg">Cancel Battle</button>
+
+            <?php
             }
             ?>
           </div>
@@ -598,7 +596,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     })
   }
 
-  function cancelBattle(id){
+  function cancelBattle(id) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this battle",
