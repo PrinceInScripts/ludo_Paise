@@ -324,11 +324,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
                       </div>
                     </div>
-                    <?php
-                  }
-              ?>
                 </div>
-                
+
 
 
                 <?php
@@ -411,7 +408,9 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 
 
               </div>
-          
+            <?php
+                  }
+            ?>
             <!-- /.tab-content -->
 
             </div><!-- /.card-body -->
