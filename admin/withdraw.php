@@ -75,7 +75,7 @@ include("top.php");
                                         <td>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=1" class="btn btn-success">Approve</a>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=2" class="btn btn-danger">Reject</a>
-                                                    <button onclick="info('<?=$user['mobile'] ?>')" class="btn btn-danger">Reject</button>
+                                                    <button onclick="info('<?=$user['mobile'] ?>')" class="btn btn-primary">Info</button>
                                                 </td>
                                         <?php
                                         }
