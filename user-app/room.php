@@ -97,7 +97,27 @@ if ($created_by != '' && $accepted_by != '') {
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
     <style>
+        .Wfloat {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 10000;
+        }
+
+        .myW-float {
+            margin-top: 11px;
+        }
+
         .rules {
             display: flex;
             flex-direction: row;
@@ -407,12 +427,11 @@ if ($created_by != '' && $accepted_by != '') {
         </div>
     </section>
 
-    <?php 
-    if(isset($_GET['error'])){
-        ?>
-      
-        <script>
+    <?php
+    if (isset($_GET['error'])) {
+    ?>
 
+        <script>
             swal.fire({
                 title: "Error",
                 text: "<?php echo $_GET['error'] ?>",
@@ -420,7 +439,7 @@ if ($created_by != '' && $accepted_by != '') {
                 button: "Ok",
             });
         </script>
-        <?php
+    <?php
     }
     ?>
 
@@ -722,6 +741,12 @@ if ($created_by != '' && $accepted_by != '') {
     <!-- sidebar starts -->
     <?php include_once('includes/sidebar.php') ?>
     <!-- sidebar end -->
+
+    <a href="https://api.whatsapp.com/send?phone=917042536431&amp;text=Hi..Sir, I have issue with my Battle ID *<?= $game_id ?>*" class="Wfloat" target="_blank">
+
+        <i class="fa fa-whatsapp myW-float" aria-hidden="true"></i>
+
+    </a>
 
     <!-- iconsax js -->
     <script src="../assets/js/iconsax.js"></script>
@@ -1049,7 +1074,7 @@ if ($created_by != '' && $accepted_by != '') {
 
         //     if (data.action === 'update_room_code' && data.room_code) {
         //         // Update the DOM with the new room code
-                
+
         //         document.querySelector('.spinner-border').style.display = 'none';
         //         document.getElementById('room-code-heading').textContent = 'Room Code';
         //         document.getElementById('room-code-copybutton').style.display = 'inline';
