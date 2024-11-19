@@ -13,7 +13,7 @@ $aadhar = $_POST['aadhar'];
 
 // check aadhar is already exist or not 
 
-$check = "SELECT * FROM users WHERE adhaar_no = '$aadhar'";
+$check = "SELECT * FROM users WHERE adhaar_no = '$aadhar' AND kyc_status = '1'";
 $result = mysqli_query($con, $check);
 $fetch = mysqli_fetch_assoc($result);
 
