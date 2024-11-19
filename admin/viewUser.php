@@ -584,10 +584,10 @@ if (isset($_GET['id'])) {
                                                             } elseif ($row['status'] == 'lost') {
                                                                 echo "<button class='btn btn-danger'>Lose</button>";
                                                             } elseif($row['status'] == 'game_refund') {
-                                                                echo "<button class='btn btn-warning'>Cancel</button>";
+                                                                echo "<button class='btn btn-secondary'>Cancel</button>";
 
                                                             }elseif($row['status'] == 'game_win') {
-                                                                echo "<button class='btn btn-warning'>Won By Admin</button>";
+                                                                echo "<button class='btn btn-success'>Won By Admin</button>";
 
                                                             } else {
                                                                 echo "<button class='btn btn-primary'>Join</button>";
