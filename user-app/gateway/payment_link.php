@@ -21,11 +21,11 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
     $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE id = 1"));
     $min_deposit = $setting['minRecharge'];
 
-    if($amount < $min_deposit){
+    if ($amount < $min_deposit) {
         echo json_encode(array('status' => 'error', 'message' => 'Minimum deposit amount is ' . $min_deposit));
         exit();
     }
-    
+
     // assuming mobile is passed in the POST data
 
     if ($payment_mode == 'phonepe_api') {
@@ -84,8 +84,8 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         if (isset($response['payment_link'])) {
 
             // insert data into paymenthistory table 
-           
-            
+
+
 
             $sql = "INSERT INTO `paymenthistory`(`userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`) VALUES ('$user_id','$txn_id','$amount','deposit','phonepe',0,'Pending Payment')";
             $result = mysqli_query($con, $sql);
@@ -106,10 +106,10 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         $result = mysqli_query($con, $sql);
         $upi_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        if(count($upi_list) == 0){
+        if (count($upi_list) == 0) {
             echo json_encode(array('status' => 'error', 'message' => 'No UPI available'));
             exit();
-        }else{
+        } else {
             // take random upi entry from the list
             $upi = $upi_list[array_rand($upi_list)]['upi'];
 
@@ -123,11 +123,58 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
                 echo json_encode(array('status' => 'error', 'message' => 'Error in generating payment link'));
             }
         }
-
-       
     } else if ($payment_mode == 'upigateway') {
         sleep(1);
-        echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
+
+        // API Endpoint
+        $url = "https://upig.in/api/create-order";
+        $orderid = uniqid('txn_qr_');
+
+        // Data to send (replace with dynamic data as needed)
+        $data = [
+            "customer_mobile" => $mobile,
+            "user_token" => "70080ad1bdbef1d1d0b394be20e1c7ff",
+            "amount" => $amount,
+            "order_id" => $orderid, // Generate a unique order ID for each request
+            "redirect_url" => "https://ludopaisa.com/user-app/history",
+            "remark1" => "ludopaisa",
+            "remark2" => "ludopaisa"
+        ];
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data)); // Form-encoded payload
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+
+        // Execute the request
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Check for errors
+        if (curl_errno($ch)) {
+            echo "cURL Error: " . curl_error($ch);
+        } else {
+            if ($httpCode === 200) {
+                $responseData = json_decode($response, true);
+                if ($responseData['status'] === true) {
+                    echo json_encode(array('status' => 'success', 'url' => $responseData['result']['payment_url']));
+                } else {
+                    echo json_encode(array('status' => 'error', 'message' => 'Error in response', 'response' => $responseData));
+                }
+            } else {
+                echo json_encode(array('status' => 'error', 'message' => 'HTTP Error: ' . $httpCode));
+            }
+        }
+
+        // Close cURL session
+        curl_close($ch);
     } else if ($payment_mode == 'bankcard') {
         sleep(1);
         echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
