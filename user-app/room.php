@@ -96,6 +96,7 @@ if ($created_by != '' && $accepted_by != '') {
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
         .rules {
             display: flex;
@@ -406,6 +407,23 @@ if ($created_by != '' && $accepted_by != '') {
         </div>
     </section>
 
+    <?php 
+    if(isset($_GET['error'])){
+        ?>
+      
+        <script>
+
+            swal.fire({
+                title: "Error",
+                text: "<?php echo $_GET['error'] ?>",
+                icon: "error",
+                button: "Ok",
+            });
+        </script>
+        <?php
+    }
+    ?>
+
     <?php
     if ($roomcode == null && $created_by == $user_id) {
     ?>
@@ -425,7 +443,10 @@ if ($created_by != '' && $accepted_by != '') {
         <!-- Waiting for roomcode -->
 
         <section class="room-code-section">
-            <h1 class="room-code-heading">Waiting for Room Code</h1>
+            <h1 id="room-code-heading" class="room-code-heading">Waiting for Room Code</h1>
+            <p id="room-code" style="display: none;" class="room-code"></p>
+            <br>
+            <button id="room-code-copybutton" style="display: none;" class="btn btn-success" onclick="copyToClipboard()">Copy Code</button>
             <!--  Loading Icon  -->
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -560,7 +581,7 @@ if ($created_by != '' && $accepted_by != '') {
                 <p>Congratulations! You won the game</p>
                 <button class="btn btn-secondary" onclick="winSSC()">View Screenshot</button>
             </div>
-            
+
         <?php
         } elseif ($accepted_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner == $user_id) {
         ?>
@@ -582,7 +603,7 @@ if ($created_by != '' && $accepted_by != '') {
         ?>
             <div class="game-result">
                 <p>Game Cancelled</p>
-                
+
             </div>
         <?php
         } elseif ($created_by == $user_id && $isJoined == 1 && $is_complete == 1 && $winner != $user_id) {
@@ -596,11 +617,11 @@ if ($created_by != '' && $accepted_by != '') {
         ?>
             <div class="game-result">
                 <p>Sorry! You lost the game</p>
-                <?php 
-                if($acceptor_ss != 'lost'){
-                    ?>
+                <?php
+                if ($acceptor_ss != 'lost') {
+                ?>
                     <button class="btn btn-secondary" onclick="winSSA()">View Screenshot</button>
-                    <?php
+                <?php
                 }
                 ?>
             </div>
@@ -1010,6 +1031,42 @@ if ($created_by != '' && $accepted_by != '') {
             }
         }
         ?>
+
+
+        // const ws = new WebSocket('ws://localhost:8080');
+
+        // ws.onopen = function() {
+        //     console.log('Connected to WebSocket server');
+        //     // Inform the server that the user is waiting for a room code
+        //     ws.send(JSON.stringify({
+        //         action: 'wait_for_room_code',
+        //         battle: battle_id
+        //     }));
+        // };
+
+        // ws.onmessage = function(event) {
+        //     const data = JSON.parse(event.data);
+
+        //     if (data.action === 'update_room_code' && data.room_code) {
+        //         // Update the DOM with the new room code
+                
+        //         document.querySelector('.spinner-border').style.display = 'none';
+        //         document.getElementById('room-code-heading').textContent = 'Room Code';
+        //         document.getElementById('room-code-copybutton').style.display = 'inline';
+        //         const roomCodeElement = document.getElementById('room-code');
+        //         roomCodeElement.textContent = data.room_code;
+        //         roomCodeElement.style.display = 'block';
+        //     }
+        // };
+
+        // ws.onerror = function(error) {
+        //     console.error('WebSocket error:', error);
+        // };
+
+        // refresh page after 5 seconds 
+        setTimeout(() => {
+            location.reload();
+        }, 15000);
     </script>
 
 

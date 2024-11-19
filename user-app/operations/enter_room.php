@@ -13,6 +13,15 @@ if(isset($_POST['submit']) && isset($_POST['roomcode']) && isset($_POST['battle_
         header('Location: ../room?battle='.$battle_id.'&error=Roomcode error');
         exit();
     } 
+
+    // if roomcode already exist in games table then redirect to room with error message
+
+    $sql = "SELECT * FROM games WHERE roomcode = '$roomcode'";
+    $result = mysqli_query($con, $sql);
+    if(mysqli_num_rows($result) > 0){
+        header('Location: ../room?battle='.$battle_id.'&error=Roomcode already exist');
+        exit();
+    }
     
 
     // Insert Roomcode to games table 
