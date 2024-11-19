@@ -64,7 +64,7 @@ include("top.php");
 
                                             <tr>
                                                 <td><?php echo $i++; ?></td>
-                                                <td><?php echo $user['mobile']; ?></td>
+                                                <td> <a href="./viewUser.php?id=<?=$row['userid']?>"><?php echo $user['mobile']; ?></a> </td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
@@ -120,7 +120,7 @@ include("top.php");
 
                                             <tr>
                                                 <td><?php echo $i++; ?></td>
-                                                <td><?php echo $user['mobile']; ?></td>
+                                                <td><a href="./viewUser.php?id=<?=$row['userid']?>"><?php echo $user['mobile']; ?></a></td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
@@ -171,7 +171,7 @@ include("top.php");
 
                                             <tr>
                                                 <td><?php echo $i++ ?></td>
-                                                <td><?php echo $user['mobile']; ?></td>
+                                                <td><a href="./viewUser.php?id=<?=$row['userid']?>"><?php echo $user['mobile']; ?></a></td>
                                                 <td><?php echo $row['txnid']; ?></td>
                                                 <td><?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
