@@ -544,8 +544,8 @@ if (isset($_GET['id'])) {
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>User ID</th>
                                                     <th>Game ID</th>
+                                                    <th>Roomcode</th>
                                                     <th>Amount</th>
                                                     <th>Profit Amount</th>
                                                     <th>Remark</th>
@@ -566,8 +566,13 @@ if (isset($_GET['id'])) {
 
                                                     <tr>
                                                         <td><?php echo $i++; ?></td>
-                                                        <td><?php echo $row['user_id']; ?></td>
                                                         <td><?php echo $row['game_id']; ?></td>
+                                                        <td>
+                                                            <?php 
+                                                            $room = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM games WHERE id='" . $row['game_id'] . "'"));
+                                                            echo $room['roomcode'];
+                                                            ?>
+                                                        </td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['ProfitAmount']; ?></td>
                                                         <td><?php echo $row['remark']; ?></td>
@@ -578,6 +583,12 @@ if (isset($_GET['id'])) {
                                                                 echo "<button class='btn btn-success'>Won</button>";
                                                             } elseif ($row['status'] == 'lost') {
                                                                 echo "<button class='btn btn-danger'>Lose</button>";
+                                                            } elseif($row['status'] == 'game_refund') {
+                                                                echo "<button class='btn btn-warning'>Cancel</button>";
+
+                                                            }elseif($row['status'] == 'game_win') {
+                                                                echo "<button class='btn btn-warning'>Won By Admin</button>";
+
                                                             } else {
                                                                 echo "<button class='btn btn-primary'>Join</button>";
                                                             }
