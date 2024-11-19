@@ -2,7 +2,8 @@
 include("db.php");
 include("top.php");
 ?>
-
+        <!-- swal fire cdn  -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -75,7 +76,7 @@ include("top.php");
                                         <td>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=1" class="btn btn-success">Approve</a>
                                                     <a href="withdrawAction.php?id=<?php echo $row['id']; ?>&action=2" class="btn btn-danger">Reject</a>
-                                                    <button onclick="info('<?=$user['mobile'] ?>')" class="btn btn-primary">Info</button>
+                                                    <button onclick="info('<?=$row['userid'] ?>','<?=$row['type']?>')" class="btn btn-primary">Info</button>
                                                 </td>
                                         <?php
                                         }
@@ -203,10 +204,33 @@ include("top.php");
         </div>
 
         <script>
-            function info(mobile){
-                alert(mobile);
+            function info(userid,type){
+                // fetch bank info using mobile number and display it in alert
+
+                // ajax 
+
+                $.ajax({
+                    url: 'operations/getBankInfo.php',
+                    type: 'post',
+                    data: {userid:userid, bank_type:type},
+                    success: function(response){
+                        // swal fire alert
+                        var res = JSON.parse(response);
+                        if(res[0].status == 'success'){
+                            if(res[0].type == 'upi'){
+                                swal.fire("UPI: "+res[0].upi);
+                            }else if(res[0].type == 'bank'){
+                                swal.fire("Account No: "+res[0].account_no+"\nIFSC: "+res[0].ifsc+"\nBank Name: "+res[0].bank_name+"\nBranch Name: "+res[0].branch_name+"\nHolder Name: "+res[0].holder_name);
+                            }
+                        }else{
+                            swal.fire(res[0].message);
+                        }
+
+                    }
+                });
             }
         </script>
+
 
         <?php
         include("footer.php");
