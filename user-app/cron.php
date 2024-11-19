@@ -7,7 +7,7 @@ $currentTimestamp = time();
 
 try {
     // Fetch rows where the date is older than 2 minutes from the current time
-    $query = "SELECT * FROM games WHERE accepted_by is not null AND is_joined = 0 AND status = 'pending'";
+    $query = "SELECT * FROM games WHERE accepted_by is not null AND isJoined = 0 AND status = 'pending'";
     $result = $con->query($query);
 
     if ($result->num_rows > 0) {
