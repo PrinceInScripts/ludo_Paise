@@ -22,7 +22,7 @@ $balance = $fetchBalanceRow['withdraw_wallet'] + $fetchBalanceRow['deposit_walle
 
     if($balance >= $joining_fee){
         if(mysqli_num_rows($result) > 0 && $created_by != $user_id){
-            $sql = "UPDATE games SET accepted_by = '$user_id' WHERE id = '$battle_id'";
+            $sql = "UPDATE games SET accepted_by = '$user_id', requested_at = current_timestamp() WHERE id = '$battle_id'";
             $result = mysqli_query($con, $sql);
             if($result){
                 
