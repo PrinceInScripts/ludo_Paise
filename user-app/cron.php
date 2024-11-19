@@ -18,7 +18,7 @@ try {
             // Check if the current time exceeds 2 minutes from the fetched date
             if ($currentTimestamp - $fetchedDate > 120) { // 120 seconds = 2 minutes
                 // Delete the old entry
-                $deleteQuery = "UPDATE games SET accepted_by = null, requested_at = null WHERE id = ?";
+                $deleteQuery = "UPDATE games SET accepted_by = null, requested_at = current_timestamp() WHERE id = ?";
                 $stmt = $con->prepare($deleteQuery);
                 $stmt->bind_param('i', $id);
                 $stmt->execute();
