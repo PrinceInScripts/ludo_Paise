@@ -164,6 +164,10 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             if ($httpCode === 200) {
                 $responseData = json_decode($response, true);
                 if ($responseData['status'] === true) {
+
+                    $sql = "INSERT INTO `paymenthistory`(`userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`) VALUES ('$user_id','$orderid','$amount','deposit','upigateway',0,'Pending Payment')";
+                    $result = mysqli_query($con, $sql);
+
                     echo json_encode(array('status' => 'success', 'url' => $responseData['result']['payment_url']));
                 } else {
                     echo json_encode(array('status' => 'error', 'message' => 'Error in response', 'response' => $responseData));
