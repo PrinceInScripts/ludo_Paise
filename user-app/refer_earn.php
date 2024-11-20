@@ -286,6 +286,30 @@ $referralEarnings = $user['referral_earning'];
             }
         }
     </style>
+    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+       
+
+       <style>
+          
+           .Wfloat {
+               position: fixed;
+               width: 50px;
+               height: 50px;
+               bottom: 110px;
+               right: 20px;
+               background-color: #25d366;
+               color: #FFF;
+               border-radius: 50px;
+               text-align: center;
+               font-size: 30px;
+               box-shadow: 2px 2px 3px #999;
+               z-index: 10000;
+           }
+   
+           .myW-float {
+               margin-top: 11px;
+           }
+       </style>
 </head>
 
 <body>
@@ -302,9 +326,9 @@ $referralEarnings = $user['referral_earning'];
                 </div>
 
                 <div class="d-flex align-items-center gap-sm-3 gap-2">
-                    <a href="chatting">
+                    <!-- <a href="chatting">
                         <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                    </a>
+                    </a> -->
                     <a href="notification">
                         <i class="iconsax icon-btn" data-icon="bell-2"> </i>
                     </a>
@@ -761,6 +785,9 @@ $referralEarnings = $user['referral_earning'];
     <!-- sidebar starts -->
     <?php include_once('includes/sidebar.php') ?>
     <!-- sidebar end -->
+    <a href="https://api.whatsapp.com/send?phone=917042536431" class="Wfloat" target="_blank">
+        <i class="fa fa-whatsapp myW-float" aria-hidden="true"></i>
+    </a>
 
     <!-- iconsax js -->
     <script src="../assets/js/iconsax.js"></script>

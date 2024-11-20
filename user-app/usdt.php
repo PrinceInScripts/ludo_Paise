@@ -49,6 +49,35 @@ include('includes/sessions.php');
 
     <!-- Swal Fire CDN  -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+
+
+    <style>
+        .wallet-amount {
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 14px;
+        }
+
+        .Wfloat {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 10000;
+        }
+
+        .myW-float {
+            margin-top: 11px;
+        }
+    </style>
 
     <style>
         .driver-list {
@@ -256,7 +285,7 @@ include('includes/sessions.php');
                         window.location.href = './payment';
                     });
                 </script>
-            
+
     <?php
             } else {
                 $usdt = $payment['upi'];
@@ -328,7 +357,7 @@ include('includes/sessions.php');
                         <input type="hidden" class="form-control" name="txn_id" id="txn_id" value="<?= $_GET['txn_id'] ?>">
                     </div>
                     <br>
-                  
+
                     <br>
 
                     <div onclick="uploadRef()" name="submit" class="btn theme-btn w-100 auth-btn">UPLOAD</div>
@@ -340,6 +369,10 @@ include('includes/sessions.php');
 
 
     <!-- finding driver list end -->
+
+    <a href="https://api.whatsapp.com/send?phone=917042536431" class="Wfloat" target="_blank">
+        <i class="fa fa-whatsapp myW-float" aria-hidden="true"></i>
+    </a>
 
     <!-- iconsax js -->
     <script src="../assets/js/iconsax.js"></script>
@@ -362,7 +395,7 @@ include('includes/sessions.php');
         function uploadRef() {
             // submit form with upload screenshot and reference no using ajax
 
-          
+
 
             // Get the uploaded screenshot file
             var ss = document.getElementById("ss").files[0];

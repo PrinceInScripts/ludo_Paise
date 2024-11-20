@@ -50,11 +50,32 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
+    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+       
+
     <style>
         .wallet-amount {
             font-size: 2.5rem;
             text-align: center;
             padding: 14px;
+        }
+        .Wfloat {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 10000;
+        }
+
+        .myW-float {
+            margin-top: 11px;
         }
     </style>
 </head>
@@ -219,6 +240,12 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <!-- sidebar starts -->
     <?php include_once('includes/sidebar.php') ?>
     <!-- sidebar end -->
+
+    <a href="https://api.whatsapp.com/send?phone=917042536431" class="Wfloat" target="_blank">
+
+<i class="fa fa-whatsapp myW-float" aria-hidden="true"></i>
+
+</a>
 
     <!-- iconsax js -->
     <script src="../assets/js/iconsax.js"></script>
