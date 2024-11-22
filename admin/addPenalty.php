@@ -21,11 +21,13 @@ if(isset($_POST['mobile']) && isset($_POST['amount']) && isset($_POST['id'])){
         $deposit_wallet = $row['deposit_wallet'];
         $withdraw_wallet = $row['withdraw_wallet'];
 
-        // deduct from deposit wallet but if deposit balance has been exhausted, deduct from withdraw wallet instead 
+        // deduct from deposit wallet but if deposit balance has been exhausted, deduct from both wallets 
 
         if($deposit_wallet >= $amount){
             $deposit_wallet -= $amount;
         } else {
+            $amount -= $deposit_wallet;
+            $deposit_wallet = 0;
             $withdraw_wallet -= $amount;
         }
 

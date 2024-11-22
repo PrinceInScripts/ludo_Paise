@@ -51,9 +51,23 @@ if (isset($_POST['action'])) {
         $penalty = mysqli_real_escape_string($con, $_POST['penalty_amount']);
         $remark = mysqli_real_escape_string($con, $_POST['penalty_remark']);
 
-        $wallet = $user['deposit_wallet'] - $penalty;
-        $sql = "UPDATE users SET deposit_wallet='$wallet' WHERE id='$id'";
+        // deduct from deposit wallet but if deposit balance has been exhausted, deduct from both wallets 
+        $deposit_wallet = $user['deposit_wallet'];
+        $withdraw_wallet = $user['withdraw_wallet'];
+
+        if ($deposit_wallet >= $penalty) {
+            $deposit_wallet -= $penalty;
+        } else {
+            $penalty -= $deposit_wallet;
+            $deposit_wallet = 0;
+            $withdraw_wallet -= $penalty;
+        }
+
+        $sql = "UPDATE users SET deposit_wallet='$deposit_wallet', withdraw_wallet='$withdraw_wallet' WHERE id='$id'";
         mysqli_query($con, $sql);
+
+        
+
         //insert that amount in amount table for taking all amount insert data in amount table
         $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$penalty', '$id','debited')";
         $insertAmount = mysqli_query($con, $sql1);
