@@ -65,7 +65,7 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
          // check if winner has referral code
         if($winnerReferralId != null){
             // update winner referral balance
-            $updateWinnerReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE id = '$winnerReferralId'";
+            $updateWinnerReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE referrer_id = '$winnerReferralId'";
             $result = mysqli_query($con, $updateWinnerReferral);
             // insert that amount in amount table for taking all amount insert data
             $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$winnerReferral', '$winnerReferralId')";
@@ -80,7 +80,7 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
         // check if loser has referral code
         if($loserReferralId != null){
             // update loser referral balance
-            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE id = '$loserReferralId'";
+            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
             $result = mysqli_query($con, $updateLoserReferral);
             // insert that amount in amount table for taking all amount insert data
             $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
@@ -137,7 +137,7 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
         // check if winner has referral code
         if($winnerReferralId != null){
             // update winner referral balance
-            $updateWinnerReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE id = '$winnerReferralId'";
+            $updateWinnerReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE referrer_id = '$winnerReferralId'";
             $result = mysqli_query($con, $updateWinnerReferral);
             // insert that amount in amount table for taking all amount insert data
             $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$winnerReferral', '$winnerReferralId')";
@@ -153,7 +153,7 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
 
         if($loserReferralId != null){
             // update loser referral balance
-            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE id = '$loserReferralId'";
+            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
             $result = mysqli_query($con, $updateLoserReferral);
             // insert that amount in amount table for taking all amount insert data
             $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
