@@ -164,43 +164,7 @@ $img_src_data = mysqli_fetch_assoc($img_src_run);
 
                 </div>
                 <hr>
-                <div class="auth-form">
-                    <?php
-                    if ($panStatus == 1) {
-                    ?>
-                        <div class="form-group mb-4">
-
-                            <label class="form-label" for="Inputemail1">Pan No</label>
-                            <input readonly type="email" class="form-control" id="Inputemail1" minlength="10" maxlength="10" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Please enter a valid PAN number (e.g. ABCDE1234F)" required placeholder="Enter your Pan" value="<?php echo $pan; ?>">
-                        </div>
-                        <button  class="btn theme-btn w-100">Verified <img src="https://cdn-icons-png.flaticon.com/128/5962/5962703.png" width="18" alt=""> </button>
-                    <?php
-                    } else {
-                    ?>
-                        <div class="form-group mb-4">
-
-                            <label class="form-label" for="pan">Pan No</label>
-                            <input type="text" class="form-control" id="pan" name="pan" minlength="10" maxlength="10" onkeyup="validatePAN()" title="Please enter a valid PAN number (e.g. ABCDE1234F)" required placeholder="ABCDE1234F" value="<?php echo $pan; ?>">
-                        </div>
-                        <span id="pan-error" style="color: red; display: none;">Invalid PAN format <br> <br></span>
-                        
-
-                        
-                        <div id="otp-box" style="display:none" class="form-group mb-4">
-
-                            <label class="form-label" for="pan-otp">Enter OTP</label>
-                            <input type="text" class="form-control" id="pan-otp" name="pan-otp" minlength="10" maxlength="10" placeholder="Enter OTP">
-                        </div>
-
-                        <button id="sendOtpBtn" onclick="sendPanOtp()" type="menu" class="btn btn-warning w-100">Verify</button>
-                        
-                    <?php
-                    }
-                    ?>
-
-
-                </div>
-                <hr>
+             
                 <br>
                 <h3 class="text-center profile-name">Update Profile</h3>
                 <form action="operations/update_profile.php" class="auth-form" method="post">
