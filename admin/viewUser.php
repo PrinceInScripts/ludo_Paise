@@ -540,7 +540,7 @@ if (isset($_GET['id'])) {
                                 <!-- Game Activity -->
                                 <div class="tab-pane" id="game_activity">
                                 <div class="card">
-                                        <table id="example2" class="table table-bordered table-striped">
+                                        <table id="example5" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -660,7 +660,7 @@ if (isset($_GET['id'])) {
                                 <!-- Bonus History -->
                                 <div class="tab-pane" id="bonus">
                                     <div class="card">
-                                        <table id="example1" class="table table-bordered table-striped">
+                                        <table id="example6" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>

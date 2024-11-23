@@ -139,31 +139,31 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                 <h4 class="fw-semibold title-color">Withdrawal Notice</h4>
                 <div class="d-flex align-items-center gap-1">
                     <img class="img-fluid members" src="https://themes.pixelstrap.com/pwa/taxify/assets/images/svg/profile-fill.svg" alt="profile">
-                    <h5 class="fw-medium title-color">8</h5>
+                    <h5 class="fw-medium title-color"></h5>
                 </div>
             </div>
             <ul class="details-list">
                 <li>
-                    <h5>9:00 am to 11:00 am</h5>
-                    <h6>Withdraw within the time limit.</h6>
+                    <h5>सुबह 10:00 बजे से दोपहर 12:00 बजे तक</h5>
+                    <h6>निर्धारित समय सीमा के भीतर निकासी करें।</h6>
                 </li>
                 <li>
-                    <h5>2 Withdrawal per day</h5>
-                    <h6>You can only place 2 Withdrawal in a day</h6>
+                    <h5>3 बार नि:शुल्क निकासी</h5>
+                    <h6>इसके बाद 1% टीडीएस लागू होगा।</h6>
                 </li>
             </ul>
 
         </div>
         <div class="condition-part">
-            <h4 class="fw-semibold title-color">Policies & fees</h4>
+            <h4 class="fw-semibold title-color">नीतियां और शुल्क</h4>
             <ul class="condition-list">
                 <li>
-                    <h5>Tolls and surcharges</h5>
-                    <p>Any additional charges will be billed after your deposit is completed.</p>
+                    <h5>जीत की राशि पर 1% बोनस</h5>
+                    <p>जीती हुई राशि को जमा में बदलने पर 1% अतिरिक्त प्राप्त करें।</p>
                 </li>
                 <li>
-                    <h5>Non refundable fare</h5>
-                    <p>You’ll be charged the full upfront amount even if your bids is against the result</p>
+                    <h5>3 बार नि:शुल्क निकासी और 1% टीडीएस</h5>
+                    <p>निकासी केवल उसी खाते में की जाएगी जिससे जमा किया गया हो।</p>
                 </li>
             </ul>
         </div>
