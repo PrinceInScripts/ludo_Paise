@@ -183,6 +183,8 @@ $userid = $_SESSION['id'];
                     $query = "SELECT * FROM `gamelists`";
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_array($result)) {
+                    if($row['status'] == 1 || $row['status'] == 0){
+                        
                     ?>
                         
                         <a style="opacity:<?=$row['opacity'] ?>" class="gameCard-container" href='<?php if($row['status'] == 1){
@@ -190,7 +192,7 @@ $userid = $_SESSION['id'];
                         }else{
                             echo "#";
                         } ?>'>
-                            <span class="py-1 blink text-primary d-block text-right">◉ LIVE</span>
+                            <span class="py-1 blink text-primary d-block text-right">◉ <?php  echo ($row['status'] == 1) ? "LIVE" : "Coming Soon"; ?></span>
                             <picture class="gameCard-image">
                                 <img width="100%" src="../assets/images/games/<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
                             </picture>
@@ -200,6 +202,7 @@ $userid = $_SESSION['id'];
 
                         </a>
                     <?php
+                    }
                     }
                     ?>
                 </div>
