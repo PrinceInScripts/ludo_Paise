@@ -156,7 +156,7 @@ $userid = $_SESSION['id'];
         <div class="swiper banner1 home-banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider.gif" alt="slider">
+                    <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider.jpg" alt="slider">
                 </div>
                 <div class="swiper-slide">
                     <img class="img-fluid slider-img w-100" src="../assets/images/slider/slider.gif" alt="slider">
