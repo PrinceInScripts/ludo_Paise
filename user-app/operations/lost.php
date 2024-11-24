@@ -3,188 +3,109 @@ require_once '../db.php';
 $user_id = $_SESSION['id'];
 
 if (isset($_POST['battle_id'])) {
-
     $battle_id = $_POST['battle_id'];
 
-    $fetch = "SELECT * FROM games WHERE id = '$battle_id' AND is_complete = 0 AND (created_by = '$user_id' OR accepted_by = '$user_id')";
-    $result = mysqli_query($con, $fetch);
-    $fetch = mysqli_fetch_assoc($result);
+    // Fetch game details
+    $fetchGameQuery = $con->prepare("SELECT * FROM games WHERE id = ? AND is_complete = 0 AND (created_by = ? OR accepted_by = ?)");
+    $fetchGameQuery->bind_param("iii", $battle_id, $user_id, $user_id);
+    $fetchGameQuery->execute();
+    $gameResult = $fetchGameQuery->get_result();
+    $gameData = $gameResult->fetch_assoc();
 
-    if (mysqli_num_rows($result) > 0) {
-        if ($fetch['created_by'] == $user_id) {
-            // fetch games table
-            $getGames = "SELECT * FROM games WHERE id = '$battle_id'";
-            $getGamesResult = mysqli_query($con, $getGames);
-            $getGamesRow = mysqli_fetch_assoc($getGamesResult);
-            $opponent = $getGamesRow['accepted_by'];
-            $prize = $getGamesRow['winAmount'];
-            $amount = $getGamesRow['amount'];
-            $status = 'complete';
-            $isComplete = 1;
-            $reason = 'Game lost by creator';
-            $winner = $opponent;
-            $remark = 'Game lost by creator';
-            $creator_ss = 'lost';
+    if ($gameResult->num_rows > 0) {
+        $isCreator = $gameData['created_by'] == $user_id;
+        $opponent = $isCreator ? $gameData['accepted_by'] : $gameData['created_by'];
+        $prize = $gameData['winAmount'];
+        $amount = $gameData['amount'];
+        $reason = $isCreator ? 'Game lost by creator' : 'Game lost by acceptor';
+        $remark = $isCreator ? 'Game lost by creator' : 'Game lost by acceptor';
+        $ssField = $isCreator ? 'creator_ss' : 'acceptor_ss';
 
-            // UPDATE `games` SET `id`='[value-1]',`game_id`='[value-2]',`game_type`='[value-3]',`roomcode`='[value-4]',`amount`='[value-5]',`winAmount`='[value-6]',`created_by`='[value-7]',`accepted_by`='[value-8]',`created_at`='[value-9]',`updated_at`='[value-10]',`status`='[value-11]',`is_complete`='[value-12]',`creator_ss`='[value-13]',`acceptor_ss`='[value-14]',`creator_join_ss`='[value-15]',`acceptor_join_ss`='[value-16]',`status_reason`='[value-17]',`room_status`='[value-18]',`winner`='[value-19]',`isJoined`='[value-20]',`remark`='[value-21]' WHERE 1
+        // Update game status
+        $updateGameQuery = $con->prepare("UPDATE games SET status = 'complete', is_complete = 1, $ssField = 'lost', status_reason = ?, winner = ?, remark = ? WHERE id = ? AND ($ssField = 'pending')");
+        $updateGameQuery->bind_param("sisi", $reason, $opponent, $remark, $battle_id);
+        $updateGameQuery->execute();
 
-            $sql = "UPDATE games SET status = '$status', is_complete = '$isComplete', creator_ss = '$creator_ss', status_reason = '$reason', winner = '$winner', remark = '$remark' WHERE id = '$battle_id' AND created_by = '$user_id'";
-            // update balance of opponent
-            $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
-            $updateBalanceResult = mysqli_query($con, $updateBalance);
-            //insert that amount in amount table for taking all amount insert data in amount table
-            $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$prize', '$opponent','credited')";
-            $insertAmount = mysqli_query($con, $sql1);            
+        // Update opponent balance
+        $updateBalanceQuery = $con->prepare("UPDATE users SET withdraw_wallet = withdraw_wallet + ? WHERE id = ?");
+        $updateBalanceQuery->bind_param("ii", $prize, $opponent);
+        $updateBalanceQuery->execute();
 
-            if ($updateBalanceResult) {
-                // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 
-                $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$opponent', '$battle_id', '$amount', '$prize', 'won', 'Game Won')";
-                $insertRecord2 = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$user_id', '$battle_id', '$amount', '$amount', 'lost', 'Game Lost')";
-                $insertRecordResult = mysqli_query($con, $insertRecord);
-                $insertRecordResult2 = mysqli_query($con, $insertRecord2);
-            }
+        // Insert amount into the amount table
+        $insertAmountQuery = $con->prepare("INSERT INTO amount (amount, user_id, type) VALUES (?, ?, 'credited')");
+        $insertAmountQuery->bind_param("ii", $prize, $opponent);
+        $insertAmountQuery->execute();
 
-            // 2% for winner referral and 1% for loser referral 
-            $winnerReferral = $amount * 0.02;
-            $loserReferral = $amount * 0.01;
+        // Insert game records
+        $insertGameRecordQuery = $con->prepare("INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertGameRecordQuery->bind_param("iiisss", $opponent, $battle_id, $amount, $prize, $statusWon = 'won', $remarkWon = 'Game Won');
+        $insertGameRecordQuery->execute();
+        $insertGameRecordQuery->bind_param("iiisss", $user_id, $battle_id, $amount, $amount, $statusLost = 'lost', $remarkLost = 'Game Lost');
+        $insertGameRecordQuery->execute();
 
-            // fetch referral code of winner 
-            $fetchWinnerReferral = "SELECT level_1 FROM users WHERE id = '$opponent'";
-            $fetchWinnerReferralResult = mysqli_query($con, $fetchWinnerReferral);
-            $fetchWinnerReferralRow = mysqli_fetch_assoc($fetchWinnerReferralResult);
-            $winnerReferralCode = $fetchWinnerReferralRow['level_1'];
+        // Process referral bonuses
+        processReferralBonus($con, $opponent, $user_id, $amount);
 
-            // fetch referral code of loser
-            $fetchLoserReferral = "SELECT level_1 FROM users WHERE id = '$user_id'";
-            $fetchLoserReferralResult = mysqli_query($con, $fetchLoserReferral);
-            $fetchLoserReferralRow = mysqli_fetch_assoc($fetchLoserReferralResult);
-            $loserReferralCode = $fetchLoserReferralRow['level_1'];
-
-            // check if winner has referral code 
-
-            if ($winnerReferralCode != null) {
-                $updateWinnerReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE referrer_id = '$winnerReferralCode'";
-                $updateWinnerReferralResult = mysqli_query($con, $updateWinnerReferral);
-                //insert that amount in amount table for taking all amount insert data in amount table
-                $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$winnerReferral', '$winnerReferralCode','credited')";
-                $insertAmount = mysqli_query($con, $sql1);
-
-
-                // insert into referral_data table 
-                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$winnerReferralCode', '$battle_id', '$winnerReferral', '$user_id', '2% Referral Bonus')";
-                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
-
-            }
-
-            if ($loserReferralCode != null) {
-                $updateLoserReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralCode'";
-                $updateLoserReferralResult = mysqli_query($con, $updateLoserReferral);
-                //insert that amount in amount table for taking all amount insert data in amount table
-                $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$loserReferral', '$loserReferralCode','credited')";
-                $insertAmount = mysqli_query($con, $sql1);
-
-
-                // insert into referral_data table
-                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralCode', '$battle_id', '$loserReferral', '$user_id', '1% Referral Bonus')";
-                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
-            }
-
-
-
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-                echo json_encode([['error' => false, 'message' => "Lost by creator."]]);
-            } else {
-                echo json_encode([['error' => true, 'message' => "An error occured."]]);
-            }
-        } else {
-            // fetch games table
-            $getGames = "SELECT * FROM games WHERE id = '$battle_id'";
-            $getGamesResult = mysqli_query($con, $getGames);
-            $getGamesRow = mysqli_fetch_assoc($getGamesResult);
-            $opponent = $getGamesRow['created_by'];
-            $prize = $getGamesRow['winAmount'];
-            $amount = $getGamesRow['amount'];
-            $status = 'complete';
-            $isComplete = 1;
-            $reason = 'Game lost by acceptor';
-            $winner = $opponent;
-            $remark = 'Game lost by acceptor';
-            $acceptor_ss = 'lost';
-
-            $sql = "UPDATE games SET status = '$status', is_complete = '$isComplete', acceptor_ss = '$acceptor_ss', status_reason = '$reason', winner = '$winner', remark = '$remark' WHERE id = '$battle_id' AND accepted_by = '$user_id'";
-
-            $updateBalance = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$prize' WHERE id = '$opponent'";
-            $updateBalanceResult = mysqli_query($con, $updateBalance);
-            //insert that amount in amount table for taking all amount insert data in amount table
-            $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$prize', '$opponent','credited')";
-            $insertAmount = mysqli_query($con, $sql1);
-            
-            
-
-            if ($updateBalanceResult) {
-                // INSERT INTO `game_record`(`id`, `user_id`, `game_id`, `amount`, `ProfitAmount`, `status`, `remark`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]') 
-                $insertRecord = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$opponent', '$battle_id', '$amount', '$prize', 'won', 'Game Won')";
-                $insertRecord2 = "INSERT INTO game_record (user_id, game_id, amount, ProfitAmount, status, remark) VALUES ('$user_id', '$battle_id', '$amount', '$amount', 'lost', 'Game Lost')";
-                $insertRecordResult = mysqli_query($con, $insertRecord);
-                $insertRecordResult2 = mysqli_query($con, $insertRecord2);
-            }
-
-            // 2% for winner referral and 1% for loser referral
-            $winnerReferral = $amount * 0.02;
-            $loserReferral = $amount * 0.01;
-
-            // fetch referral code of winner
-            $fetchWinnerReferral = "SELECT level_1 FROM users WHERE id = '$opponent'";
-            $fetchWinnerReferralResult = mysqli_query($con, $fetchWinnerReferral);
-            $fetchWinnerReferralRow = mysqli_fetch_assoc($fetchWinnerReferralResult);
-
-            $winnerReferralCode = $fetchWinnerReferralRow['level_1'];
-
-            // fetch referral code of loser
-            $fetchLoserReferral = "SELECT level_1 FROM users WHERE id = '$user_id'";
-            $fetchLoserReferralResult = mysqli_query($con, $fetchLoserReferral);
-            $fetchLoserReferralRow = mysqli_fetch_assoc($fetchLoserReferralResult);
-            $loserReferralCode = $fetchLoserReferralRow['level_1'];
-
-            // check if winner has referral code
-
-            if ($winnerReferralCode != null) {
-                $updateWinnerReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$winnerReferral', referral_earning = referral_earning + '$winnerReferral' WHERE referrer_id = '$winnerReferralCode'";
-                $updateWinnerReferralResult = mysqli_query($con, $updateWinnerReferral);
-                //insert that amount in amount table for taking all amount insert data in amount table
-                $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$winnerReferral', '$winnerReferralCode','credited')";
-                $insertAmount = mysqli_query($con, $sql1);
-
-                // insert into referral_data table
-                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$winnerReferralCode', '$battle_id', '$winnerReferral', '$user_id', '2% Referral Bonus')";
-                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
-            }
-
-            if ($loserReferralCode != null) {
-                $updateLoserReferral = "UPDATE users SET withdraw_wallet = withdraw_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralCode'";
-                $updateLoserReferralResult = mysqli_query($con, $updateLoserReferral);
-                //insert that amount in amount table for taking all amount insert data in amount table
-                $sql1 = "INSERT INTO amount (amount, user_id,type) VALUES ('$loserReferral', '$loserReferralCode','credited')";
-                $insertAmount = mysqli_query($con, $sql1);
-
-                // insert into referral_data table
-                $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralCode', '$battle_id', '$loserReferral', '$user_id', '1% Referral Bonus')";
-                $insertReferralDataResult = mysqli_query($con, $insertReferralData);
-            }
-
-            
-
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-                echo json_encode([['error' => false, 'message' => "Lost by acceptor."]]);
-            } else {
-                echo json_encode([['error' => true, 'message' => "An error occured."]]);
-            }
-        }
+        echo json_encode(['error' => false, 'message' => $reason]);
     } else {
-        echo json_encode([['error' => true, 'message' => "Battle not found or unauthorized access."]]);
+        echo json_encode(['error' => true, 'message' => "Invalid battle ID or no active game."]);
     }
-} else {
-    echo json_encode([['error' => true, 'message' => "Missing battle ID or user ID."]]);
 }
+
+/**
+ * Process referral bonuses for both winner and loser.
+ */
+function processReferralBonus($con, $winner, $loser, $amount)
+{
+    $winnerReferral = $amount * 0.02;
+    $loserReferral = $amount * 0.01;
+
+    // Fetch referral codes
+    $winnerReferralCode = getReferralCode($con, $winner);
+    $loserReferralCode = getReferralCode($con, $loser);
+
+    // Update and log winner referral bonus
+    if ($winnerReferralCode) {
+        updateReferralBonus($con, $winnerReferralCode, $winnerReferral, $loser, '2% Referral Bonus');
+    }
+
+    // Update and log loser referral bonus
+    if ($loserReferralCode) {
+        updateReferralBonus($con, $loserReferralCode, $loserReferral, $loser, '1% Referral Bonus');
+    }
+}
+
+/**
+ * Fetch referral code for a user.
+ */
+function getReferralCode($con, $userId)
+{
+    $referralQuery = $con->prepare("SELECT level_1 FROM users WHERE id = ?");
+    $referralQuery->bind_param("i", $userId);
+    $referralQuery->execute();
+    $result = $referralQuery->get_result();
+    $row = $result->fetch_assoc();
+    return $row['level_1'] ?? null;
+}
+
+/**
+ * Update referral bonus and log the referral data.
+ */
+function updateReferralBonus($con, $referrerId, $amount, $sourceUser, $remark)
+{
+    // Update user wallet and referral earnings
+    $updateReferralQuery = $con->prepare("UPDATE users SET withdraw_wallet = withdraw_wallet + ?, referral_earning = referral_earning + ? WHERE referrer_id = ?");
+    $updateReferralQuery->bind_param("iii", $amount, $amount, $referrerId);
+    $updateReferralQuery->execute();
+
+    // Insert into amount table
+    $insertAmountQuery = $con->prepare("INSERT INTO amount (amount, user_id, type) VALUES (?, ?, 'credited')");
+    $insertAmountQuery->bind_param("ii", $amount, $referrerId);
+    $insertAmountQuery->execute();
+
+    // Log referral data
+    $insertReferralDataQuery = $con->prepare("INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES (?, ?, ?, ?, ?)");
+    $insertReferralDataQuery->bind_param("iiiss", $referrerId, $sourceUser, $amount, $remark);
+    $insertReferralDataQuery->execute();
+}
+?>
