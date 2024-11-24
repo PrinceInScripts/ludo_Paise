@@ -51,17 +51,30 @@ if (isset($_POST['action'])) {
         $penalty = mysqli_real_escape_string($con, $_POST['penalty_amount']);
         $remark = mysqli_real_escape_string($con, $_POST['penalty_remark']);
 
-        // deduct from deposit wallet but if deposit balance has been exhausted, deduct from both wallets 
-        $deposit_wallet = $user['deposit_wallet'];
-        $withdraw_wallet = $user['withdraw_wallet'];
+        // sum of deposit and withdraw wallet 
 
-        if ($deposit_wallet >= $penalty) {
+        $total_wallet = $user['deposit_wallet'] + $user['withdraw_wallet'];
+
+        // check if penalty amount is greater than total wallet amount
+        if ($penalty > $total_wallet) {
+            
+            $withdraw_wallet = 0;
             $deposit_wallet -= $penalty;
-        } else {
-            $penalty -= $deposit_wallet;
-            $deposit_wallet = 0;
-            $withdraw_wallet -= $penalty;
+        }else{
+            $deposit_wallet = $user['deposit_wallet'];
+            $withdraw_wallet = $user['withdraw_wallet'];
+            $penalty_amount = $penalty;
+            if ($penalty_amount > $deposit_wallet) {
+                $penalty_amount = $penalty_amount - $deposit_wallet;
+                $deposit_wallet = 0;
+                $withdraw_wallet = $withdraw_wallet - $penalty_amount;
+            }else{
+                $deposit_wallet = $deposit_wallet - $penalty_amount;
+                
+            }
         }
+
+
 
         $sql = "UPDATE users SET deposit_wallet='$deposit_wallet', withdraw_wallet='$withdraw_wallet' WHERE id='$id'";
         mysqli_query($con, $sql);

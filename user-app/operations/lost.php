@@ -44,7 +44,7 @@ if (isset($_POST['battle_id'])) {
         $insertGameRecordQuery->execute();
 
         // Process referral bonuses
-        processReferralBonus($con, $opponent, $user_id, $amount);
+        processReferralBonus($con, $opponent, $user_id, $amount, $battle_id);
 
         echo json_encode(['error' => false, 'message' => $reason]);
     } else {
@@ -55,7 +55,7 @@ if (isset($_POST['battle_id'])) {
 /**
  * Process referral bonuses for both winner and loser.
  */
-function processReferralBonus($con, $winner, $loser, $amount)
+function processReferralBonus($con, $winner, $loser, $amount, $battle_id)
 {
     $winnerReferral = $amount * 0.02;
     $loserReferral = $amount * 0.01;
@@ -66,12 +66,12 @@ function processReferralBonus($con, $winner, $loser, $amount)
 
     // Update and log winner referral bonus
     if ($winnerReferralCode) {
-        updateReferralBonus($con, $winnerReferralCode, $winnerReferral, $loser, '2% Referral Bonus');
+        updateReferralBonus($con, $winnerReferralCode, $winnerReferral, $loser, '2% Referral Bonus', $battle_id);
     }
 
     // Update and log loser referral bonus
     if ($loserReferralCode) {
-        updateReferralBonus($con, $loserReferralCode, $loserReferral, $loser, '1% Referral Bonus');
+        updateReferralBonus($con, $loserReferralCode, $loserReferral, $loser, '1% Referral Bonus', $battle_id);
     }
 }
 
@@ -91,7 +91,7 @@ function getReferralCode($con, $userId)
 /**
  * Update referral bonus and log the referral data.
  */
-function updateReferralBonus($con, $referrerId, $amount, $sourceUser, $remark)
+function updateReferralBonus($con, $referrerId, $amount, $sourceUser, $remark, $battle_id)
 {
     // Update user wallet and referral earnings
     $updateReferralQuery = $con->prepare("UPDATE users SET withdraw_wallet = withdraw_wallet + ?, referral_earning = referral_earning + ? WHERE referrer_id = ?");
@@ -105,7 +105,8 @@ function updateReferralBonus($con, $referrerId, $amount, $sourceUser, $remark)
 
     // Log referral data
     $insertReferralDataQuery = $con->prepare("INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES (?, ?, ?, ?, ?)");
-    $insertReferralDataQuery->bind_param("iiiss", $referrerId, $sourceUser, $amount, $remark);
+    $insertReferralDataQuery->bind_param("iiiss", $referrerId, $battle_id, $amount, $sourceUser, $remark);
     $insertReferralDataQuery->execute();
+    
 }
 ?>
