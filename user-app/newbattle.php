@@ -55,7 +55,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
 
-    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
        
 
        <style>

@@ -97,7 +97,7 @@ if ($created_by != '' && $accepted_by != '') {
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
     <style>
         .Wfloat {
             position: fixed;

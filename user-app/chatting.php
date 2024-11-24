@@ -46,7 +46,7 @@ include('./includes/sessions.php');
     <!-- Theme css -->
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style.css">
 
-    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
        
 
        <style>

@@ -203,7 +203,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
         }
     </style>
 
-<script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
        
 
        <style>

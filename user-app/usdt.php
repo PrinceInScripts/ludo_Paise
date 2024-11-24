@@ -49,7 +49,7 @@ include('includes/sessions.php');
 
     <!-- Swal Fire CDN  -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://kit.fontawesome.com/e8623f4723.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
 
 
     <style>
