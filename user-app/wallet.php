@@ -144,7 +144,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
             </div>
             <ul class="details-list">
                 <li>
-                    <h5>सुबह 10:00 बजे से दोपहर 12:00 बजे तक</h5>
+                    <h5>सुबह 10:00 बजे से रात्रि 12:00 बजे तक</h5>
                     <h6>निर्धारित समय सीमा के भीतर निकासी करें।</h6>
                 </li>
                 <li>
