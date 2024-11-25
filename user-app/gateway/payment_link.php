@@ -181,7 +181,34 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         curl_close($ch);
     } else if ($payment_mode == 'bankcard') {
         sleep(1);
-        echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));
+        // fetch upi list from manualupi table 
+
+        $sql = "SELECT * FROM manual_deposit WHERE status = 1 ORDER BY id DESC LIMIT 1";
+        $result = mysqli_query($con, $sql);
+        $upi_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        if (count($upi_list) == 0) {
+            echo json_encode(array('status' => 'error', 'message' => 'No Bank available'));
+            exit();
+        } else {
+            // take random upi entry from the list
+            
+            $upi = array('ac' => $upi_list[0]['ac'], 'ac_holder' => $upi_list[0]['ac_holder'], 'ifsc' => $upi_list[0]['ifsc'], 'bank_name' => $upi_list[0]['bank_name']);
+            // array to string conversion 
+
+            $upi = json_encode($upi);
+            
+
+            $txn_id = uniqid('btxn_');
+            // INSERT INTO `paymenthistory`(`id`, `userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`, `utr`, `created_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]')
+            $sql = "INSERT INTO `paymenthistory`(`userid`, `order_id`, `amount`, `type`, `upi`, `status`, `remark`) VALUES ('$user_id','$txn_id','$amount','deposit','$upi',0,'Pending Payment')";
+            $result = mysqli_query($con, $sql);
+            if ($result) {
+                echo json_encode(array('status' => 'success', 'url' => './deposit?txn_id=' . $txn_id));
+            } else {
+                echo json_encode(array('status' => 'error', 'message' => 'Error in generating payment link'));
+            }
+        }
     } else {
         sleep(1);
         echo json_encode(array('status' => 'error', 'message' => 'Use other gateway'));

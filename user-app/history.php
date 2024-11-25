@@ -160,7 +160,27 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi'] ?></h5>
+                                                            <h5 class="fw-normal title-color">
+                                                                <?php 
+                                                                $upiDetails = $row['upi'];
+                                                                $upiDetails = explode(',', $upiDetails);
+                                                                foreach ($upiDetails as $upi) {
+                                                                    // Check if it's a UPI ID based on the presence of '@'
+                                                                    if (strpos($upi, '@') !== false) {
+                                                                        echo "$upi\n";
+                                                                    } else {
+                                                                        if($upi == 'phonepe'){
+                                                                            echo 'PhonePe';
+                                                                        }elseif($upi == 'upigateway'){
+                                                                            echo 'UPI Gateway';
+                                                                        }else{
+                                                                            echo "Bank Deposit";
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </h5>
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>
@@ -214,7 +234,27 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi']?></h5>
+                                                            <h5 class="fw-normal title-color">
+                                                            <?php 
+                                                                $upiDetails = $row['upi'];
+                                                                $upiDetails = explode(',', $upiDetails);
+                                                                foreach ($upiDetails as $upi) {
+                                                                    // Check if it's a UPI ID based on the presence of '@'
+                                                                    if (strpos($upi, '@') !== false) {
+                                                                        echo "$upi\n";
+                                                                    } else {
+                                                                        if($upi == 'phonepe'){
+                                                                            echo 'PhonePe';
+                                                                        }elseif($upi == 'upigateway'){
+                                                                            echo 'UPI Gateway';
+                                                                        }else{
+                                                                            echo "Bank Deposit";
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </h5>
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>
@@ -268,7 +308,27 @@ $userid = $_SESSION['id'];
                                                     <div class="ride-info-content">
                                                         <div class="d-flex align-content-center gap-2 lh-base">
                                                             <span class="count content-color fw-normal">UPI: </span>
-                                                            <h5 class="fw-normal title-color"><?=$row['upi']?></h5>
+                                                            <h5 class="fw-normal title-color">
+                                                            <?php 
+                                                                $upiDetails = $row['upi'];
+                                                                $upiDetails = explode(',', $upiDetails);
+                                                                foreach ($upiDetails as $upi) {
+                                                                    // Check if it's a UPI ID based on the presence of '@'
+                                                                    if (strpos($upi, '@') !== false) {
+                                                                        echo "$upi\n";
+                                                                    } else {
+                                                                        if($upi == 'phonepe'){
+                                                                            echo 'PhonePe';
+                                                                        }elseif($upi == 'upigateway'){
+                                                                            echo 'UPI Gateway';
+                                                                        }else{
+                                                                            echo "Bank Deposit";
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </h5>
                                                         </div>
                                                         <h6 class="fw-normal content-color mt-2">UTR : <?php if($row['utr'] == null){echo "NULL";}else{echo $row['utr'];} ?></h6>
                                                     </div>

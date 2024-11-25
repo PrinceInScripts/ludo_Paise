@@ -60,6 +60,8 @@ include("top.php");
                 <?php 
                 if($row['slug'] == 'manual'){
                   echo '<button onclick="changeUPI()" class="btn btn-primary">Change UPI</button>';
+                }elseif($row['slug'] == 'bankcard'){
+                  echo '<a href="addBankCard.php" class="btn btn-primary">Add Bank Card</a>';
                 }
                 ?>
               </td>
