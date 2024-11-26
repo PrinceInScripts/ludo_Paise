@@ -99,13 +99,15 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             echo json_encode(array('status' => 'error', 'message' => 'Error in response', 'response' => $response));
         }
     } else if ($payment_mode == 'manual') {
-        sleep(1);
+        
         // fetch upi list from manualupi table 
 
         if ($amount < 2000 || $amount > 100000) {
             echo json_encode(array('status' => 'error', 'message' => 'Amount should be between 2000 and 100000'));
             exit();
         }
+
+        sleep(1);
 
         $sql = "SELECT * FROM manualupi WHERE status = 1";
         $result = mysqli_query($con, $sql);
@@ -185,7 +187,7 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         // Close cURL session
         curl_close($ch);
     } else if ($payment_mode == 'bankcard') {
-        sleep(1);
+       
         // fetch upi list from manualupi table 
 
         // payment range is from 2000 to 100000 
@@ -194,6 +196,8 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
             echo json_encode(array('status' => 'error', 'message' => 'Amount should be between 2000 and 100000'));
             exit();
         }
+
+        sleep(1);
 
         $sql = "SELECT * FROM manual_deposit WHERE status = 1 ORDER BY id DESC LIMIT 1";
         $result = mysqli_query($con, $sql);
