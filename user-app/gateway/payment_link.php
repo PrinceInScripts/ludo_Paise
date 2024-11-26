@@ -102,6 +102,11 @@ if (isset($_POST['payment_mode']) && isset($_POST['amount'])) {
         sleep(1);
         // fetch upi list from manualupi table 
 
+        if ($amount < 2000 || $amount > 100000) {
+            echo json_encode(array('status' => 'error', 'message' => 'Amount should be between 2000 and 100000'));
+            exit();
+        }
+
         $sql = "SELECT * FROM manualupi WHERE status = 1";
         $result = mysqli_query($con, $sql);
         $upi_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
