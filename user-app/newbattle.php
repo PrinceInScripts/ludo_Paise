@@ -268,18 +268,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                         <div class="profile-head">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                                <h5>Challenge From <span style="color:red">
-                                                <?php 
-                                                    $str = $rowName['username'];
-
-                                                    if (strlen($str) > 10) {
-                                                        $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
-                                                        echo $shortened;
-                                                    } else {
-                                                        echo $str; // If the string is 10 characters or less, show it as is
-                                                    }
-                                                    ?>
-                                                </span></h5>
+                                                <h5>Challenge From <span style="color:red"><?= $rowName['username'] ?></span></h5>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-2">
@@ -359,19 +348,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                         <div class="profile-head">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/3637/3637532.png" alt="profile">
-                                                <h5>Challange From <span style="color:green">
-                                                    <?php 
-                                                    $str = $rowName['username'];
-
-                                                    if (strlen($str) > 10) {
-                                                        $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
-                                                        echo $shortened;
-                                                    } else {
-                                                        echo $str; // If the string is 10 characters or less, show it as is
-                                                    }
-                                                    ?>
-                                            
-                                            </span></h5>
+                                                <h5>Challange From <span style="color:green"><?= $rowName['username'] ?></span></h5>
                                             </div>
                                             <h4 class="fw-semibold theme-color">
 
