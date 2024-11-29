@@ -25,7 +25,7 @@ $user_id = $_SESSION['id'];
                                         <div class="profile-head">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/3637/3637532.png" alt="profile">
-                                                <h5>Challange From <span style="color:green">
+                                                <h5>Challenge From <span style="color:green">
                                                 <?php 
                                                     $str = $rowName['username'];
 
