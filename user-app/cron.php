@@ -29,6 +29,32 @@ try {
     } else {
         echo "No entries found.\n";
     }
+
+
+    $fetchgame = "SELECT * FROM games WHERE status = 'pending' AND isJoined = 0 AND accepted_by is null";
+    $resultgame = $con->query($fetchgame);
+
+    if ($resultgame->num_rows > 0) {
+        while ($row = $resultgame->fetch_assoc()) {
+            $id = $row['id'];
+            $fetchedDate = strtotime($row['created_at']);
+
+            // Check if the current time exceeds 2 minutes from the fetched date
+            if ($currentTimestamp - $fetchedDate > 120) { // 120 seconds = 2 minutes
+                // Delete the old entry
+                $deleteQuery = "DELETE FROM games WHERE id = ?";
+                $stmt = $con->prepare($deleteQuery);
+                $stmt->bind_param('i', $id);
+                $stmt->execute();
+
+                echo "Deleted entry with ID: $id\n";
+            }
+        }
+    } else {
+        echo "No entries found.\n";
+    }
+
+
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
