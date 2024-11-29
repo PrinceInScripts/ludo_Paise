@@ -49,8 +49,14 @@ $user_id = $_SESSION['id'];
                                 <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                 <p>
                                     <?php
+                                    $str = $rowName['username'];
 
-                                    echo $rowName['username'];
+                                    if (strlen($str) > 10) {
+                                        $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                        echo $shortened;
+                                    } else {
+                                        echo $str; // If the string is 10 characters or less, show it as is
+                                    }
                                     ?>
                                 </p>
 
@@ -70,8 +76,14 @@ $user_id = $_SESSION['id'];
                                 <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                 <p>
                                     <?php
+                                    $str = $rowName['username'];
 
-                                    echo $rowName['username'];
+                                    if (strlen($str) > 10) {
+                                        $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                        echo $shortened;
+                                    } else {
+                                        echo $str; // If the string is 10 characters or less, show it as is
+                                    }
                                     ?>
                                 </p>
 

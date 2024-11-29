@@ -380,9 +380,15 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
                                                     <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                                     <p>
-                                                        <?php
+                                                    <?php
+                                                        $str = $rowName['username'];
 
-                                                        echo $rowName['username'];
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
                                                         ?>
                                                     </p>
 
@@ -401,9 +407,15 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                     ?>
                                                     <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                                     <p>
-                                                        <?php
+                                                    <?php
+                                                        $str = $rowName['username'];
 
-                                                        echo $rowName['username'];
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
                                                         ?>
                                                     </p>
 
