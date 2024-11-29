@@ -21,7 +21,7 @@ $time_limit = 120; // Time limit in seconds (e.g., 120 seconds)
         $isjoined = $row1['isJoined'];
 
         if($is_joined && $isjoined == 1){
-            $fetchAcceptorName = "SELECT username FROM users WHERE id = '$accept'";
+            $fetchAcceptorName = "SELECT * FROM users WHERE id = '$accept'";
             $resultAcceptorName = mysqli_query($con, $fetchAcceptorName);
             $rowAcceptorName = mysqli_fetch_assoc($resultAcceptorName);
         }
@@ -36,7 +36,7 @@ $time_limit = 120; // Time limit in seconds (e.g., 120 seconds)
             <div class="driver-box">
                 <div class="profile-head">
                     <div class="d-flex align-items-center gap-2">
-                        <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
+                        <img class="img-fluid profile-img" src="../assets/images/profile/p<?=$rowName['profile_pic'] ?>.png" alt="profile">
                         <?php 
                         if($is_joined && $isjoined == 1){
                             ?>

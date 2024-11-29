@@ -25,7 +25,7 @@
 
             // Assuming you have a field in your database to identify the challenge sender
             $challenger_username = $row['created_by'];
-            $getName  = "SELECT username FROM users WHERE id = '$challenger_username'";
+            $getName  = "SELECT * FROM users WHERE id = '$challenger_username'";
             $resultName = mysqli_query($con, $getName);
             $rowName = mysqli_fetch_assoc($resultName);
 
@@ -35,7 +35,7 @@
                 <div class="driver-box">
                     <div class="profile-head">
                         <div class="d-flex align-items-center gap-2">
-                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
+                            <img class="img-fluid profile-img" src="../assets/images/profile/p<?=$rowName['profile_pic'] ?>.png" alt="profile">
                             <h5>Challenge From <span style="color:red">
                                     <?php
                                     $str = $rowName['username'];
