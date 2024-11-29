@@ -270,7 +270,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                         $str = $rowName['username'];
 
                                                         if (strlen($str) > 10) {
-                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
                                                             echo $shortened;
                                                         } else {
                                                             echo $str; // If the string is 10 characters or less, show it as is
@@ -362,7 +362,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                         $str = $rowName['username'];
 
                                                         if (strlen($str) > 10) {
-                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
                                                             echo $shortened;
                                                         } else {
                                                             echo $str; // If the string is 10 characters or less, show it as is
@@ -384,7 +384,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                         $str = $rowName['username'];
 
                                                         if (strlen($str) > 10) {
-                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
                                                             echo $shortened;
                                                         } else {
                                                             echo $str; // If the string is 10 characters or less, show it as is
@@ -411,7 +411,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                         $str = $rowName['username'];
 
                                                         if (strlen($str) > 10) {
-                                                            $shortened = $str[0] . str_repeat('*', strlen($str) - 2) . $str[strlen($str) - 1];
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
                                                             echo $shortened;
                                                         } else {
                                                             echo $str; // If the string is 10 characters or less, show it as is
