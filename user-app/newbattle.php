@@ -56,33 +56,30 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
     <link rel="stylesheet" id="change-link" type="text/css" href="../assets/css/style2.css">
 
     <script src="https://kit.fontawesome.com/734dee5206.js" crossorigin="anonymous"></script>
-       
 
-       <style>
-          
-           .Wfloat {
-               position: fixed;
-               width: 50px;
-               height: 50px;
-               bottom: 110px;
-               right: 20px;
-               background-color: #25d366;
-               color: #FFF;
-               border-radius: 50px;
-               text-align: center;
-               font-size: 30px;
-               box-shadow: 2px 2px 3px #999;
-               z-index: 10000;
-           }
-   
-           .myW-float {
-               margin-top: 11px;
-           }
-       </style>
 
     <style>
-        
+        .Wfloat {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 10000;
+        }
 
+        .myW-float {
+            margin-top: 11px;
+        }
+    </style>
+
+    <style>
         section,
         .section-t-space {
             padding-top: 2px;
@@ -257,7 +254,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
                                 // Assuming you have a field in your database to identify the challenge sender
                                 $challenger_username = $row['created_by'];
-                                $getName  = "SELECT username FROM users WHERE id = '$challenger_username'";
+                                $getName  = "SELECT * FROM users WHERE id = '$challenger_username'";
                                 $resultName = mysqli_query($con, $getName);
                                 $rowName = mysqli_fetch_assoc($resultName);
 
@@ -267,8 +264,20 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                     <div class="driver-box">
                                         <div class="profile-head">
                                             <div class="d-flex align-items-center gap-2">
-                                                <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                                                <h5>Challenge From <span style="color:red"><?= $rowName['username'] ?></span></h5>
+                                                <img class="img-fluid profile-img" src="../assets/images/profile/p<?=$rowName['profile_pic'] ?>.png" alt="profile">
+                                                <h5>Challenge From <span style="color:red">
+                                                        <?php
+                                                        $str = $rowName['username'];
+
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
+                                                        ?>
+
+                                                    </span></h5>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-2">
@@ -348,7 +357,18 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                         <div class="profile-head">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img class="img-fluid profile-img" src="https://cdn-icons-png.flaticon.com/512/3637/3637532.png" alt="profile">
-                                                <h5>Challange From <span style="color:green"><?= $rowName['username'] ?></span></h5>
+                                                <h5>Challenge From <span style="color:green">
+                                                <?php
+                                                        $str = $rowName['username'];
+
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
+                                                        ?>
+                                                </span></h5>
                                             </div>
                                             <h4 class="fw-semibold theme-color">
 
@@ -360,9 +380,15 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
 
                                                     <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                                     <p>
-                                                        <?php
+                                                    <?php
+                                                        $str = $rowName['username'];
 
-                                                        echo $rowName['username'];
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
                                                         ?>
                                                     </p>
 
@@ -381,9 +407,15 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                                                     ?>
                                                     <img id="output" width="40px" class="profile-pic" src="../assets/images/profile/p<?= $rowName['profile_pic'] ?>.png" alt="p<?= $rowName['profile_pic'] ?>">
                                                     <p>
-                                                        <?php
+                                                    <?php
+                                                        $str = $rowName['username'];
 
-                                                        echo $rowName['username'];
+                                                        if (strlen($str) > 10) {
+                                                            $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
+                                                            echo $shortened;
+                                                        } else {
+                                                            echo $str; // If the string is 10 characters or less, show it as is
+                                                        }
                                                         ?>
                                                     </p>
 

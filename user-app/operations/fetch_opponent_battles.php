@@ -1,15 +1,12 @@
-
-
-
 <div id="opponent-battle" class="">
     <ul class="driver-list">
         <?php
 
         require_once '../db.php';
         // Asia/Kolkata timezone 
-date_default_timezone_set('Asia/Kolkata');
+        date_default_timezone_set('Asia/Kolkata');
 
-$user_id = $_SESSION['id'];
+        $user_id = $_SESSION['id'];
         // Query to fetch battles created by opponents
         $sql = "SELECT * FROM games WHERE (status = 'pending' OR status = 'running') AND created_by != '$user_id' AND (accepted_by = '$user_id' OR accepted_by is null) ORDER BY id DESC";
         $result = mysqli_query($con, $sql);
@@ -28,48 +25,58 @@ $user_id = $_SESSION['id'];
 
             // Assuming you have a field in your database to identify the challenge sender
             $challenger_username = $row['created_by'];
-            $getName  = "SELECT username FROM users WHERE id = '$challenger_username'";
+            $getName  = "SELECT * FROM users WHERE id = '$challenger_username'";
             $resultName = mysqli_query($con, $getName);
             $rowName = mysqli_fetch_assoc($resultName);
 
-             // Change this as per your database field
+            // Change this as per your database field
         ?>
             <li>
                 <div class="driver-box">
                     <div class="profile-head">
                         <div class="d-flex align-items-center gap-2">
-                            <img class="img-fluid profile-img" src="../assets/images/profile/p8.png" alt="profile">
-                            <h5>Challenge From <span style="color:red"><?= $rowName['username'] ?></span></h5>
+                            <img class="img-fluid profile-img" src="../assets/images/profile/p<?=$rowName['profile_pic'] ?>.png" alt="profile">
+                            <h5>Challenge From <span style="color:red">
+                                    <?php
+                                    $str = $rowName['username'];
+
+                                    if (strlen($str) > 10) {
+                                        $shortened = $str[0] . str_repeat('*', 6) . $str[strlen($str) - 1];
+                                        echo $shortened;
+                                    } else {
+                                        echo $str; // If the string is 10 characters or less, show it as is
+                                    }
+                                    ?></span></h5>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
-                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee: <?=$row['amount'] ?></h5>
+                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/6828/6828650.png" width="22" alt=""> </span> Entry Fee: <?= $row['amount'] ?></h5>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
-                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize: <?=$row['winAmount'] ?></h5>
+                        <h5 class="fw-normal title-color"><span><img src="https://cdn-icons-png.flaticon.com/512/5984/5984518.png" width="20" alt=""> </span> Prize: <?= $row['winAmount'] ?></h5>
                     </div>
-                    <?php 
-                    if($row['accepted_by'] == $user_id && $row['isJoined'] == 0){
-                        ?>
+                    <?php
+                    if ($row['accepted_by'] == $user_id && $row['isJoined'] == 0) {
+                    ?>
                         <div class="grid-btn mt-2">
-                        <a href="#0" class="btn btn-secondary w-100 m-0">Waiting...</a>
-                    </div>
-                        <?php 
-                    }elseif($row['accepted_by'] == $user_id && $row['isJoined'] == 1){
-                        ?>
+                            <a href="#0" class="btn btn-secondary w-100 m-0">Waiting...</a>
+                        </div>
+                    <?php
+                    } elseif ($row['accepted_by'] == $user_id && $row['isJoined'] == 1) {
+                    ?>
                         <div class="grid-btn mt-2">
-                        <a href="room?battle=<?=$game_id?>" class="btn btn-primary w-100 m-0">View Room</a>
-                    </div>
-                        <?php 
-                    }else{
-                        ?>
+                            <a href="room?battle=<?= $game_id ?>" class="btn btn-primary w-100 m-0">View Room</a>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
                         <div class="grid-btn mt-2">
-                        <a href="operations/request_battle.php?battle_id=<?=$game_id?>" class="btn btn-secondary w-100 m-0">Play</a>
-                    </div>
-                        <?php 
+                            <a href="operations/request_battle.php?battle_id=<?= $game_id ?>" class="btn btn-secondary w-100 m-0">Play</a>
+                        </div>
+                    <?php
                     }
                     ?>
-                    
+
                     <div class="progress mt-2" role="progressbar">
                         <div class="progress-bar w-25"></div>
                     </div>

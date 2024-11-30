@@ -263,12 +263,12 @@ $deposit = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM manual_deposit O
         }
 
         .badge-warning {
-    color: #212529;
-    background-color: #ffc107;
-}
+            color: #212529;
+            background-color: #ffc107;
+        }
     </style>
-<!-- swal fire cdn  -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- swal fire cdn  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -341,7 +341,7 @@ $deposit = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM manual_deposit O
     <div class="container mt-5">
         <!-- Withdraw Notice Alert Box -->
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Notice:</strong> कृपया सटीक राशि (<?=$txn['amount'] ?> INR) जमा करें। कोई भी अतिरिक्त राशि जमा न करें. आपका भुगतान 24 घंटों के भीतर स्वीकृत हो जाएगा और आसान अनुमोदन प्राप्त करने के लिए टिप्पणी (Remark) जोड़ना न भूलें।
+            <strong>Notice:</strong> कृपया सटीक राशि (<?= $txn['amount'] ?> INR) जमा करें। कोई भी अतिरिक्त राशि जमा न करें. आपका भुगतान 5 मिनट के भीतर स्वीकृत हो जाएगा और आसान अनुमोदन प्राप्त करने के लिए टिप्पणी (Remark) जोड़ना न भूलें।
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
