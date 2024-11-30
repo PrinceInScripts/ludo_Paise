@@ -405,7 +405,7 @@ $setting = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM settings WHERE i
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Please complete KYC first to make payment more than 500 INR',
+                    text: 'Please complete KYC first to make payment more than 10000 INR',
                 }).then(() => {
                     window.location.href = 'profile';
                 });
