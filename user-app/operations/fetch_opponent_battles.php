@@ -59,7 +59,7 @@
                     if ($row['accepted_by'] == $user_id && $row['isJoined'] == 0) {
                     ?>
                         <div class="grid-btn mt-2">
-                            <a href="#0" class="btn btn-secondary w-100 m-0">Waiting...</a>
+                            <a href="operations/cancel_battle.php?battle_id=<?=$game_id?>" class="btn btn-danger w-100 m-0">Delete</a>
                         </div>
                     <?php
                     } elseif ($row['accepted_by'] == $user_id && $row['isJoined'] == 1) {
