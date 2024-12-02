@@ -29,20 +29,22 @@ if (isset($_FILES['file']) && isset($_POST['battle_id']) && isset($_POST['screen
         $creator = $fetch['created_by'];
         $acceptor = $fetch['accepted_by'];
 
-        if($user_id == $creator){
-            // check if cretor_join_ss uploaded proof ss or not 
-            if($fetch['creator_join_ss'] == null){
-                echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
-                exit;
-            }
 
-        }elseif($user_id == $acceptor){
-            // check if acceptor_join_ss uploaded proof ss or not 
-            if($fetch['acceptor_join_ss'] == null){
-                echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
-                exit;
-            }
-        }
+
+        // if($user_id == $creator){
+        //     // check if cretor_join_ss uploaded proof ss or not 
+        //     if($fetch['creator_join_ss'] == null){
+        //         echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
+        //         exit;
+        //     }
+
+        // }elseif($user_id == $acceptor){
+        //     // check if acceptor_join_ss uploaded proof ss or not 
+        //     if($fetch['acceptor_join_ss'] == null){
+        //         echo json_encode([['error' => true, 'message' => "Please upload Game Join screenshot first."]]);
+        //         exit;
+        //     }
+        // }
 
         
 
