@@ -124,7 +124,7 @@ $wallet = $data['deposit_wallet'] + $data['withdraw_wallet'];
                         <h4 class="wallet-amount fw-semibold success-color navbar-expand">₹ <?= $data['withdraw_wallet'] ?></h4>
                         <div class="grid-btn mt-2">
                             <a href="withdraw" class="btn gray-btn w-100 m-0">Withdraw</a>
-                            <button onclick="convert()" class="btn theme-btn w-100 m-0">Convert</button>
+                            <!-- <button onclick="convert()" class="btn theme-btn w-100 m-0">Convert</button> -->
                         </div>
                     </div>
                 </li>
