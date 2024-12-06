@@ -77,20 +77,20 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
 
         }
 
-        // check if loser has referral code
-        if($loserReferralId != null){
-            // update loser referral balance
-            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
-            $result = mysqli_query($con, $updateLoserReferral);
-            // insert that amount in amount table for taking all amount insert data
-            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
-            $insertAmount = mysqli_query($con, $sql1);
+        // // check if loser has referral code
+        // if($loserReferralId != null){
+        //     // update loser referral balance
+        //     $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
+        //     $result = mysqli_query($con, $updateLoserReferral);
+        //     // insert that amount in amount table for taking all amount insert data
+        //     $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
+        //     $insertAmount = mysqli_query($con, $sql1);
 
-            // insert into referral_data table 
-            $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralId', '$battle_id', '$loserReferral', '$created_by', '1% loser referral earning')";
-            $result = mysqli_query($con, $insertReferralData);
+        //     // insert into referral_data table 
+        //     $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralId', '$battle_id', '$loserReferral', '$created_by', '1% loser referral earning')";
+        //     $result = mysqli_query($con, $insertReferralData);
 
-        }
+        // }
 
 
         if($result){
@@ -151,19 +151,19 @@ if(isset($_POST['mobile']) && isset($_POST['id'])){
 
         // check if loser has referral code
 
-        if($loserReferralId != null){
-            // update loser referral balance
-            $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
-            $result = mysqli_query($con, $updateLoserReferral);
-            // insert that amount in amount table for taking all amount insert data
-            $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
-            $insertAmount = mysqli_query($con, $sql1);
+        // if($loserReferralId != null){
+        //     // update loser referral balance
+        //     $updateLoserReferral = "UPDATE users SET deposit_wallet = deposit_wallet + '$loserReferral', referral_earning = referral_earning + '$loserReferral' WHERE referrer_id = '$loserReferralId'";
+        //     $result = mysqli_query($con, $updateLoserReferral);
+        //     // insert that amount in amount table for taking all amount insert data
+        //     $sql1 = "INSERT INTO amount (amount, user_id) VALUES ('$loserReferral', '$loserReferralId')";
+        //     $insertAmount = mysqli_query($con, $sql1);
 
-            // insert into referral_data table 
-            $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralId', '$battle_id', '$loserReferral', '$accepted_by', '1% loser referral earning')";
-            $result = mysqli_query($con, $insertReferralData);
+        //     // insert into referral_data table 
+        //     $insertReferralData = "INSERT INTO referral_data (earn_to, battle_id, amount, earn_from, remark) VALUES ('$loserReferralId', '$battle_id', '$loserReferral', '$accepted_by', '1% loser referral earning')";
+        //     $result = mysqli_query($con, $insertReferralData);
 
-        }
+        // }
 
         if($result){
             echo json_encode(array('status' => 'success'));
